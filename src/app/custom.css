@@ -1,0 +1,11 @@
+.bg-gradient {
+    background: linear-gradient(270deg,#33e1d9,#5691c8)!important;
+}
+.monitor-head {
+    height: 6vh!important;
+}
+.monitor-body-without-footer {
+    max-height: 92vh!important;
+    overflow-y: auto;    
+}
+
