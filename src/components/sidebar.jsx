@@ -8,7 +8,8 @@ export default function Sidebar() {
                     </Link>
                     <hr />
                     <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item"><Link href="#" className="nav-link active">Cuentas a cobrar</Link></li>
+                        <li className="nav-item"><Link href="/cuentas-a-cobrar" className="nav-link active">Cuentas a cobrar</Link></li>
+                        <li className=""><Link href="/cuentas-a-pagar" className="nav-link link-dark">Cuentas a pagar</Link></li>
                         <li><a href="#" className="nav-link link-dark">Cuentas a Pagar</a></li>
                         <li><a href="#" className="nav-link link-dark">Tesoreria</a></li>
                         <li><a href="#" className="nav-link link-dark">Contabilidad</a></li>

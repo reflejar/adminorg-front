@@ -1,7 +1,8 @@
+'use client'
 import React from 'react';
 
-import { useDeudas, useSaldos } from 'utility/hooks/dispatchers';
-import Spinner from '../../spinner/spinner';
+import { useDeudas, useSaldos } from '@/utility/hooks/dispatchers';
+import Spinner from '@/components/spinner/spinner';
 
 const Deudas = (props) => {
   const { selected, Table } = props;

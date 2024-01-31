@@ -6,7 +6,7 @@ import moment from 'moment';
 import Comprobantes from 'views-admin/clientes/CRUDL/factura/CR';
 import BasicModal from '../modal/basic';
 
-import "react-table/react-table.css";
+// import "react-table/react-table.css";
 
 const CheckboxTable = checkboxHOC(ReactTable);
 

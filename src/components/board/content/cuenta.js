@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useEstadoCuenta } from 'utility/hooks/dispatchers';
-import Spinner from '../../spinner/spinner';
+import { useEstadoCuenta } from '@/utility/hooks/dispatchers';
+import Spinner from '@/components/spinner/spinner';
 
 const Cuenta = (props) => {
   const { selected, Table } = props;

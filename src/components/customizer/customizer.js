@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Settings } from "react-feather";
 
-import { FoldedContentConsumer } from "utility/context/toggleContentContext";
+
+import { FoldedContentConsumer } from "@/utility/context/toggleContentContext";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -56,7 +56,7 @@ class Customizer extends Component {
                      <i className="ft-x font-medium-3" />{" "}
                   </Link>{" "}
                   <span className="customizer-toggle bg-danger" id="customizer-toggle-icon" onClick={this.toggleCustomizer}>
-                     <Settings size={18} className="white spinner" />
+                     {/* <Settings size={18} className="white spinner" /> */}
                   </span>
                   <PerfectScrollbar>
                      <div className="customizer-content p-3">

@@ -7,7 +7,7 @@ const Search = ({onChange, searchTerm, addNew}) => (
                     { addNew }
                 </div>
                 <input
-                    className="form-control mx-2"
+                    className="form-control mx-2 shadow-sm"
                     id="searchUser"
                     name="searchUser"
                     type="text"

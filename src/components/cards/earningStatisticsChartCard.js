@@ -10,7 +10,7 @@ import Chartist from "chartist";
 //Chsrtis CSS
 import "chartist/dist/chartist.min.css";
 //Component specific chart CSS
-import "_assets/scss/components/cards/earningStatisticChartCard.scss";
+// import "_assets/scss/components/cards/earningStatisticChartCard.scss";
 
 class EarningStatisticChartCard extends PureComponent {
    render() {

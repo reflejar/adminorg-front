@@ -8,7 +8,7 @@ import ChartistGraph from "react-chartist";
 //Chsrtis CSS
 import "chartist/dist/chartist.min.css";
 //Component specific chart CSS
-import "_assets/scss/components/cards/fitnessStatisticsCardWithChart.scss";
+// import "_assets/scss/components/cards/fitnessStatisticsCardWithChart.scss";
 
 class FitnessStatisticsCardWithChart extends PureComponent {
    render() {

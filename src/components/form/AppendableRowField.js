@@ -1,7 +1,7 @@
 import React from 'react';
 import cs from 'classnames';
 
-import './styles.scss';
+;
 import get from 'lodash/get';
 
 export const AppendableRowField = ({

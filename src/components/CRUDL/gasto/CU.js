@@ -1,3 +1,5 @@
+'use client'
+'use client'
 import React, { useState, useEffect } from 'react';
 import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
@@ -8,9 +10,9 @@ import { useDispatch } from 'react-redux';
 import { gastosActions } from '@/redux/actions/gastos';
 import { toastr } from "react-redux-toastr";
 
-import { gastos } from 'utility/options/taxones';
-import Spinner from 'components/spinner/spinner';
-import { useTitulos } from 'utility/hooks/dispatchers';
+import { gastos } from '@/utility/options/taxones';
+import Spinner from '@/components/spinner/spinner';
+import { useTitulos } from '@/utility/hooks/dispatchers';
 
 const empty = 'Campo requerido';
 

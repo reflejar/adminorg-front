@@ -9,7 +9,7 @@ import ChartistGraph from "react-chartist";
 //Chsrtis CSS
 import "chartist/dist/chartist.min.css";
 //Component specific chart CSS
-import "_assets/scss/components/cards/userStatisticChartCard.scss";
+// import "_assets/scss/components/cards/userStatisticChartCard.scss";
 
 class UserStatisticChartCard extends PureComponent {
    render() {

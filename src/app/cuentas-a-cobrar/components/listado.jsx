@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import List from '@/components/board/list'
 import { clientesActions } from "@/redux/actions/clientes";
 import Search from "@/components/board/search";
-import ModalNew from './modal-cliente';
+import ModalNew from './modals/cliente';
 
 
 const filterCliente = (items, search) => {
@@ -47,11 +47,11 @@ const Buscador = connect(
 
 
 export default function Listado() {
-    return (<div className="col-lg-2 p-3 min-vh-100">
-              <div className="monitor-head">
+    return (<div className="col-lg-2 min-vh-100 bg-light">
+              <div className="monitor-head p-3">
                 <Buscador />
               </div>
-              <div className="monitor-body-without-footer pe-2">
+              <div className="monitor-body-without-footer p-3 bg-white">
                 <Filas />
               </div>
             </div>)

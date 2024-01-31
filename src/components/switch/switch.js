@@ -4,7 +4,7 @@ import Toggle from "react-toggle";
 // import "prismjs/themes/prism-okaidia.css"; //Include CSS
 
 import "react-toggle/style.css";
-import "_assets/scss/views/components/extra/switch.scss";
+// import "_assets/scss/views/components/extra/switch.scss";
 
 
 class Switch extends Component {

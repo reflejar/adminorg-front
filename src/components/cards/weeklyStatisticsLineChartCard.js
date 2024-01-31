@@ -10,7 +10,7 @@ import ChartistLib from "chartist";
 //Chsrtis CSS
 import "chartist/dist/chartist.min.css";
 //Component specific chart CSS
-import "_assets/scss/components/cards/weeklySalesStatisticsBarChartCard.scss";
+// import "_assets/scss/components/cards/weeklySalesStatisticsBarChartCard.scss";
 
 class WeeklySalesStatisticsBarChartCard extends PureComponent {
    render() {

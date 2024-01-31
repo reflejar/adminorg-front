@@ -1,0 +1,25 @@
+.fixed-rows {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// .fixed-column td:nth-child(1) {
+//   position: absolute;
+//   width: 160px;
+//   overflow: hidden;
+//   background-color: #ffffff;
+//   border-right: 1px solid #dfdfdf;
+// }
+// .fixed-column th:nth-child(1) {
+//   position: absolute;
+//   width: 160px;
+//   overflow: hidden;
+//   background-color: #ffffff;
+//   border-right: 1px solid #dfdfdf;
+// }
+// .fixed-column td:nth-child(2) {
+//   padding-left: 170px;
+// }
+// .fixed-column th:nth-child(2) {
+//   padding-left: 170px;
+// }

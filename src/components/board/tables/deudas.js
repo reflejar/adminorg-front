@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import ReactExport from "react-export-excel";
+// import ReactExport from "react-export-excel";
 import { Button, ButtonGroup } from 'reactstrap';
-import { SiMicrosoftexcel } from "react-icons/si";
-import {Numero} from "utility/formats";
+// import { SiMicrosoftexcel } from "react-icons/si";
+import {Numero} from "@/utility/formats";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const TableDeudas = ({data, columns, addProps}) => {
 
   return (
     <React.Fragment>
       <section className="bg-lighten-5 d-flex justify-content-between">
-        <ExcelFile element={<Button className="btn-sm" outline>
+        {/* <ExcelFile element={<Button className="btn-sm" outline>
           <SiMicrosoftexcel size={22} />
           </Button>}
             filename="estado-deuda">
@@ -29,7 +29,8 @@ const TableDeudas = ({data, columns, addProps}) => {
           <Button className="btn-sm btn-warning" disabled outline title="Saldo adeudado">
             {Numero(data.reduce((a,v) =>  a = a + v.saldo , 0 ))}
           </Button>            
-        </ButtonGroup>
+        </ButtonGroup> */}
+        aaa
       </section>
 
       <ReactTable

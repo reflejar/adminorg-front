@@ -6,7 +6,7 @@ import checkboxHOC from 'react-table/lib/hoc/selectTable';
 import BasicModal from '../modal/basic';
 import Comprobantes from 'views-admin/clientes/CRUDL/factura/CR';
 
-import "react-table/react-table.css";
+// import "react-table/react-table.css";
 
 const CheckboxTable = checkboxHOC(ReactTable);
 

@@ -1,21 +1,21 @@
+'use client'
 import React, { useCallback, useState, useEffect } from "react";
 
-import "react-table/react-table.css";
-import { Edit } from 'react-feather';
+// import "react-table/react-table.css";
 import ReactTable from 'react-table';
 import { Button } from 'reactstrap';
-import ReactExport from "react-export-excel";
-import { SiMicrosoftexcel } from "react-icons/si";
+// import ReactExport from "react-export-excel";
+// import { SiMicrosoftexcel } from "react-icons/si";
 
 import Chance from "chance";
 
-import Spinner from "components/spinner/spinner";
+import Spinner from "@/components/spinner/spinner";
 
 const chance = new Chance();
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const TableParametro = ({ titles, items, loadingItems, selectItem, toggle, causante }) => {
  
@@ -28,16 +28,16 @@ const TableParametro = ({ titles, items, loadingItems, selectItem, toggle, causa
       {
         Header: '',
         Cell: row => (
-          
-          <Edit
-            size={18}
-            className="mr-2"
-            onClick={() => {
-              selectItem({...row.original, causante});
-              toggle(true)
-            }}
-            cursor='pointer'
-          />
+          ""          
+          // <Edit
+          //   size={18}
+          //   className="mr-2"
+          //   onClick={() => {
+          //     selectItem({...row.original, causante});
+          //     toggle(true)
+          //   }}
+          //   cursor='pointer'
+          // />
         )
       }
     )
@@ -66,7 +66,7 @@ const TableParametro = ({ titles, items, loadingItems, selectItem, toggle, causa
 
   return (
     <React.Fragment>
-      <section className="bg-lighten-5 text-left">
+      {/* <section className="bg-lighten-5 text-left">
         <ExcelFile
           element={
             <Button className="btn-sm" outline>
@@ -81,7 +81,7 @@ const TableParametro = ({ titles, items, loadingItems, selectItem, toggle, causa
             ))}
           </ExcelSheet>
         </ExcelFile>
-      </section>
+      </section> */}
       <ReactTable
         data={data}
         columns={columns}

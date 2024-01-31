@@ -2,10 +2,19 @@
     background: linear-gradient(270deg,#33e1d9,#5691c8)!important;
 }
 .monitor-head {
-    height: 6vh!important;
+    height: 7vh!important;
 }
 .monitor-body-without-footer {
-    max-height: 92vh!important;
+    height: 93vh!important;
     overflow-y: auto;    
 }
 
+
+.monitor-body {
+    height: 84vh!important;
+    overflow-y: auto;
+}
+
+.monitor-footer {
+    height: 9vh!important;
+}

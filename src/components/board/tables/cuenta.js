@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import ReactExport from "react-export-excel";
+// import ReactExport from "react-export-excel";
 import { Button } from 'reactstrap';
-import { SiMicrosoftexcel } from "react-icons/si";
+// import { SiMicrosoftexcel } from "react-icons/si";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 
 const TableCuenta = ({data, columns, addProps}) => {
@@ -14,7 +14,7 @@ const TableCuenta = ({data, columns, addProps}) => {
   return (
     <React.Fragment>
       <section className="bg-lighten-5 text-left">
-        <ExcelFile
+        {/* <ExcelFile
           element={
             <Button className="btn-sm" outline>
               <SiMicrosoftexcel size={22} />
@@ -27,7 +27,8 @@ const TableCuenta = ({data, columns, addProps}) => {
               <ExcelColumn label={column.Header} value={column.accessor} />
             ))}
           </ExcelSheet>
-        </ExcelFile>
+        </ExcelFile> */}
+        aaa
       </section>
       <ReactTable
         showPagination

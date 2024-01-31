@@ -6,7 +6,7 @@ import ChartistGraph from "react-chartist";
 //Chsrtis CSS
 import "chartist/dist/chartist.min.css";
 //Component specific chart CSS
-import "_assets/scss/components/cards/productSalesChartCard.scss";
+// import "_assets/scss/components/cards/productSalesChartCard.scss";
 
 class ProductSalesChartCard extends PureComponent {
    render() {
