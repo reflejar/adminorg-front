@@ -23,7 +23,7 @@ const getExcel = (apiEndpoint) => {
         headers: headers
       }).then((response) => {
         //   FileDownload(response.data, 'informe.xlsx');
-        console.log("gola")
+        console.log("Hola")
       });
 }
 

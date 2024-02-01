@@ -30,7 +30,6 @@ const TableDeudas = ({data, columns, addProps}) => {
             {Numero(data.reduce((a,v) =>  a = a + v.saldo , 0 ))}
           </Button>            
         </ButtonGroup> */}
-        aaa
       </section>
 
       <ReactTable

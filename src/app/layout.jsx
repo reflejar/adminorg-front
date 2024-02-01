@@ -9,6 +9,7 @@ import './custom.css'
 
 import { store } from "@/redux/storeConfig/store";
 import Spinner from "@/components/spinner/spinner";
+import App from "./_app";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,7 +26,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} overflow-hidden`}>
         <Provider store={store}>
             <Suspense fallback={<Spinner />}>
-              {children}
+              <App>{children}</App>
               <ReduxToastr
                   timeOut={4000}
                   newestOnTop={false}

@@ -49,7 +49,6 @@ const TableInforme = ({data, query, getExcelReporte}) => {
       })
       .catch((error) => {
         const { data } = error;
-        console.log(data)
       })
   }, [getExcelReporte, query]);
 

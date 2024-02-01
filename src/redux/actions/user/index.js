@@ -36,7 +36,7 @@ const login = (username, password) => async (dispatch) => {
     }
 };
 
-const logout = () => async (dispatch) => {
+const logout = () => (dispatch) => {
     dispatch({
         type: LOGOUT
     })
@@ -55,7 +55,6 @@ const register = (payload) => async (dispatch) => {
 const recovery = (payload) => async (dispatch) => {
 
     let apiEndpoint = 'users/passwordRecovery/';
-    console.log(payload)
 
     const response = await authService.post(apiEndpoint, payload)
     if (response && response.data) {

@@ -51,7 +51,7 @@ const Login = () => {
           <div className="card py-5 px-3">
             <div className="card-body text-center">
               {state.loading ? <Spinner /> : <>
-                <Image src='/img/logo.png' width={0} height={0} style={{ width: '55%', height: '10vh' }} alt="Logo de AdminSmart" className='mb-4' />
+                <Image src='/img/logo.png' width={0} height={0} style={{ width: '50%', height: '10vh' }} alt="Logo de AdminSmart" className='mb-4' />
                 <input
                     type="text"
                     className="form-control my-3"
