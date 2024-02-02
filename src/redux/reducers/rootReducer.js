@@ -13,7 +13,6 @@ import intereses from './intereses';
 import descuentos from './descuentos';
 import configuraciones from './configuraciones';
 import contabilidad from './contabilidad';
-import user from './user';
 import titulos from './titulos';
 import puntos from './puntos';
 import deudas from './deudas';
@@ -41,7 +40,6 @@ const appReducer = combineReducers({
    descuentos,
    contabilidad,
    configuraciones,
-   user,
    titulos,
    puntos,
    deudas,
@@ -54,14 +52,6 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-   if (action.type === "LOGOUT") {
-      localStorage.clear();
-      state = undefined;
-   }
-   if (action.type === "CHANGE_COMMUNITY") {
-      state = undefined;
-   }
-
    return appReducer(state, action);
 }
 

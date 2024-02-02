@@ -1,44 +1,25 @@
 'use client'
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
  } from "reactstrap";
-import { connect } from 'react-redux'
-import { useRouter } from 'next/navigation';
 
 import {Select} from "@/components/Select"
+import { useAuthContext } from "@/contexts/authContext";
+import Cookies from "js-cookie";
 
-import { userActions } from '@/redux/actions/user';
-import { useEffect } from "react";
 
-function Sidebar({currentUser, logoutUser, changeCommunityUser}) {
+export default function Sidebar() {
 
+    const { changeCommunity } = useAuthContext();
     const router = useRouter();
-
-    useEffect(() => {
-        if (!currentUser) 
-        router.push('/auth/login');
-    }, [currentUser])
-
-    const logout = async () => {
-        await logoutUser();
-     }
-  
-  
-    const changeCommunity = (value) =>  {
-        changeCommunityUser(value)
-          .then((response) => {
-           window.location.reload(false)
-          })
-          .catch((errors) => {
-           console.log(errors)
-          })
-      }
-  
+    const cookieUser = Cookies.get('currentUser')
+    const currentUser = JSON.parse(cookieUser)
 
     return (<div className="col-lg-2 d-flex flex-column flex-shrink-0 p-3 bg-light min-vh-100">
                     <Link href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -64,7 +45,7 @@ function Sidebar({currentUser, logoutUser, changeCommunityUser}) {
 
                         <DropdownMenu>
                             <DropdownItem disabled>
-                                <span className="font-small-3">
+                                <span className="text-dark">
                                 {currentUser && currentUser.profile.nombre} <span className="text-muted">({currentUser && currentUser.user.group})</span>
                                 </span>
                             </DropdownItem>
@@ -91,7 +72,7 @@ function Sidebar({currentUser, logoutUser, changeCommunityUser}) {
                             {/* </Link> */}
                             <DropdownItem divider />
                             <DropdownItem>
-                                <div onClick={(event) => { logout() }} >
+                                <div onClick={() => router.push('/auth/logout')} >
                                     <i className="bi-logout"></i> Logout
                                 </div>
                             </DropdownItem>
@@ -104,15 +85,3 @@ function Sidebar({currentUser, logoutUser, changeCommunityUser}) {
   }
   
 
-  const mapStateToProps = (state) => ({
-    currentUser: state.user.auth,
- });
- 
- 
- const mapDispatchToProps = dispatch => ({
-    logoutUser: () => dispatch(userActions.logout()),
-    changeCommunityUser: (community) => dispatch(userActions.changeCommunity(community))
- })
- 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

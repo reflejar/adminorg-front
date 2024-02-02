@@ -5,7 +5,7 @@ import Contenido from "./components/contenido"
 
 export default function CuentasACobrar() {
     return (
-      <main className="row animate__animated animate__bounceInRight animate__faster">
+      <main className="row">
         <Sidebar />
         <Listado />
         <Contenido />

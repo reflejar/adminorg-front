@@ -31,7 +31,6 @@ export default function Deudas(props) {
 
 
   const handleToggle = (rowInfo) => {
-    console.log(rowInfo)
     setModal({
         open: !modal.open,
         item: rowInfo
@@ -138,7 +137,6 @@ export default function Deudas(props) {
             {data.map((row, keyTr) => <tr key={keyTr}>
               {columns.map((col, keyTd) => {
                 const val = row[col.accessor]
-                console.log(row)
                 return <td 
                           key={keyTd} 
                           className={`${typeof val === "number" && "text-end"} ${col.Header === "Documento" && "pointer link-primary text-primary"}`}

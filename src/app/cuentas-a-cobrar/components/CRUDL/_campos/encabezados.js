@@ -2,6 +2,8 @@ import React from 'react';
 import { Row } from "reactstrap";
 
 import { usePuntosDeVenta } from '@/utility/hooks/dispatchers';
+import Cookies from 'js-cookie';
+import { useAuthContext } from "@/contexts/authContext";
 
 const filterTypes = (arr, afip) =>
   afip ? 
@@ -10,6 +12,7 @@ const filterTypes = (arr, afip) =>
 
 const Encabezado = ({ documento, setDocumento, errors, onlyRead, types }) => {
   const [puntos] = usePuntosDeVenta();
+  const currentUser = JSON.parse(Cookies.get('currentUser'))
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -53,7 +56,7 @@ const Encabezado = ({ documento, setDocumento, errors, onlyRead, types }) => {
               disabled={onlyRead ? true : (documento.receipt.receipt_type === "Recibo X" ? true : false)}
               onChange={handleNestedFieldChange('receipt')}>
                 <option value=''>---</option>
-                {filterTypes(types, JSON.parse(localStorage.getItem('user')).afip).map((type) => (
+                {filterTypes(types, currentUser.afip).map((type) => (
                   <option value={type.id} key={type.id}>{type.nombre}</option>
                 ))}            
           </select>

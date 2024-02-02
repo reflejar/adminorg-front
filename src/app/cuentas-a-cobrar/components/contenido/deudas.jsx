@@ -32,7 +32,6 @@ export default function Deudas(props) {
 
 
   const handleToggle = (rowInfo) => {
-    console.log(rowInfo)
     setModal({
         open: !modal.open,
         item: rowInfo

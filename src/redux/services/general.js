@@ -1,11 +1,12 @@
 import axios from 'axios';
 import config from '../config/config';
+import Cookies from 'js-cookie';
 // import FileDownload from 'js-file-download';
 
 
 const initialHeaders = () => ({
     'Content-Type': 'application/json',
-    'Authorization': 'Token ' + localStorage.getItem('token'),
+    'Authorization': 'Token ' + Cookies.get('token'),
 })
 
 const get = (apiEndpoint) => {
