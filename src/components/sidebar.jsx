@@ -11,18 +11,19 @@ import {
 
 import {Select} from "@/components/Select"
 import { useAuthContext } from "@/contexts/authContext";
-import Cookies from "js-cookie";
+import SpinnerComponent from "./spinner/spinner";
 
 
 export default function Sidebar() {
 
-    const { changeCommunity } = useAuthContext();
+    const { changeCommunity, fetchMe } = useAuthContext();
     const router = useRouter();
-    const cookieUser = Cookies.get('currentUser')
-    const currentUser = JSON.parse(cookieUser)
+
+    const currentUser = fetchMe()
 
     return (<div className="col-lg-2 d-flex flex-column flex-shrink-0 p-3 bg-light min-vh-100">
-                    <Link href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            {!currentUser ? <SpinnerComponent /> : <>
+            <Link href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <span className="fs-4">AdminOrg</span>
                     </Link>
                     <hr />
@@ -79,6 +80,8 @@ export default function Sidebar() {
                         </DropdownMenu>
                     </UncontrolledDropdown>
 
+
+            </>}
 
     </div>
     )

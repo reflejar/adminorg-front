@@ -12,7 +12,9 @@ const filterTypes = (arr, afip) =>
 
 const Encabezado = ({ documento, setDocumento, errors, onlyRead, types }) => {
   const [puntos] = usePuntosDeVenta();
-  const currentUser = JSON.parse(Cookies.get('currentUser'))
+  
+  const { fetchMe } = useAuthContext();
+  const currentUser = fetchMe()
 
   const handleChange = (event) => {
     const { name, value } = event.target;

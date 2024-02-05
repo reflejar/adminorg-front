@@ -76,7 +76,7 @@ function Contenido(props) {
                     { selected ? <Cuenta selected={selected}/> : "Por favor seleccione" }
                 </TabPane>
                 <TabPane tabId="3">
-                    {/* { selected ? <Info selected={selected} /> : "Por favor seleccione" } */}
+                    { selected ? <Info selected={selected} /> : "Por favor seleccione" }
                 </TabPane>
                 </TabContent>
             </section>

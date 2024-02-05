@@ -25,6 +25,7 @@ const setUserDetails = (data) => {
 export const AuthContext = createContext({
   login: (username, password) => {},
   logout: () => {},
+  fetchMe: () => {},
   changeCommunity: (comunidad) => {},
 });
 
@@ -54,6 +55,13 @@ export default function AuthContextProvider({children}) {
   }, []);
 
 
+  const fetchMe = useCallback(function () {
+    const cookieUser = Cookies.get('currentUser')
+    const currentUser = cookieUser ? JSON.parse(cookieUser) : null
+    return currentUser
+  }, []);
+
+
   const changeCommunity = useCallback(async function (comunidad) {
 
 
@@ -75,9 +83,10 @@ export default function AuthContextProvider({children}) {
     () => ({
       login,
       logout,
+      fetchMe,
       changeCommunity
     }),
-    [login, logout, changeCommunity]
+    [login, logout, fetchMe, changeCommunity]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
