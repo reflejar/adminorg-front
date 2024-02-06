@@ -138,7 +138,7 @@ const CU = ({ selected, onClose }) => {
               </FormGroup>
               <FormGroup>
                 <Label for="es_extranjero">Es extranjero?</Label>
-                <Field type="checkbox" name="es_extranjero" id="es_extranjero" className={`form-control ${errors.es_extranjero && touched.es_extranjero && 'is-invalid'}`} />
+                <Field type="checkbox" name="es_extranjero" id="es_extranjero" className={`form-control ${errors.es_extranjero && touched.es_extranjero && 'is-invalid'}`} value={false}/>
                 {errors.es_extranjero && touched.es_extranjero ? <div className="invalid-feedback">{errors.es_extranjero}</div> : null}
               </FormGroup>
             </Col>

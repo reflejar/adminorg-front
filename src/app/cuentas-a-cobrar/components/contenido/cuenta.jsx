@@ -12,12 +12,12 @@ import ReciboX from '../CRUDL/recibo-x/CR';
 import { facturasTypes, notasCreditoTypes, notasDebitoTypes, recibosTypes } from '../CRUDL/_options/receipt_types';
 
 // Cosas de Tesoreria
-import Transferencia from '@/app/tesoreria/CRUDL/transferencia/CU';
-import { transferenciasTypes } from '@/app/tesoreria/CRUDL/_options/receipt_types';
+import Transferencia from '@/app/tesoreria/components/CRUDL/transferencia/CU';
+import { transferenciasTypes } from '@/app/tesoreria/components/CRUDL/_options/receipt_types';
 
  // Cosas de Contabilidad
-import Asiento from '@/app/contabilidad/CRUDL/asiento/CU';
-import { asientosTypes } from '@/app/contabilidad/CRUDL/_options/receipt_types';
+import Asiento from '@/app/contabilidad/components/CRUDL/asiento/CU';
+import { asientosTypes } from '@/app/contabilidad/components/CRUDL/_options/receipt_types';
 
 export default function Deudas(props) {
   const { selected } = props;

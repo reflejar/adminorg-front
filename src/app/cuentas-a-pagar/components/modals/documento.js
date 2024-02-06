@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Button } from "reactstrap";
 
-import Documento from "../CRUDL/documento/CU";
-import OP from "../CRUDL/op/CU";
+import Documento from "../components/CRUDL/documento/CU";
+import OP from "../components/CRUDL/op/CU";
 import BasicModal from '@/components/modal/basic';
 
 class ModalDocumento extends Component {

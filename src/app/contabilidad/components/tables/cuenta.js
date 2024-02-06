@@ -17,22 +17,30 @@ import {
 } from '../../clientes/CRUDL/_options/receipt_types';
 
 // Cosas de Proveedores
-import ProveedorDocumento from '../../cuentas-a-pagar/CRUDL/documento/CU';
-import ProveedorNotaCredito from '../../cuentas-a-pagar/CRUDL/nota-credito/CU';
-import ProveedorOP from '../../cuentas-a-pagar/CRUDL/op/CU';
+import ProveedorDocumento from '../../../cuentas-a-pagar/components/CRUDL/documento/CU';
+import ProveedorNotaCredito from '../../../cuentas-a-pagar/components/CRUDL/nota-credito/CU';
+import ProveedorOP from '../../../cuentas-a-pagar/components/CRUDL/op/CU';
 import { 
   documentosTypes as proveedoresDocumentosTypes, 
   notasCreditoTypes as proveedoresNotasCreditoTypes, 
   opTypes as proveedoresOpTypes
- } from '../../cuentas-a-pagar/CRUDL/_options/receipt_types';
+ } from '../../../cuentas-a-pagar/components/CRUDL/_options/receipt_types';
 
 // Cosas de Tesoreria
-import TesoreriaTransferencia from '../CRUDL/transferencia/CU';
+import TesoreriaTransferencia from '../../../.a-pasar/tesoreria/components/CRUDL/transferencia/CU';
 import { 
   transferenciasTypes as tesoreriaTransferenciasTypes, 
+ } from '../../../.a-pasar/tesoreria/components/CRUDL/_options/receipt_types';
+
+ // Cosas de Contabilidad
+import ContabilidadAsiento from '../CRUDL/asiento/CU';
+import { 
+  asientosTypes as contabilidadAsientosTypes, 
  } from '../CRUDL/_options/receipt_types';
 
+
 // import "react-table/react-table.css";
+
 
 const getColumns = () => [{
   Header: 'Fecha',
@@ -70,12 +78,12 @@ const getColumns = () => [{
   )   
 }];
 
+
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      columns: getColumns(),
       modal: {
         open: false,
         item: null
@@ -166,11 +174,20 @@ export default class Table extends React.Component {
       })
       return documentos[type]
     }    
+    if (causante === "asiento") {
+      contabilidadAsientosTypes.forEach((type) => {
+        documentos[type.nombre] = <ContabilidadAsiento
+        update={true}
+        onClose={this.handleToggle}
+        selected={item}
+      />
+      })
+      return documentos[type]
+    }        
   }
 
   renderModal = () => {
     const { item } = this.state.modal;
-
     if (item) {
       const { receipt } = item
       return (
@@ -195,21 +212,19 @@ export default class Table extends React.Component {
             if (rowInfo && column.id === 'Comprobante') {
               this.handleToggle(rowInfo);
             }
-            
           }
         }
-      }
+      },
     };
 
     return (
       <React.Fragment>
         {this.state.modal && this.state.modal.item && this.renderModal()}
-
         <CuentaTable
           data={data}
           columns={getColumns()}
           addProps={addProps}
-        />        
+        />   
       </React.Fragment>
     );
   }

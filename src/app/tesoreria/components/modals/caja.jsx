@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
-import { Plus } from "react-feather";
+import React, { Component } from "react";
 
-import Caja from "../../CRUDL/caja/CU";
+import Caja from "@/components/CRUDL/caja/CU";
 import BasicModal from '@/components/modal/basic';
 
 
@@ -18,17 +17,17 @@ class ModalCaja extends Component {
 
    render() {
     return (
-      <Fragment>
+      <>
         <BasicModal
           open={this.state.modal}
           onToggle={this.handleToggle}
-          button={<Plus size={16} onClick={this.handleToggle} />}
+          button={<i onClick={this.handleToggle} className="bi-person-plus" ></i>}
           className={""}
-          header={"Nueva Caja"}
+          header={"Nuevo Caja"}
           component={<Caja onClose={() => this.handleToggle(false)} />}
           footer={false}
         />
-      </Fragment>
+      </>
     );
   }
 }

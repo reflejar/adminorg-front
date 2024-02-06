@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
-import { UserPlus } from "react-feather";
+import React, { Component } from "react";
 
-import Proveedor from "../../CRUDL/proveedor/CU";
+import Proveedor from "@/components/CRUDL/proveedor/CU";
 import BasicModal from '@/components/modal/basic';
 
 
@@ -18,17 +17,17 @@ class ModalProveedor extends Component {
 
    render() {
     return (
-      <Fragment>
+      <>
         <BasicModal
           open={this.state.modal}
           onToggle={this.handleToggle}
-          button={<UserPlus size={16} onClick={this.handleToggle} />}
+          button={<i onClick={this.handleToggle} className="bi-person-plus" ></i>}
           className={""}
           header={"Nuevo Proveedor"}
           component={<Proveedor onClose={() => this.handleToggle(false)} />}
           footer={false}
         />
-      </Fragment>
+      </>
     );
   }
 }

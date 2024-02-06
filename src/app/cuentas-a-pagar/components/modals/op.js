@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Button } from "reactstrap";
 
-import NotaCredito from "../CRUDL/nota-credito/CU";
+import OP from "../components/CRUDL/op/CU";
 import BasicModal from '@/components/modal/basic';
 
-class ModalNotaCredito extends Component {
+class ModalPago extends Component {
   state = {
     modal: false
   }
@@ -28,18 +28,17 @@ class ModalNotaCredito extends Component {
               outline
               color="primary"
               disabled={isDisabled}
-              onClick={this.handleToggle}
+              onClose={() => this.handleToggle(false)}
             >
-              + Nota de credito
+              + Pago
             </Button>
           )}
-          header="Nueva Nota de credito"
-          component={<NotaCredito onClose={this.handleToggle} />}
-          footer={false}
+          header="Nuevo Pago"
+          component={(<OP onClose={() => this.handleToggle(false)} />)}
         />
       </Fragment>
     );
   }
 }
 
-export default ModalNotaCredito;
+export default ModalPago;

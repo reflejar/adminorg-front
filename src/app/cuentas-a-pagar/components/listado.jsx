@@ -2,9 +2,9 @@
 
 import { connect } from 'react-redux'
 import List from '@/components/board/list'
-import { clientesActions } from "@/redux/actions/clientes";
+import { proveedoresActions } from "@/redux/actions/proveedores";
 import Search from "@/components/board/search";
-import ModalNew from './modals/cliente';
+import ModalNew from './modals/proveedor';
 
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
@@ -36,18 +36,17 @@ function Listado({searchTerm, searchOnChange, items, instance, getItems, setSele
 
 
 const mapStateToProps = (state) => ({
-  searchTerm: state.clientes.search,
-  items: state.clientes.search !== '' ? 
-         state.clientes.list.filter(t => t.full_name.toLocaleLowerCase().includes(state.clientes.search.toLocaleLowerCase())) : 
-         state.clientes.list,
-  instance: state.clientes.instance
+  searchTerm: state.proveedores.search,
+  items: state.proveedores.search !== '' ? 
+         state.proveedores.list.filter(t => t.full_name.toLocaleLowerCase().includes(state.proveedores.search.toLocaleLowerCase())) : 
+         state.proveedores.list,
+  instance: state.proveedores.instance
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  searchOnChange: searchTerm => dispatch(clientesActions.search(searchTerm)),
-  getItems: () => dispatch(clientesActions.get_all()),
-  setSelectedObject: payload => dispatch(clientesActions.select(payload))
-
+  searchOnChange: searchTerm => dispatch(proveedoresActions.search(searchTerm)),
+  getItems: () => dispatch(proveedoresActions.get_all()),
+  setSelectedObject: payload => dispatch(proveedoresActions.select(payload))
 });
 
 

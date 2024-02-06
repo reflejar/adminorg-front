@@ -10,12 +10,12 @@ import OP from '../CRUDL/op/CU';
 import { documentosTypes, notasCreditoTypes, opTypes } from '../CRUDL/_options/receipt_types';
 
 // Cosas de Tesoreria
-import Transferencia from '../../tesoreria/CRUDL/transferencia/CU';
-import { transferenciasTypes } from '../../tesoreria/CRUDL/_options/receipt_types';
+import Transferencia from '../../../tesoreria/components/CRUDL/transferencia/CU';
+import { transferenciasTypes } from '../../../tesoreria/components/CRUDL/_options/receipt_types';
 
  // Cosas de Contabilidad
-import Asiento from '../../contabilidad/CRUDL/asiento/CU';
-import { asientosTypes } from '../../contabilidad/CRUDL/_options/receipt_types';
+import Asiento from '../../../contabilidad/components/CRUDL/asiento/CU';
+import { asientosTypes } from '../../../contabilidad/components/CRUDL/_options/receipt_types';
 
 // import "react-table/react-table.css";
 

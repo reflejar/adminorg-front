@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     UncontrolledDropdown,
     DropdownToggle,
@@ -16,31 +16,29 @@ import SpinnerComponent from "./spinner/spinner";
 
 export default function Sidebar() {
 
-    const { changeCommunity, fetchMe } = useAuthContext();
+    const { changeCommunity, currentUser } = useAuthContext();
     const router = useRouter();
-
-    const currentUser = fetchMe()
+    const pathname = usePathname()
 
     return (<div className="col-lg-2 d-flex flex-column flex-shrink-0 p-3 bg-light min-vh-100">
-            {!currentUser ? <SpinnerComponent /> : <>
             <Link href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <span className="fs-4">AdminOrg</span>
                     </Link>
                     <hr />
                     <ul className="nav nav-pills flex-column mb-auto">
-                        <li className="nav-item"><Link href="/cuentas-a-cobrar" className="nav-link active">Cuentas a cobrar</Link></li>
-                        <li className=""><Link href="/cuentas-a-pagar" className="nav-link link-dark">Cuentas a pagar</Link></li>
-                        <li><a href="#" className="nav-link link-dark">Tesoreria</a></li>
-                        <li><a href="#" className="nav-link link-dark">Contabilidad</a></li>
-                        <li><a href="#" className="nav-link link-dark">Configuraciones</a></li>
+                        <Link href="/cuentas-a-cobrar" className={`nav-link ${pathname == '/cuentas-a-cobrar' ? 'active' : 'link-dark'}`}> <i className="bi-download me-2" /> Cuentas a cobrar</Link>
+                        <Link href="/cuentas-a-pagar" className={`nav-link ${pathname == '/cuentas-a-pagar' ? 'active' : 'link-dark'}`}><i className="bi-upload me-2" /> Cuentas a pagar</Link>
+                        <Link href="/tesoreria" className={`nav-link ${pathname == '/tesoreria' ? 'active' : 'link-dark'}`}><i className="bi-currency-dollar me-2" /> Tesoreria</Link>
+                        <Link href="/contabilidad" className={`nav-link ${pathname == '/contabilidad' ? 'active' : 'link-dark'}`}><i className="bi-briefcase me-2" /> Contabilidad</Link>
+                        <Link href="/informes" className={`nav-link ${pathname == '/informes' ? 'active' : 'link-dark'}`}><i className="bi-bar-chart-line me-2" /> Informes</Link>
+                        <Link href="/configuraciones" className={`nav-link ${pathname == '/configuraciones' ? 'active' : 'link-dark'}`}><i className="bi-gear-fill me-2" /> Configuraciones</Link>
                     </ul>
                     <hr />
 
-
-                    <UncontrolledDropdown nav inNavbar className="pr-1" direction="up">
+                    {currentUser && <UncontrolledDropdown nav inNavbar className="pr-1" direction="up">
                         <DropdownToggle nav className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle">
                             <Image src="/img/assistant.svg" alt="" width="32" height="32" className="rounded-circle me-2" />
-                            <strong>{currentUser && currentUser.profile.nombre}</strong>
+                            <strong>{currentUser.profile && currentUser.profile.nombre}</strong>
                         </DropdownToggle>
 
 
@@ -78,10 +76,9 @@ export default function Sidebar() {
                                 </div>
                             </DropdownItem>
                         </DropdownMenu>
-                    </UncontrolledDropdown>
+                    </UncontrolledDropdown>}
 
 
-            </>}
 
     </div>
     )

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
 
-import Registros from "../CRUDL/registros/index";
+import Registros from "../components/CRUDL/registros/index";
 import BasicModal from '@/components/modal/basic';
 
 

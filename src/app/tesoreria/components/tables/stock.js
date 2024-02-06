@@ -1,6 +1,6 @@
 import React from 'react';
-import moment from 'moment';
-import CuentaTable from "@/components/board/tables/cuenta";
+import moment from "moment";
+import DeudasTable from "@/components/board/tables/deudas";
 import {Numero} from "@/utility/formats";
 
 import BasicModal from '@/components/modal/basic';
@@ -17,79 +17,87 @@ import {
 } from '../../clientes/CRUDL/_options/receipt_types';
 
 // Cosas de Proveedores
-import ProveedorDocumento from '../../cuentas-a-pagar/CRUDL/documento/CU';
-import ProveedorNotaCredito from '../../cuentas-a-pagar/CRUDL/nota-credito/CU';
-import ProveedorOP from '../../cuentas-a-pagar/CRUDL/op/CU';
+import ProveedorDocumento from '../../cuentas-a-pagar/components/CRUDL/documento/CU';
+import ProveedorNotaCredito from '../../cuentas-a-pagar/components/CRUDL/nota-credito/CU';
+import ProveedorOP from '../../cuentas-a-pagar/components/CRUDL/op/CU';
 import { 
   documentosTypes as proveedoresDocumentosTypes, 
   notasCreditoTypes as proveedoresNotasCreditoTypes, 
   opTypes as proveedoresOpTypes
- } from '../../cuentas-a-pagar/CRUDL/_options/receipt_types';
+ } from '../../cuentas-a-pagar/components/CRUDL/_options/receipt_types';
 
 // Cosas de Tesoreria
-import TesoreriaTransferencia from '../../tesoreria/CRUDL/transferencia/CU';
+import TesoreriaTransferencia from '../CRUDL/transferencia/CU';
 import { 
   transferenciasTypes as tesoreriaTransferenciasTypes, 
- } from '../../tesoreria/CRUDL/_options/receipt_types';
-
- // Cosas de Contabilidad
-import ContabilidadAsiento from '../CRUDL/asiento/CU';
-import { 
-  asientosTypes as contabilidadAsientosTypes, 
  } from '../CRUDL/_options/receipt_types';
 
 
 // import "react-table/react-table.css";
-
 
 const getColumns = () => [{
   Header: 'Fecha',
   id: 'Fecha',
   accessor: (d) => moment(d.fecha).format('DD/MM/YYYY')
 }, {
-  Header: 'Comprobante',
-  id: 'Comprobante',
+  id: 'Documento',
+  Header: 'Documento',
   accessor: 'nombre'
 }, {
   Header: 'Monto',
-  accessor: 'total',
-  Cell: row => (
-    <div
-      style={{
-        width: '100%',
-        textAlign: "right"
-      }}
-    >
-      {Numero(row.value)}
-    </div>
-  )   
+  accessor: 'monto',
+Cell: row => (
+<div
+  style={{
+    width: '100%',
+    textAlign: "right"
+  }}
+>
+  {Numero(row.value)}
+</div>
+)         
+}, {
+  Header: 'Utilizado',
+  accessor: 'pago_capital',
+Cell: row => (
+<div
+  style={{
+    width: '100%',
+    textAlign: "right"
+  }}
+>
+  {Numero(row.value)}
+</div>
+)         
 }, {
   Header: 'Saldo',
   accessor: 'saldo',
-  Cell: row => (
-    <div
-      style={{
-        width: '100%',
-        textAlign: "right"
-      }}
-    >
-      {Numero(row.value)}
-    </div>
-  )   
-}];
+Cell: row => (
+<div
+  style={{
+    width: '100%',
+    textAlign: "right"
+  }}
+>
+  {Numero(row.value)}
+</div>
+)         
+}];    
 
 
 export default class Table extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      modal: {
-        open: false,
-        item: null
-      }
-    };
-  }
+        this.state = {
+            modal: {
+                open: false,
+                item: null
+            }
+          };
+
+    }
+
 
   handleToggle = (rowInfo) => {
     this.setState({
@@ -102,37 +110,37 @@ export default class Table extends React.Component {
   };
 
   selectDocument = (causante, type) => {
-    const { item } = this.state.modal;
+    const { documento } = this.state.modal.item;
     let documentos = {};
     if (causante === "cliente") {
       clientesComprobantesTypes.forEach((type) => {
         documentos[type.nombre] = <ClienteComprobante
         onlyRead={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       clientesNotasDebitoTypes.forEach((type) => {
         documentos[type.nombre] = <ClienteComprobante
         onlyRead={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       clientesNotasCreditoTypes.forEach((type) => {
         documentos[type.nombre] = <ClienteNotaCredito
-        destinatario={item.destinatario}
+        destinatario={documento.destinatario}
         onlyRead={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       clientesRecibosTypes.forEach((type) => {
         documentos[type.nombre] = <ClienteReciboX
-        destinatario={item.destinatario}
+        destinatario={documento.destinatario}
         onlyRead={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       return documentos[type]
@@ -140,26 +148,26 @@ export default class Table extends React.Component {
     if (causante === "proveedor") {
       proveedoresDocumentosTypes.forEach((type) => {
         documentos[type.nombre] = <ProveedorDocumento
-        destinatario={item.destinatario}
+        destinatario={documento.destinatario}
         update={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       proveedoresNotasCreditoTypes.forEach((type) => {
         documentos[type.nombre] = <ProveedorNotaCredito
-        destinatario={item.destinatario}
+        destinatario={documento.destinatario}
         update={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       proveedoresOpTypes.forEach((type) => {
         documentos[type.nombre] = <ProveedorOP
-        destinatario={item.destinatario}
+        destinatario={documento.destinatario}
         update={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       return documentos[type]
@@ -169,34 +177,25 @@ export default class Table extends React.Component {
         documentos[type.nombre] = <TesoreriaTransferencia
         update={true}
         onClose={this.handleToggle}
-        selected={item}
+        selected={documento}
       />
       })
       return documentos[type]
     }    
-    if (causante === "asiento") {
-      contabilidadAsientosTypes.forEach((type) => {
-        documentos[type.nombre] = <ContabilidadAsiento
-        update={true}
-        onClose={this.handleToggle}
-        selected={item}
-      />
-      })
-      return documentos[type]
-    }        
   }
 
   renderModal = () => {
     const { item } = this.state.modal;
-    if (item) {
-      const { receipt } = item
+
+    if (item && item.documento) {
+      const { receipt } = item.documento
       return (
           <BasicModal
             open={this.state.modal.open}
             onToggle={this.handleToggle}
             header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
             footer={false}
-            component={this.selectDocument(item.causante, item.receipt.receipt_type)}
+            component={this.selectDocument(item.causante, item.documento.receipt.receipt_type)}
           />          
         )
     } 
@@ -204,27 +203,29 @@ export default class Table extends React.Component {
 
   render() {
     const { data } = this.props;
-
+    
     const addProps = {
       getTdProps: (state, rowInfo, column, instance) => {
         return {
           onClick: () => {
-            if (rowInfo && column.id === 'Comprobante') {
+            if (rowInfo && column.id === 'Documento') {
               this.handleToggle(rowInfo);
             }
+            
           }
         }
-      },
+      }
     };
-
+        
     return (
       <React.Fragment>
         {this.state.modal && this.state.modal.item && this.renderModal()}
-        <CuentaTable
+
+        <DeudasTable
           data={data}
           columns={getColumns()}
           addProps={addProps}
-        />   
+        /> 
       </React.Fragment>
     );
   }

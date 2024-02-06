@@ -13,7 +13,7 @@ const select = client => ({
   payload: client
 });
 
-const get_all = () => async (dispatch) => {
+const get_all = (force=false) => async (dispatch) => {
 
   const response = await Service.get(apiEndpoint);
   if (response) {
@@ -68,6 +68,7 @@ const send = (values) => async (dispatch) => {
   let payload = {
     titulo: values.titulo,
     taxon: 'socio',
+    is_active: true,
     perfil: {
       nombre: values.nombre,
       apellido: values.apellido,
@@ -97,7 +98,7 @@ const send = (values) => async (dispatch) => {
   
   response = await Service.post(apiEndpoint, payload);
   if (response) {
-    await dispatch(get_all());
+    await dispatch(get_all(true));
     await dispatch({
       type: 'POST_CLIENTE',
       payload: response.data

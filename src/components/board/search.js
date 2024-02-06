@@ -18,7 +18,7 @@ const Search = ({onChange, searchTerm, addNew}) => (
 );
 
 Search.propTypes = {
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     addNew: PropTypes.element,
     searchTerm: PropTypes.string.isRequired,
 }

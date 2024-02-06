@@ -13,8 +13,7 @@ const filterTypes = (arr, afip) =>
 const Encabezado = ({ documento, setDocumento, errors, onlyRead, types }) => {
   const [puntos] = usePuntosDeVenta();
   
-  const { fetchMe } = useAuthContext();
-  const currentUser = fetchMe()
+  const { currentUser } = useAuthContext();
 
   const handleChange = (event) => {
     const { name, value } = event.target;

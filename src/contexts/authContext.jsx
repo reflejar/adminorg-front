@@ -4,7 +4,9 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useState,
 } from "react";
 import Cookies from "js-cookie";
 import { authService } from "@/redux/services/auth";
@@ -31,6 +33,12 @@ export const AuthContext = createContext({
 
 export default function AuthContextProvider({children}) {
 
+  const [currentUser, setCurrentUser] = useState(null)
+
+  useEffect(() => {
+    fetchMe()
+  }, [])
+
   const login = useCallback(async function (username, password) {
 
     const response = await authService.post('users/login/', {username, password})
@@ -42,6 +50,7 @@ export default function AuthContextProvider({children}) {
         
         Cookies.set('currentUser', JSON.stringify(currentUser));
         Cookies.set('token', response.data.access_token);
+        setCurrentUser(currentUser)
         
         return currentUser;
     }
@@ -52,13 +61,14 @@ export default function AuthContextProvider({children}) {
   const logout = useCallback(function () {
     Cookies.remove("token");
     Cookies.remove("currentUser");
+    setCurrentUser(null)
   }, []);
 
 
   const fetchMe = useCallback(function () {
     const cookieUser = Cookies.get('currentUser')
     const currentUser = cookieUser ? JSON.parse(cookieUser) : null
-    return currentUser
+    setCurrentUser(currentUser)
   }, []);
 
 
@@ -81,12 +91,13 @@ export default function AuthContextProvider({children}) {
 
   const value = useMemo(
     () => ({
+      currentUser,
       login,
       logout,
       fetchMe,
       changeCommunity
     }),
-    [login, logout, fetchMe, changeCommunity]
+    [currentUser, login, logout, fetchMe, changeCommunity]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
