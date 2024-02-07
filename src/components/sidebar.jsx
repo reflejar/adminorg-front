@@ -11,7 +11,6 @@ import {
 
 import {Select} from "@/components/Select"
 import { useAuthContext } from "@/contexts/authContext";
-import SpinnerComponent from "./spinner/spinner";
 
 
 export default function Sidebar() {
@@ -25,14 +24,14 @@ export default function Sidebar() {
                         <span className="fs-4">AdminOrg</span>
                     </Link>
                     <hr />
-                    <ul className="nav nav-pills flex-column mb-auto">
+                    {currentUser && <ul className="nav nav-pills flex-column mb-auto">
                         <Link href="/cuentas-a-cobrar" className={`nav-link ${pathname == '/cuentas-a-cobrar' ? 'active' : 'link-dark'}`}> <i className="bi-download me-2" /> Cuentas a cobrar</Link>
                         <Link href="/cuentas-a-pagar" className={`nav-link ${pathname == '/cuentas-a-pagar' ? 'active' : 'link-dark'}`}><i className="bi-upload me-2" /> Cuentas a pagar</Link>
                         <Link href="/tesoreria" className={`nav-link ${pathname == '/tesoreria' ? 'active' : 'link-dark'}`}><i className="bi-currency-dollar me-2" /> Tesoreria</Link>
                         <Link href="/contabilidad" className={`nav-link ${pathname == '/contabilidad' ? 'active' : 'link-dark'}`}><i className="bi-briefcase me-2" /> Contabilidad</Link>
                         <Link href="/informes" className={`nav-link ${pathname == '/informes' ? 'active' : 'link-dark'}`}><i className="bi-bar-chart-line me-2" /> Informes</Link>
                         <Link href="/configuraciones" className={`nav-link ${pathname == '/configuraciones' ? 'active' : 'link-dark'}`}><i className="bi-gear-fill me-2" /> Configuraciones</Link>
-                    </ul>
+                    </ul>}
                     <hr />
 
                     {currentUser && <UncontrolledDropdown nav inNavbar className="pr-1" direction="up">

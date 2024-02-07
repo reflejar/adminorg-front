@@ -24,7 +24,7 @@ function Contenido(props) {
     const { selected } = props;
 
     return (<div className="col-lg-8 bg-light min-vh-100">
-              <section className="monitor-head pt-4 px-4">
+              <section className="monitor-head pt-3 px-4">
                 <Nav tabs >
                     <NavItem>
                     <NavLink
@@ -80,7 +80,7 @@ function Contenido(props) {
                 </TabPane>
                 </TabContent>
             </section>
-            <section className="monitor-footer p-4">
+            <section className="monitor-footer p-3">
                 <ClienteOptions />      
             </section>
       </div>

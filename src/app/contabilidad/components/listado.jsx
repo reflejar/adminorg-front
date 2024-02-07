@@ -72,6 +72,7 @@ const List = ({selected, setSelected}) => {
 
     return (
         <div className="col-lg-3 min-vh-100 bg-light">
+        <div className="monitor-head"></div>
           <div className="monitor-body-without-footer p-3 bg-white">
           <Table size="sm" responsive borderless={true} hover={true}>
                <thead>

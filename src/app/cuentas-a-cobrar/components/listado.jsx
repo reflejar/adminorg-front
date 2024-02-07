@@ -16,7 +16,7 @@ function Listado({searchTerm, searchOnChange, items, instance, getItems, setSele
 
 
     return (<div className="col-lg-2 min-vh-100 bg-light">
-              <div className="monitor-head p-3">
+              <div className="monitor-head p-3 d-flex align-items-center">
                 <Search 
                   searchTerm={searchTerm}
                   onChange={searchOnChange}
