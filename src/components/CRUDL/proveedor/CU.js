@@ -122,7 +122,7 @@ const CU = ({ selected, onClose }) => {
       // {({ errors, touched, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
               <h4>Datos personales</h4>
               <FormGroup>
                 <Label for="nombre">Nombre</Label>
@@ -165,7 +165,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.es_extranjero && touched.es_extranjero ? <div className="invalid-feedback">{errors.es_extranjero}</div> : null}
               </FormGroup>
             </Col>
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
               <h4>Otros datos</h4>
               <FormGroup>
                 <Label for="mail">Direccion de email</Label>
@@ -217,7 +217,7 @@ const CU = ({ selected, onClose }) => {
               <hr />
             </Col>
 
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
 
 
               <FormGroup>

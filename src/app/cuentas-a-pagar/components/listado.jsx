@@ -1,35 +1,47 @@
 "use client"
 
+import { useEffect } from 'react';
 import { connect } from 'react-redux'
-import List from '@/components/board/list'
 import { proveedoresActions } from "@/redux/actions/proveedores";
-import Search from "@/components/board/search";
 import ModalNew from './modals/proveedor';
 
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
-    const fetchIfNotExists = () => {
-      if (items.length <= 0) {
-        getItems()
-      }
-    }
-
+    useEffect(()=> {
+      getItems()
+    }, [])
 
     return (<div className="col-lg-2 min-vh-100 bg-light">
               <div className="monitor-head p-3 d-flex align-items-center">
-                <Search 
-                  searchTerm={searchTerm}
-                  onChange={searchOnChange}
-                  addNew={<ModalNew />}
-                />
+                <div className="d-flex justify-content-center align-items-center text-dark ">
+                  <div className="form-control-position pointer">
+                    <ModalNew />
+                  </div>
+                  <input
+                      className="form-control mx-2 shadow-sm"
+                      id="searchUser"
+                      name="searchUser"
+                      placeholder="Buscar"
+                      type="text"
+                      onChange={e => searchOnChange(e.target.value)}
+                      value= {searchTerm}
+                  />
+                </div>
               </div>
               <div className="monitor-body-without-footer p-3 bg-white">
-                <List
-                  items={items}
-                  instance={instance}
-                  getItems={fetchIfNotExists}
-                  setSelectedObject={setSelectedObject}
-                />
+                <table className="table table-sm">
+                  <tbody>
+                    {items && items.map((item,key) => (
+                      <tr 
+                        className={(instance && instance.id === item.id) ? "table-primary" : ""} 
+                        onClick={() => setSelectedObject(item)}
+                        key={key}
+                      >
+                        <td className=' pointer'>{item.full_name}</td>  
+                      </tr>                
+                    ))}
+                  </tbody>
+                </table>                
               </div>
             </div>)
   }

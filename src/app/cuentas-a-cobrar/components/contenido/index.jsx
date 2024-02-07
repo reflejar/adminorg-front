@@ -4,8 +4,6 @@ import {
     Nav,
     NavItem,
     NavLink,
-    TabContent,
-    TabPane,
   } from "reactstrap";
 import classnames from "classnames";
 import { connect } from 'react-redux'
@@ -16,73 +14,91 @@ import Cuenta from './cuenta';
 
 import Info from "@/components/CRUDL/cliente/CU";
 
-import ClienteOptions from './opciones';
+import ModalComprobante from '../modals/factura';
+import ModalNotaCredito from '../modals/nota-credito';
+import ModalCobro from "../modals/recibo-x";
+import ModalComprobanteMasivo from "../modals/factura-masiva";
+import ModalPreconceptos from "../modals/preconceptos";
+import ModalRegistros from '../modals/registros';
 
-function Contenido(props) {
+function Contenido({ selected }) {
 
     const [activeTab, setActiveTab] = useState("1");
-    const { selected } = props;
+
+    const showContent = () => {
+        switch (activeTab) {
+            case "1":
+                return <Deudas selected={selected}/>
+            case "2":
+                return <Cuenta selected={selected}/>
+            case "3":
+                return <Info selected={selected} />
+        }  
+    }
+
 
     return (<div className="col-lg-8 bg-light min-vh-100">
-              <section className="monitor-head pt-3 px-4">
+
+            <section className="monitor-head pt-3 px-4">
                 <Nav tabs >
                     <NavItem>
-                    <NavLink
-                        className={classnames({
-                        active: activeTab === "1",
-                        pointer: true
-                        })}
-                        onClick={() => {
-                        setActiveTab("1");
-                        }}
-                    >
-                        Detalle a cobrar
-                    </NavLink>
+                        <NavLink
+                            className={classnames({
+                            active: activeTab === "1",
+                            pointer: true
+                            })}
+                            onClick={() => {
+                            setActiveTab("1");
+                            }}
+                        >
+                            Detalle a cobrar
+                        </NavLink>
                     </NavItem>
                     <NavItem>
-                    <NavLink
-                        className={classnames({
-                        active: activeTab === "2",
-                        pointer: true
-                        })}
-                        onClick={() => {
-                        setActiveTab("2");
-                        }}
-                    >
-                        Cuenta historica
-                    </NavLink>
+                        <NavLink
+                            className={classnames({
+                            active: activeTab === "2",
+                            pointer: true
+                            })}
+                            onClick={() => {
+                            setActiveTab("2");
+                            }}
+                        >
+                            Cuenta historica
+                        </NavLink>
                     </NavItem>
                     <NavItem>
-                    <NavLink
-                        className={classnames({
-                        active: activeTab === "3",
-                        pointer: true
-                        })}
-                        onClick={() => {
-                        setActiveTab("3");
-                        }}>
-                        Informacion del cliente
-                    </NavLink>
+                        <NavLink
+                            className={classnames({
+                            active: activeTab === "3",
+                            pointer: true
+                            })}
+                            onClick={() => {
+                            setActiveTab("3");
+                            }}>
+                            Informacion del cliente
+                        </NavLink>
                     </NavItem>
                 </Nav>
-                </section>
+            </section>
 
             <section className="monitor-body bg-white p-3">
-                <TabContent activeTab={activeTab}>
-                <TabPane tabId="1">
-                    { selected ? <Deudas selected={selected}/> : "Por favor seleccione" }
-                </TabPane>
-                <TabPane tabId="2">
-                    { selected ? <Cuenta selected={selected}/> : "Por favor seleccione" }
-                </TabPane>
-                <TabPane tabId="3">
-                    { selected ? <Info selected={selected} /> : "Por favor seleccione" }
-                </TabPane>
-                </TabContent>
+                {selected ? showContent() : "Por favor Seleccione"}
             </section>
-            <section className="monitor-footer p-3">
-                <ClienteOptions />      
+
+            <section className="monitor-footer p-3 d-flex justify-content-between">
+                <div className="btn-group">
+                    <ModalComprobante isDisabled={!selected} />,
+                    <ModalNotaCredito isDisabled={!selected} />,
+                    <ModalCobro modal={false} isDisabled={!selected} />
+                </div>
+                <div className="btn-group">
+                    <ModalPreconceptos />,
+                    <ModalComprobanteMasivo />,
+                    <ModalRegistros />
+                </div>               
             </section>
+
       </div>
     )
   }

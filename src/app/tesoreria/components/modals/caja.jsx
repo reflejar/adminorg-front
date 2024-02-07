@@ -21,7 +21,7 @@ class ModalCaja extends Component {
         <BasicModal
           open={this.state.modal}
           onToggle={this.handleToggle}
-          button={<i onClick={this.handleToggle} className="bi-person-plus" ></i>}
+          button={<i onClick={this.handleToggle} className="bi-clipboard-plus" ></i>}
           className={""}
           header={"Nuevo Caja"}
           component={<Caja onClose={() => this.handleToggle(false)} />}

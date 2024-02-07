@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
-import { FolderPlus } from "react-feather";
+import React, { Component } from "react";
 
-import Titulo from "../../CRUDL/titulo/CU";
+import Titulo from "@/components/CRUDL/titulo/CU";
 import BasicModal from '@/components/modal/basic';
 
 
@@ -18,17 +17,17 @@ class ModalTitulo extends Component {
 
    render() {
     return (
-      <Fragment>
+      <>
         <BasicModal
           open={this.state.modal}
           onToggle={this.handleToggle}
-          button={<FolderPlus size={16} onClick={this.handleToggle} />}
+          button={<i onClick={this.handleToggle} className="bi-clipboard-plus" ></i>}
           className={""}
           header={"Nuevo Titulo"}
           component={<Titulo onClose={() => this.handleToggle(false)} />}
           footer={false}
         />
-      </Fragment>
+      </>
     );
   }
 }

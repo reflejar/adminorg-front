@@ -31,11 +31,11 @@ function Login() {
 
   return (
       <div className="bg-gradient vh-100 d-flex align-items-center justify-content-center">
-        <div className="col-md-6 col-lg-3">
+        <div className="col-md-6 col-lg-4 animate__animated animate__bounceInRight">
           <div className="card py-5 px-3">
             <div className="card-body text-center">
               {loading ? <Spinner /> : <>
-                <Image src='/img/logo.png' width={0} height={0} style={{ width: '50%', height: '10vh' }} alt="Logo de AdminSmart" className='mb-4' />
+                <Image src='/img/logo.png' width={0} height={0} style={{ width: '50%', height: '100%' }} alt="Logo de AdminSmart" className='mb-4' />
                 <form onSubmit={handleForm} className="form">
                   <input
                       type="text"

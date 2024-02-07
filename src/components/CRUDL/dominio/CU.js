@@ -106,7 +106,7 @@ const CU = ({ selected, onClose }) => {
       {({ errors, touched, setFieldValue, handleSubmit, isSubmitting, values }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
               <h4>Datos Principales</h4>
               <FormGroup>
                 <Label for="numero">Identificacion</Label>
@@ -159,10 +159,10 @@ const CU = ({ selected, onClose }) => {
                 {errors.titulo && touched.titulo ? <div className="invalid-feedback">{errors.titulo}</div> : null}
               </FormGroup>              
             </Col>
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
               <h4>Datos del domicilio</h4>
                 <Row>
-                  <Col sm="6">
+                  <Col sm="6" className='px-3'>
                     <FormGroup>
                       <Label for="domicilio_provincia">Provincia</Label>
                       <Field component="select" name="domicilio_provincia" id="domicilio_provincia" className={`form-control ${errors.domicilio_provincia && touched.domicilio_provincia && 'is-invalid'}`}>
@@ -199,7 +199,7 @@ const CU = ({ selected, onClose }) => {
                       {errors.domicilio_catastro && touched.domicilio_catastro ? <div className="invalid-feedback">{errors.domicilio_catastro}</div> : null}
                     </FormGroup>                                          
                   </Col>
-                  <Col sm="6">
+                  <Col sm="6" className='px-3'>
                     <FormGroup>
                       <Label for="domicilio_localidad">Localidad</Label>
                       <Field name="domicilio_localidad" id="domicilio_localidad" className={`form-control ${errors.domicilio_localidad && touched.domicilio_localidad && 'is-invalid'}`} />

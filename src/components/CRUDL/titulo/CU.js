@@ -65,7 +65,7 @@ const CU = ({ selected, onClose }) => {
       {({ errors, touched, setFieldValue, handleSubmit, isSubmitting, values }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
               <h4>Datos Principales</h4>
               <FormGroup>
                 <Label for="nombre">Nombre</Label>
@@ -88,7 +88,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.predeterminado && touched.predeterminado ? <div className="invalid-feedback">{errors.predeterminado}</div> : null}
               </FormGroup>                   
             </Col>
-            <Col sm="6">
+            <Col sm="6" className='px-3'>
               <h4>Dependencia</h4>
               <FormGroup>
                 <Label for="supertitulo">Rubro al que pertenece</Label>

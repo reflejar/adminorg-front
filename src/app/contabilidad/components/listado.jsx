@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Table } from 'reactstrap';
 import { useTitulos } from "@/utility/hooks/dispatchers";
 import { titulosActions } from "@/redux/actions/titulos";
+import ModalNew from './modals/titulo';
 
 import Spinner from "@/components/spinner/spinner";
 
@@ -72,7 +73,13 @@ const List = ({selected, setSelected}) => {
 
     return (
         <div className="col-lg-3 min-vh-100 bg-light">
-        <div className="monitor-head"></div>
+        <div className="monitor-head p-3 d-flex align-items-center">
+            <div className="d-flex justify-content-center align-items-center text-dark ">
+                <div className="form-control-position pointer">
+                <ModalNew />
+                </div>
+            </div>
+        </div>
           <div className="monitor-body-without-footer p-3 bg-white">
           <Table size="sm" responsive borderless={true} hover={true}>
                <thead>
