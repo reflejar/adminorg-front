@@ -125,9 +125,9 @@ export default function Deudas(props) {
   if (loadingCuentas) return <Spinner />
 
   return (
-      <>
+      <div className="table-responsive min-vh-75">
         {modal && modal.item && renderModal()}
-        <table className='table table-responsive table-sm table-striped table-bordered'>
+        <table className='table table-sm table-striped table-bordered text-nowrap'>
           <thead>
             <tr>
               {columns.map((col, key) => <th key={key}>{col.Header}</th>)}
@@ -148,7 +148,7 @@ export default function Deudas(props) {
             </tr>)}
           </tbody>
         </table>
-    </>
+    </div>
 
   );
 };

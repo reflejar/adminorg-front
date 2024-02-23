@@ -14,10 +14,10 @@ import Cuenta from './cuenta';
 
 import Info from "@/components/CRUDL/cliente/CU";
 
-import ModalComprobante from '../modals/factura';
-import ModalNotaCredito from '../modals/nota-credito';
-import ModalCobro from "../modals/recibo-x";
-import ModalComprobanteMasivo from "../modals/factura-masiva";
+import ModalComprobante from '../modals/comprobante';
+// import ModalNotaCredito from '../modals/nota-credito';
+// import ModalCobro from "../modals/recibo-x";
+// import ModalComprobanteMasivo from "../modals/factura-masiva";
 import ModalPreconceptos from "../modals/preconceptos";
 import ModalRegistros from '../modals/registros';
 
@@ -88,13 +88,13 @@ function Contenido({ selected }) {
 
             <section className="monitor-footer p-3 d-flex justify-content-between">
                 <div className="btn-group">
-                    <ModalComprobante isDisabled={!selected} />,
-                    <ModalNotaCredito isDisabled={!selected} />,
-                    <ModalCobro modal={false} isDisabled={!selected} />
+                    <ModalComprobante selected={selected} />,
+                    {/* <ModalNotaCredito isDisabled={!selected} />, */}
+                    {/* <ModalCobro modal={false} isDisabled={!selected} /> */}
                 </div>
                 <div className="btn-group">
                     <ModalPreconceptos />,
-                    <ModalComprobanteMasivo />,
+                    {/* <ModalComprobanteMasivo />, */}
                     <ModalRegistros />
                 </div>               
             </section>
