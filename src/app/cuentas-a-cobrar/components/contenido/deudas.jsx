@@ -18,7 +18,31 @@ export default function Deudas(props) {
         });
   
   const data = [...saldos.map((saldo) => ({...saldo, monto: -saldo.monto, saldo: -saldo.saldo})), ...deudas];
-
+  const columns = [{
+      Header: 'Fecha',
+      accessor: 'fecha'
+    }, {
+      Header: 'Documento',
+      accessor: 'nombre'
+    }, {
+      Header: 'Concepto',
+      accessor: 'concepto'
+    }, {
+      Header: 'Periodo',
+      accessor: 'periodo'
+    }, {
+      Header: 'Monto',
+      accessor: 'monto',
+    }, {
+      Header: 'Pagado/Utilizado',
+      accessor: 'pago_capital',      
+    }, {
+      Header: 'Intereses/Descuentos',
+      accessor: 'interes',
+    }, {
+      Header: 'Saldo',
+      accessor: 'saldo',
+  }];    
 
   const handleToggle = (rowInfo) => {
     setModal({
@@ -49,33 +73,6 @@ export default function Deudas(props) {
         )
     } 
   }
-
-  const columns = [{
-      Header: 'Fecha',
-      accessor: 'fecha'
-    }, {
-      Header: 'Documento',
-      accessor: 'nombre'
-    }, {
-      Header: 'Concepto',
-      accessor: 'concepto'
-    }, {
-      Header: 'Periodo',
-      accessor: 'periodo'
-    }, {
-      Header: 'Monto',
-      accessor: 'monto',
-    }, {
-      Header: 'Pagado/Utilizado',
-      accessor: 'pago_capital',      
-    }, {
-      Header: 'Intereses/Descuentos',
-      accessor: 'interes',
-    }, {
-      Header: 'Saldo',
-      accessor: 'saldo',
-  }];    
-  
 
   if (loadingDeudas || loadingSaldos) return <Spinner />
 

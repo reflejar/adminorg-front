@@ -3,7 +3,6 @@ import Portlet from "./portlet"
 
 
 export default function Selectable ({ documento, setDocumento, onlyRead, title, handler, rows }) {
-    console.log(rows)
     const [grouped, setGrouped] = useState(
         rows.map(obj=> ({
             vinculo: obj.id, 

@@ -1,5 +1,4 @@
 import {useState, useCallback, useEffect} from "react"
-import CHOICES from "./components/choices";
 import Portlet from "./components/portlet";
 import Encabezado from "./components/encabezado";
 import Selectable from "./components/selectable";
@@ -173,7 +172,6 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
 
     return (
         <form onSubmit={handleSubmit} name="form_cbte" method="POST">
-            {console.log(documento)}
             <Encabezado 
                 documento={documento} 
                 setDocumento={setDocumento} 
@@ -440,7 +438,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     </div>
                     <div className="col-sm-6 text-end">
                     {documento.pdf && <a href={documento.pdf} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Imprimir</a>}
-                    <button disabled={onlyRead || !canSend} onClick={handleSubmit} type="submit" className="btn btn-bordered btn-primary btn-block mx-1">Guardar</button>
+                    {!onlyRead && <button disabled={!canSend} onClick={handleSubmit} type="submit" className="btn btn-bordered btn-primary btn-block mx-1">Guardar</button>}
                     </div>
                 </div>
             </div>
