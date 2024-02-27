@@ -108,42 +108,35 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
 
     }, [documento.receipt.receipt_type])
 
+    const validate = () => {
+        switch (moduleHandler) {
+            case 'cliente':
+                if (documento.receipt.point_of_sales === '') return false
+
+                switch (documento.receipt.receipt_type) {
+                    case 'Factura X':
+                        const incomplete = documento.creditos ? documento.creditos.filter(c => (c.destinatario === "" || c.concepto === "" || c.monto === "" || c.monto == 0)) : []
+                        return incomplete.length === 0
+                    case 'Recibo X':
+                        const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
+                        const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
+                        return totalCajasRecibo >= totalCobrosRecibo
+                    case 'Nota de Credito X':
+                        const totalCobrosNotaDeCredito = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
+                        const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
+                        return totalCobrosNotaDeCredito === totalResultadosNotaDeCredito
+                    default:
+                        return false
+                }
+        
+            default:
+                return false
+        }
+    }
+
 
     useEffect(() => {
-
-        let cantSend = true
-        if (!onlyRead) {
-            if (documento.receipt.receipt_type && documento.receipt.point_of_sales) {
-                
-                // Si hay creditos significa que es una Factura a cliente
-                if (documento.creditos && documento.creditos.length > 0) {
-                const incomplete = documento.creditos.filter(c => (c.destinatario === "" || c.concepto === "" || c.monto === "" || c.monto == 0))
-                incomplete.length > 0 ? cantSend = true : cantSend = false
-                }
-    
-                // Si hay cobros significa que es un Recibo o una Nota de Credito
-                if (documento.cobros) {
-                const totalCobros = documento.cobros.reduce((total, current) => total + Number(current['monto']), 0)
-                
-                // Si hay resultados significa que es una Nota de Credito
-                if (documento.resultados) {
-                    const totalResultados = documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0)
-                    totalCobros > 0 && totalCobros === totalResultados ? cantSend = false : cantSend = true
-                }
-    
-                // Si hay cajas significa que es un Recibo
-                if (documento.cajas) {
-    
-                }
-                }
-            } 
-
-        }
-        if (cantSend) {
-            setCanSend(false)
-        } else {
-            setCanSend(true)
-        }
+        setCanSend(validate(documento))
 
     }, [documento])
     
@@ -165,7 +158,10 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 const { data } = error;
                 setErrors(data);
             })
-            .finally(() => setLoading(false))        
+            .finally(() => {
+                setLoading(false)
+                if (onClose) onClose()
+            })        
     },[documento]);
 
     if (loading) return <Spinner />
@@ -344,7 +340,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 cleanedField={{
                     cuenta: '',
                     detalle: '',
-                    fecha_vencimiento: '',
+                    fecha_vencimiento: moment().format('YYYY-MM-DD'),
                     monto: 0,
                 }}
             />

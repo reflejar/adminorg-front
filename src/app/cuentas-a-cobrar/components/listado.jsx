@@ -8,7 +8,7 @@ import ModalNew from './modals/cliente';
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
     useEffect(()=> {
-      getItems()
+      if (items.length === 0) getItems()
     }, [])
 
     return (<div className="col-lg-2 min-vh-100 bg-light">

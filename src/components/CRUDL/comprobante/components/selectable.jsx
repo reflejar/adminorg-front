@@ -3,29 +3,28 @@ import Portlet from "./portlet"
 
 
 export default function Selectable ({ documento, setDocumento, onlyRead, title, handler, rows }) {
-    const [grouped, setGrouped] = useState(
-        rows.map(obj=> ({
+    const [grouped, setGrouped] = useState(rows.map(obj=> ({
             vinculo: obj.id, 
-            concepto: obj.concepto, 
-            periodo: obj.periodo, 
+            concepto: obj.concepto + " - " + obj.periodo, 
             monto:obj.monto, 
             checked:false,
-            descripcion: obj.descripcion
+            detalle: ''
         }))
     )
 
     const handleChange = (e) => {
-        e.preventDefault()
-        const [row, name] = e.target.name.split('.')
-        setGrouped(() => {
+        e.preventDefault();
+        const [row, name] = e.target.name.split('.');
+        const newGrouped = [...grouped]; // Crear una nueva copia del estado
+    
         if (name === "vinculo") {
-            grouped[row]['checked'] = !grouped[row]['checked']
+            newGrouped[row]['checked'] = !newGrouped[row]['checked'];
         } else {
-            grouped[row][name] = e.target.value
+            newGrouped[row][name] = e.target.value;
         }
-        return [...grouped]
-        })
-    }
+    
+        setGrouped(newGrouped);
+    };
 
     useEffect(() => {
         setDocumento(() => ({
@@ -44,19 +43,22 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                 <thead>
                 <tr>
                     <th></th>
-                    {Object.keys(grouped[0]).map((t, i) => (<th key={i}>{t}</th>))}
+                    <th>Concepto</th>
+                    <th>Monto</th>
                 </tr>
                 </thead>
                 <tbody>
+                    {console.log(grouped)}
                 {grouped.map((row, i) => {
                     return (<tr key={i}>
                     <td>
                         <input 
-                        className="form-check-label input-sm" 
+                        className="form-check" 
                         type="checkbox" 
                         value={row.vinculo} 
                         name={`${i}.vinculo`} 
                         checked={row.checked} 
+                        disabled={onlyRead}
                         onChange={handleChange}
                         />
                     </td>
@@ -67,6 +69,7 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                         type="number" 
                         value={row.monto} 
                         name={`${i}.monto`} 
+                        disabled={onlyRead}
                         onChange={handleChange}
                         />
                     </td>

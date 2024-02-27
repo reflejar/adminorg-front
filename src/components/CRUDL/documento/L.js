@@ -125,10 +125,10 @@ const LStep = ({ causante, documentosTypes }) => {
       <Form className="registration__filters" onSubmit={handleSearch}>
         <FormGroup>
           <Label>Tipo de documento</Label>
-          <Input type="select" name="select" required={true} onChange={handleChange('receipt_type')}>
+          <Input type="select" name="select" onChange={handleChange('receipt_type')}>
             <option value=''>---</option>
             {documentosTypes.map((type, i) => (
-              <option key={i} value={type.id}>{type.nombre}</option>
+              <option key={i} value={type}>{type}</option>
             ))}
           </Input>
         </FormGroup>  
@@ -178,10 +178,11 @@ const LStep = ({ causante, documentosTypes }) => {
             </FormGroup>
           </Col>
         </Row>
-
-        <Button type="submit" color="primary">
+        <div className="text-end">
+        <Button type="submit" color="primary" className='mb-2 '>
           Buscar
         </Button>
+        </div>
       </Form>
     );
   }

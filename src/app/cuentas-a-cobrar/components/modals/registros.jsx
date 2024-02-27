@@ -46,7 +46,7 @@ const Registros = () => {
       )}
 
       {renderContent()}
-      
+      <hr />
       <div className='btn btn-warning' onClick={() => setType('')} disabled={!type} >
         Volver
       </div>

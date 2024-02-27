@@ -8,7 +8,7 @@ import ModalNew from './modals/caja';
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
     useEffect(()=> {
-      getItems()
+      if (items.length === 0) getItems()
     }, [])
 
     return (<div className="col-lg-2 min-vh-100 bg-light">
@@ -37,7 +37,7 @@ function Listado({searchTerm, searchOnChange, items, instance, getItems, setSele
                         onClick={() => setSelectedObject(item)}
                         key={key}
                       >
-                        <td className=' pointer'>{item.full_name}</td>  
+                        <td className='pointer'>{item.full_name}</td>  
                       </tr>                
                     ))}
                   </tbody>
