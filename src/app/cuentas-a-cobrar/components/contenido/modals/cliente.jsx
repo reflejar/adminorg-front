@@ -1,0 +1,28 @@
+import React, { useState } from "react";
+
+import Cliente from "@/components/CRUDL/cliente/CU";
+import BasicModal from '@/components/modal/basic';
+
+
+export default function Modal () {
+
+  const [modal, setModal] = useState(false)
+
+  const handleToggle = () => {
+    setModal(!modal);
+  };
+
+  return (
+    <>
+      <BasicModal
+        open={modal}
+        onToggle={handleToggle}
+        button={<i onClick={handleToggle} className="bi-person-plus" ></i>}
+        header="Nuevo Cliente"
+        component={<Cliente onClose={() => handleToggle(false)} />}
+        footer={false}
+      />
+    </>
+  );
+}
+

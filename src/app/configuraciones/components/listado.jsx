@@ -7,9 +7,9 @@ import { configuracionesActions } from "@/redux/actions/configuraciones";
 function Listado({items, instance, getItems, setSelectedObject}) {
 
     useEffect(()=> {
-      getItems()
+      if (items.length === 0) getItems()
     }, [])
-
+  
     return (<div className="col-lg-2 min-vh-100 bg-light">
               <div className="monitor-head bg-white">
               </div>
@@ -22,7 +22,7 @@ function Listado({items, instance, getItems, setSelectedObject}) {
                         onClick={() => {item.id && setSelectedObject(item)}}
                         key={key}
                       >
-                        <td className={`${item.id ? "pointer" : 'bg-secondary text-white' }`}>
+                        <td className={`${item.id ? "pointer" : 'bg-light text-dark' }`}>
                           {!item.id && <i className='bi-chevron-down' />} {item.full_name}
                         </td>  
                       </tr>                

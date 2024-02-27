@@ -7,8 +7,8 @@ import Deudas from './deudas';
 import Cuenta from './cuenta';
 import Info from "@/components/CRUDL/cliente/CU";
 
-import ModalComprobante from '../modals/comprobante';
-import ModalRegistros from '../modals/registros';
+import ModalComprobante from './modals/comprobante';
+import ModalRegistros from './modals/registros';
 
 function Contenido({ selected }) {
 
@@ -74,7 +74,7 @@ function Contenido({ selected }) {
   }
   
 const mapStateToProps = state => ({
-    selected: get(state, 'clientes.instance', {}),
+    selected: state.clientes.instance,
 })
 
 export default connect(mapStateToProps, null)(Contenido);

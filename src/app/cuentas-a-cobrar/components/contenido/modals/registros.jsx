@@ -1,20 +1,29 @@
 import React, { Component, useState } from "react";
-import { Button } from "reactstrap";
-
 import BasicModal from '@/components/modal/basic';
 
-import Clientes from '@/components/CRUDL/cliente/L';
+// import Clientes from '@/components/CRUDL/cliente/L';
 import Documentos from "@/components/CRUDL/documento/L";
 import CHOICES from "@/components/CRUDL/comprobante/components/choices";
+import Listado from '@/components/listados';
+import { useClientes } from "@/utility/hooks/dispatchers";
 
 const Registros = () => {
 
   const [type, setType] = useState('')
+  const [clientes] = useClientes()
 
   const renderContent = () => {
     switch (type) {
       case 'cliente':
-        return <Clientes />
+        return <Listado items={clientes} columns={[
+          { label: "Nombre", key: "perfil.nombre" },
+          { label: "Apellido", key: "perfil.apellido" },
+          { label: "Razon social", key: "perfil.razon_social" },
+          { label: "Tipo de documento", key: "perfil.tipo_documento" },
+          { label: "Numero", key: "perfil.numero_documento" },
+          { label: "Mail", key: "perfil.mail" },
+          { label: "Telefono", key: "perfil.telefono" },
+        ]} />
       case 'comprobante':
         return <Documentos causante={"cliente"} documentosTypes={CHOICES.receiptTypes['cliente']} />
       default:
@@ -54,38 +63,24 @@ const Registros = () => {
   );
 }
 
+export default function Modal ({selected}) {
 
-class ModalRegistros extends Component {
-  state = {
-    modal: false
-  }
+  const [modal, setModal] = useState(false)
 
-  handleToggle = (isOpen) => {
-    this.setState({
-      modal: typeof isOpen === 'boolean' ? isOpen : !this.state.modal
-    });
+  const handleToggle = () => {
+    setModal(!modal);
   };
 
-  render() {
-    return (
+  return (
+    <>
       <BasicModal
-        open={this.state.modal}
-        onToggle={this.handleToggle}
+        open={modal}
+        onToggle={handleToggle}
+        button={(<button className="btn btn-outline-danger mx-1 shadow" onClick={handleToggle}> Registros </button>)}
         header="Registros"
         component={<Registros onClose={() => this.handleToggle(false)} />}
-        button={(
-          <Button
-            outline
-            color="danger"
-            className="mx-1 shadow"
-            onClick={this.handleToggle}
-          >
-            Registros
-          </Button>
-        )}
+        footer={false}
       />
-    );
-  }
+    </>
+  );
 }
-
-export default ModalRegistros;
