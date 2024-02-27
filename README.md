@@ -2,7 +2,7 @@
 
 # AdminOrg Front
 
-[![GitHub license](https://img.shields.io/github/license/reflejar/adminorg-front)](https://github.com/reflejar/adminorg-front/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/reflejar/adminorg-front)](https://github.com/reflejar/adminorg-front/blob/main/LICENSE)
 
 Sistema web creado para la administración, gestión, comunicación y contabilidad de comunidades.
 
