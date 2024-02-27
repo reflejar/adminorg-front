@@ -25,7 +25,7 @@ const Listado = ({ items, columns }) => {
 
                 <CSVLink
                 target="_blank"
-                filename="adminsmart-clientes.csv"
+                filename="adminorg-clientes.csv"
                 headers={columns}          
                 data={dataForTable}>
                 <div className='btn btn-outline-secondary'>

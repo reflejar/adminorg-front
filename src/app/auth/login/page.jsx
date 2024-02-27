@@ -35,7 +35,7 @@ function Login() {
           <div className="card py-5 px-3">
             <div className="card-body text-center">
               {loading ? <Spinner /> : <>
-                <Image src='/img/logo.png' width={0} height={0} style={{ width: '50%', height: '100%' }} alt="Logo de AdminSmart" className='mb-4' />
+                <Image src='/img/logo.png' width={0} height={0} style={{ width: '50%', height: '100%' }} alt="Logo de AdminOrg" className='mb-4' />
                 <form onSubmit={handleForm} className="form">
                   <input
                       type="text"
