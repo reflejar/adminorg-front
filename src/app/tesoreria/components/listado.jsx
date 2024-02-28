@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { cajasActions } from "@/redux/actions/cajas";
-import ModalNew from './modals/caja';
+import ModalNew from './contenido/modals/caja';
 
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
