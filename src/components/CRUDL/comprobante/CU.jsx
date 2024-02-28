@@ -18,8 +18,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     const [ingresos, loadingIngresos] = useIngresos();
     const [cajas, loadingCajas] = useCajas();
     const [gastos, loadingGastos] = useGastos();
-    const [deudas, loadingDeudas] = useDeudas(true, destinatario);
-    const [saldos, loadingSaldos] = useSaldos(true, destinatario);
+    const [deudas, loadingDeudas] = useDeudas(destinatario);
+    const [saldos, loadingSaldos] = useSaldos(destinatario);
     const [disponibilidades, loadingDisponibilidades] = useDisponibilidades();
     const [canSend, setCanSend] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -120,7 +120,9 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     case 'Recibo X':
                         const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
                         const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
-                        return totalCajasRecibo >= totalCobrosRecibo
+                        const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
+                        const totalPagos = totalCajasRecibo + totalSaldosRecibo
+                        if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
                     case 'Nota de Credito X':
                         const totalCobrosNotaDeCredito = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
                         const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
@@ -141,8 +143,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     }, [documento])
     
     const updateSituation = useCallback(() => {
-        dispatch(deudasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), capture: true }));
-        dispatch(saldosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), capture: true }));
+        dispatch(deudasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD') }));
+        dispatch(saldosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD') }));
         dispatch(cuentasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD') }));
     }, [dispatch, destinatario] );
 
@@ -176,7 +178,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             />
 
             {/* Clientes: Seccion de Creditos */}
-            {documento.creditos && <Appendable 
+            {documento.creditos && ((loadingIngresos || loadingCajas) ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -234,7 +236,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     cantidad: 0,
                     monto: 0,
                 }}
-            />
+            />)
             }
 
             {/* Proveedores: Seccion de Debitos */}
@@ -286,14 +288,14 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             }         */}
 
             {/* Clientes: Seccion de Cobros */}
-            {documento.cobros && <Selectable 
+            {documento.cobros && (loadingDeudas ? <Spinner /> : <Selectable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
                 title="Items pendientes de cobro"
                 handler="cobros"
                 rows={deudas}
-            />
+            />)
             }        
 
             {/* Proveedores: Seccion de Deudas */}
@@ -308,7 +310,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             }               */}
 
             {/* Seccion de Cajas */}
-            {documento.cajas && <Appendable 
+            {documento.cajas && (loadingCajas ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -343,11 +345,11 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     fecha_vencimiento: moment().format('YYYY-MM-DD'),
                     monto: 0,
                 }}
-            />
+            />)
             }
 
             {/* Seccion de Resultados */}
-            {documento.resultados && <Appendable 
+            {documento.resultados && ((loadingIngresos || loadingGastos) ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -382,29 +384,29 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     periodo: moment().format('YYYY-MM-DD'),
                     monto: 0,
                 }}
-            />
+            />)
             }    
 
             {/* Seccion de Utilización de saldos */}
-            {documento.utilizaciones_saldos && saldos.length > 0 && <Selectable 
+            {documento.utilizaciones_saldos && saldos.length > 0 && (loadingSaldos ? <Spinner /> : <Selectable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
                 title="Utilizar saldos anteriores"
                 handler="utilizaciones_saldos"
                 rows={saldos}
-            />
+            />)
             }   
 
             {/* Seccion de Utilización de disponibilidades */}
-            {documento.utilizaciones_disponibilidades && disponibilidades.length > 0 && <Selectable 
+            {documento.utilizaciones_disponibilidades && disponibilidades && disponibilidades.length > 0 && (loadingDisponibilidades ? <Spinner /> : <Selectable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
                 title="Utilizar disponibilidades"
                 handler="utilizaciones_disponibilidades"
                 rows={disponibilidades}
-            />
+            />)
             }                  
 
                 

@@ -10,8 +10,8 @@ import Comprobante from '@/components/CRUDL/comprobante/CU';
 
 export default function Deudas(props) {
   const { selected } = props;
-  const [deudas, loadingDeudas] = useDeudas(true, selected);
-  const [saldos, loadingSaldos] = useSaldos(true, selected);
+  const [deudas, loadingDeudas] = useDeudas(selected);
+  const [saldos, loadingSaldos] = useSaldos(selected);
   const [modal, setModal] = useState({
             open: false,
             item: null

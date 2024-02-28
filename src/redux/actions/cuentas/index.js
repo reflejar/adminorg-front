@@ -7,14 +7,9 @@ const get = (params) => async (dispatch) => {
   if (params.titulo) {
     path = path + `&titulo=${params.titulo}`
   }
-
   const response = await Service.get(path);
-
   if (response && response.data) {
-    dispatch({
-      type: 'GET_STATUS_CUENTAS',
-      payload: response.data
-    });
+    return response.data;
   }
 };
 

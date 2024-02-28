@@ -1,14 +1,13 @@
 'use client'
 import { useState } from "react";
 import { connect } from 'react-redux'
-import get from 'lodash/get';
 
-import Deudas from './deudas';
-import Cuenta from './cuenta';
+import Deudas from './tablaDeudas';
+import Cuenta from './tablaCuenta';
 import Info from "@/components/CRUDL/cliente/CU";
 
-import ModalComprobante from './modals/comprobante';
-import ModalRegistros from './modals/registros';
+import ModalComprobante from './modalComprobante';
+import ModalRegistros from './modalRegistros';
 
 function Contenido({ selected }) {
 

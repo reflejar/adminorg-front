@@ -9,12 +9,6 @@ const get = (params) => async (dispatch) => {
 
   
   if (response && response.data) {
-    if (typeof params.destinatario === "number" && params.capture) {
-      dispatch({
-        type: 'GET_SALDOS',
-        payload: response.data
-      });
-    } 
     return response.data;
 
   }

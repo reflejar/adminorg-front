@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {Numero} from "@/utility/formats";
 import { useEstadoCuenta } from '@/utility/hooks/dispatchers';
@@ -17,6 +17,11 @@ export default function Deudas(props) {
             item: null
         });
   
+
+  useEffect(()=> {
+    
+  }, [modal.open])
+
   const data = [...cuentas];
   const columns =[{
       Header: 'Fecha',
@@ -42,19 +47,18 @@ export default function Deudas(props) {
 
 
   const renderModal = () => {
-    if (modal.item && modal.item.documento) {
-      const { receipt } = modal.item.documento
+    if (modal.item && modal.item.receipt) {
+      const { receipt } = modal.item
       return (
           <BasicModal
             open={modal.open}
             onToggle={handleToggle}
             header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
             footer={false}
-            // component={selectDocument(modal.item.causante, modal.item.documento.receipt.receipt_type)}
             component={<Comprobante 
                 moduleHandler={modal.item.causante} 
                 destinatario={selected}
-                documentoId={modal.item.documento.id}
+                documentoId={modal.item.id}
                 onClose={handleToggle}
                 onlyRead={true} 
               />}

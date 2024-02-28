@@ -122,8 +122,8 @@ const LStep = ({ causante, documentosTypes }) => {
 
   if (!table) {
     return (
-      <Form className="registration__filters" onSubmit={handleSearch}>
-        <FormGroup>
+      <Form className="row" onSubmit={handleSearch}>
+        <FormGroup className='col-sm-4 px-3'>
           <Label>Tipo de documento</Label>
           <Input type="select" name="select" onChange={handleChange('receipt_type')}>
             <option value=''>---</option>
@@ -133,7 +133,7 @@ const LStep = ({ causante, documentosTypes }) => {
           </Input>
         </FormGroup>  
 
-        <FormGroup>
+        <FormGroup className='col-sm-4 px-3'>
           <Label>Punto de venta</Label>
 
           <Input type="select" name="select" onChange={handleChange('point')}>
@@ -144,7 +144,7 @@ const LStep = ({ causante, documentosTypes }) => {
           </Input>
         </FormGroup>
 
-        <FormGroup>
+        <FormGroup className='col-sm-4 px-3'>
           <Label>Numero de documento</Label>
           <Input
             value={fields.numero}
@@ -153,9 +153,7 @@ const LStep = ({ causante, documentosTypes }) => {
             onChange={handleChange('numero')} />
         </FormGroup>
 
-        <Row>
-          <Col md={6}>
-            <FormGroup>
+            <FormGroup className='col-sm-4 px-3'>
               <Label>Desde</Label>
               <Input
                 type="date"
@@ -164,10 +162,8 @@ const LStep = ({ causante, documentosTypes }) => {
                 onChange={handleChange('startDate')}
               />
             </FormGroup>
-          </Col>
 
-          <Col md={6}>
-            <FormGroup>
+            <FormGroup className='col-sm-4 px-3'>
               <Label>Hasta</Label>
               <Input
                 type="date"
@@ -176,8 +172,6 @@ const LStep = ({ causante, documentosTypes }) => {
                 onChange={handleChange('endDate')}
               />
             </FormGroup>
-          </Col>
-        </Row>
         <div className="text-end">
         <Button type="submit" color="primary" className='mb-2 '>
           Buscar
@@ -191,7 +185,7 @@ const LStep = ({ causante, documentosTypes }) => {
     <div className="registration__results">
       <div className="registration__actions">
         <ReactToPrint
-          trigger={() => <Button outline>Imprimir</Button>}
+          trigger={() => <div className='btn btn-outline-secondary mx-2' outline>Imprimir</div>}
           content={() => ref.current}
         />
         <CSVLink
@@ -199,9 +193,9 @@ const LStep = ({ causante, documentosTypes }) => {
           data={dataForTable}
           target="_blank"
           filename="adminorg-documentos.csv">
-          <Button outline>
-            CSV
-          </Button>
+          <div className='btn btn-outline-secondary'>
+              CSV
+          </div>
         </CSVLink>
       </div>
 

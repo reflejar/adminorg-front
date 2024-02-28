@@ -211,19 +211,33 @@ export const useRetenciones = () => {
 };
 
 // Otros
+export const useDeudas = (selected, date) => {
+  const [loading, setLoading] = useState(false);
+  const [deudas, setDeudas] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (selected) {
+      setLoading(true);
+      dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD') }))
+        .then((response) => setDeudas(response))
+        .finally(() => setLoading(false));
+    }
+  }, [selected]);
+
+  return [deudas, loading];
+};
+
+
+
 export const useEstadoCuenta = (selected) => {
   const [loading, setLoading] = useState(false);
-  
-  const { cuentas } = useSelector((state) => ({
-    cuentas: get(state, 'cuentas.list', [])
-  }));
-  
+  const [cuentas, setCuentas] = useState([]);
   const dispatch = useDispatch();
   
   useEffect(() => {
     if (selected) {
       setLoading(true);
-      
       const esTitulo = selected.hasOwnProperty("supertitulo");
       let query = { destinatario: selected.id, fecha: moment().format('YYYY-MM-DD') }
       if (esTitulo) {
@@ -231,83 +245,45 @@ export const useEstadoCuenta = (selected) => {
       }
 
       dispatch(cuentasActions.get(query))
+        .then((response) => setCuentas(response))
         .finally(() => setLoading(false));
     }
-  }, [selected, dispatch]);
+  }, [selected]);
 
   return [cuentas, loading];
 };
 
-export const useSaldos = (capture, selected, date) => {
+export const useSaldos = (selected, date) => {
   const [loading, setLoading] = useState(false);
   const [saldos, setSaldos] = useState([]);
-
-  const { saldosRedux } = useSelector((state) => ({
-    saldosRedux: get(state, 'saldos.list', []) 
-  }));
   
   const dispatch = useDispatch();
   useEffect(() => {
     if (selected) {
       setLoading(true);
-  
-      dispatch(saldosActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD'), capture }))
+      dispatch(saldosActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD') }))
         .then((response) => setSaldos(response))
         .finally(() => setLoading(false));
     }
-  }, [selected, dispatch, date, capture, setSaldos]);
+  }, [selected]);
 
-  if (capture) {
-    return [saldosRedux, loading];
-  }
   return [saldos, loading];
 
 };
 
-export const useDeudas = (capture, selected, date, condonacion=false) => {
-  const [loading, setLoading] = useState(false);
-  const [deudas, setDeudas] = useState([]);
-
-  const { deudasRedux } = useSelector((state) => ({
-    deudasRedux: get(state, 'deudas.list', [])
-  }));
-
-  
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (selected) {
-      setLoading(true);
-  
-      dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD'), condonacion, capture }))
-        .then((response) => setDeudas(response))
-        .finally(() => setLoading(false));
-    }
-  }, [selected, dispatch, date, condonacion, capture, setDeudas]);
-
-  if (capture) {
-    return [deudasRedux, loading];
-  }
-  return [deudas, loading];
-};
 
 
 export const useDisponibilidades = (date) => {
   const [loading, setLoading] = useState(false);
-
   const [disponibilidades, setDisponibilidades] = useState([]);
-  
   const dispatch = useDispatch();
 
   useEffect(() => {
-    async function fetchDispo() {
-      setLoading(true);
-  
-      const data = await dispatch(saldosActions.get({ destinatario: "caja", fecha: moment(date).format('YYYY-MM-DD') }));
-      setDisponibilidades(data);
-      setLoading(false);
-    }
-    fetchDispo();
-  }, [dispatch, date]);
+    setLoading(true);
+      dispatch(saldosActions.get({ destinatario: "caja", fecha: moment(date).format('YYYY-MM-DD') }))
+      .then((response) => setDisponibilidades(response))
+      .finally(() => setLoading(false));
+  }, []);
 
   return [disponibilidades, loading];
 
