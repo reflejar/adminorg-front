@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
+import { Row, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
 import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
@@ -62,8 +62,8 @@ const CU = ({ selected, onClose }) => {
         titulo: get(selected, 'titulo', tituloPred.id),
       }}
       validationSchema={Yup.object().shape({
-        nombre: Yup.string().required(empty),
-        apellido: Yup.string().required(empty),
+        nombre: Yup.string(),
+        apellido: Yup.string(),
         razon_social: Yup.string(),
         tipo_documento: Yup.string().required(empty),
         numero_documento: Yup.number().required(empty),

@@ -1,5 +1,4 @@
 'use client'
-'use client'
 import React, { useState, useEffect } from 'react';
 import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
@@ -78,14 +77,13 @@ const CU = ({ selected, onClose }) => {
       {({ errors, touched, setFieldValue, handleSubmit, isSubmitting, values }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="12">
-              <h4>Datos Principales</h4>
-              <FormGroup>
+              <h4>Datos del gasto</h4>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="nombre">Nombre</Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="taxon">Tipo de erogacion</Label>
                 <Field component="select" name="taxon" id="taxon" className={`form-control ${errors.taxon && touched.taxon && 'is-invalid'}`}>
                   {gastos.map((gasto, i) => {
@@ -94,7 +92,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.taxon && touched.taxon ? <div className="invalid-feedback">{errors.taxon}</div> : null}
               </FormGroup>    
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="titulo">Titulo contable</Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>
                   <option value={""}> --- </option>
@@ -104,13 +102,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.titulo && touched.titulo ? <div className="invalid-feedback">{errors.titulo}</div> : null}
               </FormGroup>                             
-            </Col>
-
-            <Col xs={12}>
-              <hr />
-            </Col>
-            
-                        
+             
           </Row>
 
           <Button type="submit" color="primary" className="button-clip-loader" disabled={isSubmitting}>

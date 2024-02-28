@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
+import { Row, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
 import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
@@ -65,19 +65,19 @@ const CU = ({ selected, onClose }) => {
       {({ errors, touched, setFieldValue, handleSubmit, isSubmitting, values }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="6" className='px-3'>
-              <h4>Datos Principales</h4>
-              <FormGroup>
+
+              <h4>Datos del título contable</h4>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="nombre">Nombre</Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="numero">Numero</Label>
                 <Field name="numero" id="numero" className={`form-control ${errors.numero && touched.numero && 'is-invalid'}`} />
                 {errors.numero && touched.numero ? <div className="invalid-feedback">{errors.numero}</div> : null}
               </FormGroup>         
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="predeterminado">Titulo predeterminado para</Label>
                 <Field component="select" name="predeterminado" id="predeterminado" className={`form-control ${errors.predeterminado && touched.predeterminado && 'is-invalid'}`}>
                   <option value=""> --- </option>
@@ -87,10 +87,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.predeterminado && touched.predeterminado ? <div className="invalid-feedback">{errors.predeterminado}</div> : null}
               </FormGroup>                   
-            </Col>
-            <Col sm="6" className='px-3'>
-              <h4>Dependencia</h4>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="supertitulo">Rubro al que pertenece</Label>
                 <Field component="select" name="supertitulo" id="supertitulo" className={`form-control ${errors.supertitulo && touched.supertitulo && 'is-invalid'}`}>
                   <option value=""> --- </option>
@@ -100,7 +97,6 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.supertitulo && touched.supertitulo ? <div className="invalid-feedback">{errors.supertitulo}</div> : null}
               </FormGroup>
-            </Col>
 
           </Row>
 

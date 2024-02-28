@@ -1,5 +1,4 @@
 'use client'
-'use client'
 import React, { useState, useEffect } from 'react';
 import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
@@ -122,24 +121,23 @@ const CU = ({ selected, onClose }) => {
       // {({ errors, touched, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="6" className='px-3'>
-              <h4>Datos personales</h4>
-              <FormGroup>
+              <h4>Datos del proveedor</h4>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="nombre">Nombre</Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="apellido">Apellido</Label>
                 <Field name="apellido" id="apellido" className={`form-control ${errors.apellido && touched.apellido && 'is-invalid'}`} />
                 {errors.apellido && touched.apellido ? <div className="invalid-feedback">{errors.apellido}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="razon_social">Razon Social</Label>
                 <Field name="razon_social" id="razon_social" className={`form-control ${errors.razon_social && touched.razon_social && 'is-invalid'}`} />
                 {errors.razon_social && touched.razon_social ? <div className="invalid-feedback">{errors.razon_social}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="tipo_documento">Tipo de documento</Label>
                 <Field component="select" name="tipo_documento" id="tipo_documento" className={`form-control ${errors.tipo_documento && touched.tipo_documento && 'is-invalid'}`}>
                   <option defaultValue={null}>---</option>
@@ -149,36 +147,23 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.tipo_documento && touched.tipo_documento ? <div className="invalid-feedback">{errors.tipo_documento}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="numero_documento">Numero de documento</Label>
                 <Field type="number" step="1" name="numero_documento" id="numero_documento" className={`form-control ${errors.numero_documento && touched.numero_documento && 'is-invalid'}`} />
                 {errors.numero_documento && touched.numero_documento ? <div className="invalid-feedback">{errors.numero_documento}</div> : null}
               </FormGroup>
-              <FormGroup>
-                <Label for="fecha_nacimiento">Fecha de Nacimiento</Label>
-                <Field name="fecha_nacimiento" type="date" id="fecha_nacimiento" className={`form-control ${errors.fecha_nacimiento && touched.fecha_nacimiento && 'is-invalid'}`} />
-                {errors.fecha_nacimiento && touched.fecha_nacimiento ? <div className="invalid-feedback">{errors.fecha_nacimiento}</div> : null}
-              </FormGroup>
-              <FormGroup>
-                <Label for="es_extranjero">Es extranjero?</Label>
-                <Field type="checkbox" name="es_extranjero" id="es_extranjero" className={`form-control ${errors.es_extranjero && touched.es_extranjero && 'is-invalid'}`} />
-                {errors.es_extranjero && touched.es_extranjero ? <div className="invalid-feedback">{errors.es_extranjero}</div> : null}
-              </FormGroup>
-            </Col>
-            <Col sm="6" className='px-3'>
-              <h4>Otros datos</h4>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="mail">Direccion de email</Label>
                 <Field name="mail" type="email" id="mail" className={`form-control ${errors.mail && touched.mail && 'is-invalid'}`} />
                 {errors.mail && touched.mail ? <div className="invalid-feedback">{errors.mail}</div> : null}
               </FormGroup>
 
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="telefono">Telefono</Label>
                 <Field name="telefono" id="telefono" className={`form-control ${errors.telefono && touched.telefono && 'is-invalid'}`} />
                 {errors.telefono && touched.telefono ? <div className="invalid-feedback">{errors.telefono}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="provincia">Provincia</Label>
                 <Field component="select" name="provincia" id="provincia" className={`form-control ${errors.provincia && touched.provincia && 'is-invalid'}`}>
                   {provincias.map((provincia, i) => {
@@ -187,22 +172,22 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.provincia && touched.provincia ? <div className="invalid-feedback">{errors.provincia}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="localidad">Localidad</Label>
                 <Field name="localidad" id="localidad" className={`form-control ${errors.localidad && touched.localidad && 'is-invalid'}`} />
                 {errors.localidad && touched.localidad ? <div className="invalid-feedback">{errors.localidad}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="calle">Calle</Label>
                 <Field name="calle" id="calle" className={`form-control ${errors.calle && touched.calle && 'is-invalid'}`} />
                 {errors.calle && touched.calle ? <div className="invalid-feedback">{errors.calle}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="numero">Numero</Label>
                 <Field name="numero" id="numero" className={`form-control ${errors.numero && touched.numero && 'is-invalid'}`} />
                 {errors.numero && touched.numero ? <div className="invalid-feedback">{errors.numero}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="titulo">Titulo contable</Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>
                   {titulos.map((titulo, i) => {
@@ -211,35 +196,6 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.titulo && touched.titulo ? <div className="invalid-feedback">{errors.titulo}</div> : null}
               </FormGroup>
-            </Col>
-
-            <Col xs={12}>
-              <hr />
-            </Col>
-
-            <Col sm="6" className='px-3'>
-
-
-              <FormGroup>
-                <Label for="retiene">Retiene</Label>
-                <Select
-                  isMulti
-                  placeholder=""
-                  name="retiene"
-                  id="retiene"
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  error={errors.retiene && touched.retiene}
-                  options={optionsRetiene}    
-                  onChange={(option) => setFieldValue('retiene', option)}
-                  value={values.retiene}
-                />
-
-                {errors.retiene && touched.retiene ? <div className="error-feedback">{errors.retiene}</div> : null}
-              </FormGroup>
-
-            </Col>
-
 
           </Row>
 

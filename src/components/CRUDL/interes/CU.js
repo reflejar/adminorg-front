@@ -1,5 +1,6 @@
+'use client'
 import React from 'react';
-import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
+import { Row, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
 import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
@@ -56,19 +57,19 @@ const CU = ({ selected, onClose }) => {
       {({ errors, touched, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="12">
-              <h4>Datos Principales</h4>
-              <FormGroup>
+            
+              <h4>Datos de la metodología de interés</h4>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="nombre">Nombre</Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="plazo">Plazo</Label>
                 <Field type="number" step="1" name="plazo" id="plazo" className={`form-control ${errors.plazo && touched.plazo && 'is-invalid'}`} />
                 {errors.plazo && touched.plazo ? <div className="invalid-feedback">{errors.plazo}</div> : null}
               </FormGroup>                  
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="tipo">Tipo de interes</Label>
                 <Field component="select" name="tipo" id="tipo" className={`form-control ${errors.tipo && touched.tipo && 'is-invalid'}`}>
                   {tipos.map((tipo, i) => {
@@ -77,12 +78,12 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.tipo && touched.tipo ? <div className="invalid-feedback">{errors.tipo}</div> : null}
               </FormGroup>    
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="monto">Monto</Label>
                 <Field type="number" step="0.01" name="monto" id="monto" className={`form-control ${errors.monto && touched.monto && 'is-invalid'}`} />
                 {errors.monto && touched.monto ? <div className="invalid-feedback">{errors.monto}</div> : null}
               </FormGroup>              
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="base_calculo">Base de calculo</Label>
                 <Field component="select" name="base_calculo" id="base_calculo" className={`form-control ${errors.base_calculo && touched.base_calculo && 'is-invalid'}`}>
                   {periodizaciones.map((periodo, i) => {
@@ -91,7 +92,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.base_calculo && touched.base_calculo ? <div className="invalid-feedback">{errors.base_calculo}</div> : null}
               </FormGroup>              
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="reconocimiento">Reconocimiento</Label>
                 <Field component="select" name="reconocimiento" id="reconocimiento" className={`form-control ${errors.reconocimiento && touched.reconocimiento && 'is-invalid'}`}>
                   {periodizaciones.map((periodo, i) => {
@@ -100,13 +101,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.reconocimiento && touched.reconocimiento ? <div className="invalid-feedback">{errors.reconocimiento}</div> : null}
               </FormGroup>                                     
-            </Col>
-
-            <Col xs={12}>
-              <hr />
-            </Col>
-
-
+              
           </Row>
 
           <Button type="submit" color="primary" className="button-clip-loader" disabled={isSubmitting}>

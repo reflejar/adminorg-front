@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import BasicModal from '@/components/modal/basic';
 
 // import Clientes from '@/components/CRUDL/cliente/L';
-import Documentos from "@/components/CRUDL/documento/L";
+import Documentos from "@/components/CRUDL/comprobante/L";
 import CHOICES from "@/components/CRUDL/comprobante/components/choices";
 import Listado from '@/components/listados';
 import { useClientes } from "@/utility/hooks/dispatchers";

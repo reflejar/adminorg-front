@@ -1,7 +1,6 @@
 'use client'
-'use client'
 import React, { useState, useEffect } from 'react';
-import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
+import { Row,FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from "formik";
 import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
@@ -88,14 +87,13 @@ const CU = ({ selected, onClose }) => {
       {({ errors, touched, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col sm="12">
-              <h4>Datos Principales</h4>
-              <FormGroup>
+              <h4>Datos del ingreso</h4>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="nombre">Nombres</Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="taxon">Tipo de recurso</Label>
                 <Field component="select" name="taxon" id="taxon" className={`form-control ${errors.taxon && touched.taxon && 'is-invalid'}`}>
                   {ingresos.map((ingreso, i) => {
@@ -105,7 +103,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.taxon && touched.taxon ? <div className="invalid-feedback">{errors.taxon}</div> : null}
               </FormGroup>     
                           
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="interes">Metodologia de intereses</Label>
                 <Field component="select" name="interes" id="interes" className={`form-control ${errors.interes && touched.interes && 'is-invalid'}`}>
                   <option value={""}>---</option>
@@ -115,7 +113,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.interes && touched.interes ? <div className="invalid-feedback">{errors.interes}</div> : null}
               </FormGroup>
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="descuento">Metodologia de descuentos</Label>
                 <Field component="select" name="descuento" id="descuento" className={`form-control ${errors.descuento && touched.descuento && 'is-invalid'}`}>
                 <option value={""}>---</option>
@@ -125,7 +123,7 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.descuento && touched.descuento ? <div className="invalid-feedback">{errors.descuento}</div> : null}
               </FormGroup>    
-              <FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
                 <Label for="titulo">Titulo contable</Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>
                 <option value={""}>---</option>
@@ -135,12 +133,6 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.titulo && touched.titulo ? <div className="invalid-feedback">{errors.titulo}</div> : null}
               </FormGroup>                                       
-            </Col>
-
-            <Col xs={12}>
-              <hr />
-            </Col>
-
 
           </Row>
 
