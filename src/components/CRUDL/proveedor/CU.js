@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { proveedoresActions } from '@/redux/actions/proveedores';
 import { toastr } from "react-redux-toastr";
 
-import { Select } from '@/components/Select';
 import { mapToOptions } from '@/utility/mappers';
 import Spinner from '@/components/spinner/spinner';
 import { provincias } from '@/utility/options/provincias';
