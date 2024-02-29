@@ -1,8 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {Numero} from "@/utility/formats";
-import { useDeudas, useSaldos } from '@/utility/hooks/dispatchers';
+import { useDeudas, useSaldos } from '@/utility/hooks';
 import Spinner from '@/components/spinner/spinner';
 
 import BasicModal from '@/components/modal/basic';
@@ -16,7 +16,8 @@ export default function Deudas(props) {
             open: false,
             item: null
         });
-  
+
+
   const data = [...saldos.map((saldo) => ({...saldo, monto: -saldo.monto, saldo: -saldo.saldo})), ...deudas];
   const columns = [{
       Header: 'Fecha',
@@ -36,9 +37,6 @@ export default function Deudas(props) {
     }, {
       Header: 'Pagado/Utilizado',
       accessor: 'pago_capital',      
-    }, {
-      Header: 'Intereses/Descuentos',
-      accessor: 'interes',
     }, {
       Header: 'Saldo',
       accessor: 'saldo',

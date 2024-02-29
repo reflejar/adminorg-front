@@ -8,9 +8,7 @@ const get = (params) => async (dispatch) => {
     path = path + `&titulo=${params.titulo}`
   }
   const response = await Service.get(path);
-  if (response && response.data) {
-    return response.data;
-  }
+  if (response && response.data) return response.data
 };
 
 export const cuentasActions = {

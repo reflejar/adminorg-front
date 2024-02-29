@@ -10,7 +10,7 @@ import { toastr } from "react-redux-toastr";
 import { naturalezas } from './_options';
 
 import Spinner from '@/components/spinner/spinner';
-import { useTitulos } from '@/utility/hooks/dispatchers';
+import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';
 

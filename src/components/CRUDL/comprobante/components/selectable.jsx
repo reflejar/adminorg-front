@@ -48,9 +48,8 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                 </tr>
                 </thead>
                 <tbody>
-                    {console.log(grouped)}
                 {grouped.map((row, i) => {
-                    return (<tr key={i}>
+                    return (<tr key={i} >
                     <td>
                         <input 
                         className="form-check" 

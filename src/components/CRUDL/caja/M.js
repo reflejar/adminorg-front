@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 // Components
 import Spinner from '@/components/spinner/spinner';
 import { ImportFileDropzone } from '@/components/dropzone/ImportFileDropzone';
-import { useTitulos } from "@/utility/hooks/dispatchers";
+import { useTitulos } from "@/utility/hooks";
 import { cajas } from '@/utility/options/taxones';
 
 // Styles

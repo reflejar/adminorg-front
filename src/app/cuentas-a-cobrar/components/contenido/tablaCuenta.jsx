@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {Numero} from "@/utility/formats";
-import { useEstadoCuenta } from '@/utility/hooks/dispatchers';
+import { useEstadoCuenta } from '@/utility/hooks';
 import Spinner from '@/components/spinner/spinner';
 
 import BasicModal from '@/components/modal/basic';
@@ -17,10 +17,6 @@ export default function Deudas(props) {
             item: null
         });
   
-
-  useEffect(()=> {
-    
-  }, [modal.open])
 
   const data = [...cuentas];
   const columns =[{

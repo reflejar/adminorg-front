@@ -12,7 +12,7 @@ import { clientesActions } from '@/redux/actions/clientes';
 import Spinner from '@/components/spinner/spinner';
 import { provincias } from '@/utility/options/provincias';
 import { tipo_documentos } from '@/utility/options/documentos';
-import { useTitulos } from '@/utility/hooks/dispatchers';
+import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';
 

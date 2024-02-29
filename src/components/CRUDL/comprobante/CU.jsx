@@ -3,7 +3,7 @@ import Portlet from "./components/portlet";
 import Encabezado from "./components/encabezado";
 import Selectable from "./components/selectable";
 import Appendable from "./components/appendable";
-import { useCajas, useDeudas, useDisponibilidades, useGastos, useIngresos, useSaldos } from "@/utility/hooks/dispatchers";
+import { useCajas, useDeudas, useDisponibilidades, useGastos, useIngresos, useSaldos } from "@/utility/hooks";
 import { deudasActions } from '@/redux/actions/deudas';
 import { saldosActions } from '@/redux/actions/saldos';
 import { cuentasActions } from '@/redux/actions/cuentas';
@@ -14,6 +14,7 @@ import moment from "moment";
 
 
 export default function Comprobante({ moduleHandler, destinatario, documentoId, onlyRead, onClose }) {
+
     const dispatch = useDispatch();
     const [ingresos, loadingIngresos] = useIngresos();
     const [cajas, loadingCajas] = useCajas();

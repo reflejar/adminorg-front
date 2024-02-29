@@ -9,11 +9,10 @@ import { useDispatch } from 'react-redux';
 import { proveedoresActions } from '@/redux/actions/proveedores';
 import { toastr } from "react-redux-toastr";
 
-import { mapToOptions } from '@/utility/mappers';
 import Spinner from '@/components/spinner/spinner';
 import { provincias } from '@/utility/options/provincias';
 import { tipo_documentos } from '@/utility/options/documentos';
-import { useRetenciones, useTitulos } from '@/utility/hooks/dispatchers';
+import { useRetenciones, useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';
 
@@ -25,7 +24,6 @@ const CU = ({ selected, onClose }) => {
   const [titulos, loadingTitulos] = useTitulos();
   const [tituloPred, setTituloPred] = useState();
   let retiene = [];
-  let optionsRetiene = [];
 
   useEffect(() => {
     setTituloPred(titulos.find(titulo => titulo.predeterminado === "proveedor"))
@@ -48,17 +46,7 @@ const CU = ({ selected, onClose }) => {
     )
   }
   
-  if (selected && selected.retiene){
-    retiene = selected.retiene
-    .map((val) => ({ value: val, label: get(retenciones.find(x => x.id === val), 'nombre') }));
-    optionsRetiene = [
-      ...mapToOptions(filterAvailables(retenciones)),
-      ...mapToOptions(retenciones.filter((x) => x.inquilino === selected.id))
-    ];
-  } else {
-    optionsRetiene = mapToOptions(filterAvailables(retenciones));
-  }
-  
+
 
   return (
     <Formik

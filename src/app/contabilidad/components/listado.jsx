@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from "react";
 import { connect } from "react-redux";
 import { Table } from 'reactstrap';
-import { useTitulos } from "@/utility/hooks/dispatchers";
+import { useTitulos } from "@/utility/hooks";
 import { titulosActions } from "@/redux/actions/titulos";
 import ModalNew from './modals/titulo';
 

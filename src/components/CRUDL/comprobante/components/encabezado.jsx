@@ -1,4 +1,4 @@
-import { usePuntosDeVenta } from "@/utility/hooks/dispatchers";
+import { usePuntosDeVenta } from "@/utility/hooks";
 import CHOICES from "./choices";
 import Portlet from "./portlet";
 

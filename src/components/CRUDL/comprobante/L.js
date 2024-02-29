@@ -8,7 +8,7 @@ import { Table, Button, Form, Input, Row, Col, FormGroup, Label } from 'reactstr
 
 import Spinner from '@/components/spinner/spinner';
 import { documentosActions } from '@/redux/actions/documentos';
-import { usePuntosDeVenta } from '@/utility/hooks/dispatchers';
+import { usePuntosDeVenta } from '@/utility/hooks';
 
 class DocumentosTable extends React.Component {
   render () {

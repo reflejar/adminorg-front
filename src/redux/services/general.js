@@ -10,7 +10,6 @@ const initialHeaders = () => ({
 })
 
 const get = (apiEndpoint) => {
-    console.trace("get() called from:");
     let headers = initialHeaders();
     return axios.get(config.baseUrl+apiEndpoint, { headers })
     .then((response) => {return response})

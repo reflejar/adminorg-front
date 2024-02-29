@@ -248,7 +248,7 @@ export const useEstadoCuenta = (selected) => {
         .then((response) => setCuentas(response))
         .finally(() => setLoading(false));
     }
-  }, [selected]);
+  }, [selected.id]);
 
   return [cuentas, loading];
 };
@@ -256,8 +256,8 @@ export const useEstadoCuenta = (selected) => {
 export const useSaldos = (selected, date) => {
   const [loading, setLoading] = useState(false);
   const [saldos, setSaldos] = useState([]);
-  
   const dispatch = useDispatch();
+  
   useEffect(() => {
     if (selected) {
       setLoading(true);
