@@ -9,42 +9,7 @@ import { Table, Button, Form, Input, Row, Col, FormGroup, Label } from 'reactstr
 import Spinner from '@/components/spinner/spinner';
 import { documentosActions } from '@/redux/actions/documentos';
 import { usePuntosDeVenta } from '@/utility/hooks';
-
-class DocumentosTable extends React.Component {
-  render () {
-    return (
-      <Table responsive borderless>
-        <thead>
-          <tr>
-            {this.props.headers.map(h => (
-              <th>{h.label}</th>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {this.props.data.map((documento) => {
-            
-
-            return (
-              <tr key={documento.id}>
-                <td>{documento.receipt.receipt_type}</td>
-                <td>{moment(documento.receipt.issued_date).format("DD/MM/YYYY")}</td>
-                <td>{documento.receipt.point_of_sales}</td>
-                <td>{documento.receipt.receipt_number}</td>
-                <td>{documento.portador}</td>
-                <td>{documento.receipt.total_amount}</td>
-                <td>{documento.fecha_anulacion && "Anulado"}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    )
-  }
-}
-
-
+import Listado from '@/components/listados';
 
 const initialFields = {
   receipt_type: '',
@@ -55,13 +20,10 @@ const initialFields = {
 };
 
 const headers = [
-  { label: 'Tipo', key: 'receipt.receipt_type' },
   { label: 'Fecha', key: 'receipt.issued_date' },
-  { label: 'Punto de Venta', key: 'receipt.point_of_sales' },
-  { label: 'Numero', key: 'receipt.receipt_number' },
-  { label: 'Portador', key: 'destinatario' },
+  { label: 'Comprobante', key: 'nombre' },
+  { label: 'Portador', key: 'portador' },
   { label: 'Total', key: 'receipt.total_amount' },
-  { label: 'Obs', key: 'fecha_anulacion' },
 ];
 
 const LStep = ({ causante, documentosTypes }) => {
@@ -181,27 +143,7 @@ const LStep = ({ causante, documentosTypes }) => {
     );
   }
 
-  return (
-    <div className="registration__results">
-      <div className="registration__actions">
-        <ReactToPrint
-          trigger={() => <div className='btn btn-outline-secondary mx-2' outline>Imprimir</div>}
-          content={() => ref.current}
-        />
-        <CSVLink
-          headers={headers}
-          data={dataForTable}
-          target="_blank"
-          filename="adminorg-documentos.csv">
-          <div className='btn btn-outline-secondary'>
-              CSV
-          </div>
-        </CSVLink>
-      </div>
-
-      <DocumentosTable headers={headers} data={dataForTable} ref={ref} />
-    </div>
-  );
+  return <Listado columns={headers} items={dataForTable} />;
 };
 
 export default LStep;

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Table } from 'reactstrap';
 import { useTitulos } from "@/utility/hooks";
 import { titulosActions } from "@/redux/actions/titulos";
-import ModalNew from './modals/titulo';
+import ModalNew from './contenido/modalTitulo';
 
 import Spinner from "@/components/spinner/spinner";
 
