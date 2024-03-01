@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Proveedor from "@/components/CRUDL/proveedor/CU";
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 
 
 class ModalProveedor extends Component {

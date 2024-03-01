@@ -5,7 +5,7 @@ import { useTitulos } from "@/utility/hooks";
 import { titulosActions } from "@/redux/actions/titulos";
 import ModalNew from './contenido/modalTitulo';
 
-import Spinner from "@/components/spinner/spinner";
+import Spinner from "@/components/spinner";
 
 const Item = ({ indentation, item, children, titulos, filterChildren, selected, setSelected }) => {
     const indentationItem = indentation + "px";

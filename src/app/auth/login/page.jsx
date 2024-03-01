@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/contexts/authContext";
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import Image from "next/image"
 
 function Login() {

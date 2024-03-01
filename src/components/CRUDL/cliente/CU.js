@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { toastr } from "react-redux-toastr";
 
 import { clientesActions } from '@/redux/actions/clientes';
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import { provincias } from '@/utility/options/provincias';
 import { tipo_documentos } from '@/utility/options/documentos';
 import { useTitulos } from '@/utility/hooks';

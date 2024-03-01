@@ -9,7 +9,7 @@ import { saldosActions } from '@/redux/actions/saldos';
 import { cuentasActions } from '@/redux/actions/cuentas';
 import { documentosActions } from '@/redux/actions/documentos';
 import { useDispatch } from "react-redux";
-import Spinner from "@/components/spinner/spinner";
+import Spinner from "@/components/spinner";
 import moment from "moment";
 
 

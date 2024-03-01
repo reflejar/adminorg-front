@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Cliente from "@/components/CRUDL/cliente/CU";
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 
 
 export default function Modal () {

@@ -10,7 +10,7 @@ import { cajasActions } from '@/redux/actions/cajas';
 import { toastr } from "react-redux-toastr";
 
 import { cajas } from '@/utility/options/taxones';
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';

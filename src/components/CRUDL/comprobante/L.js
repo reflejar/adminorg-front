@@ -2,7 +2,7 @@
 import React, { useMemo, useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import { documentosActions } from '@/redux/actions/documentos';
 import { usePuntosDeVenta } from '@/utility/hooks';
 import Listado from '@/components/listados';

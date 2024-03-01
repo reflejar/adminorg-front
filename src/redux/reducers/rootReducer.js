@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 
-import customizer from "./customizer/";
 import { reducer as toastrReducer } from "react-redux-toastr";
 
 import clientes from './clientes';
@@ -27,7 +26,6 @@ import carpetas from './carpetas';
 
 const appReducer = combineReducers({
    toastr: toastrReducer, // <- Mounted at toastr.
-   customizer,
    clientes,
    carpetas,
    dominios,

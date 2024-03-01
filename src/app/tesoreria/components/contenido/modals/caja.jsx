@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Caja from "@/components/CRUDL/caja/CU";
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 
 
 class ModalCaja extends Component {

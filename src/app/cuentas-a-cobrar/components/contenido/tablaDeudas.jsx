@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import moment from 'moment';
 
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 import Comprobante from '@/components/CRUDL/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';

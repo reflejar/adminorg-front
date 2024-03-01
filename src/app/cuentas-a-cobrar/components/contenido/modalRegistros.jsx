@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 
 import Documentos from "@/components/CRUDL/comprobante/L";
 import CHOICES from "@/components/CRUDL/comprobante/components/choices";

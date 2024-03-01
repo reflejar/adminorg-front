@@ -41,16 +41,16 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
             <div className="col-md-12">
             {grouped.length === 0 ? <div className="text-center fs-4">...No hay items...</div> : <table className="table table-condensed table-responsive">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th>Concepto</th>
-                    <th>Monto</th>
+                <tr className="row">
+                    <th className="col-md-2"></th>
+                    <th className="col-md-8">Concepto</th>
+                    <th className="col-md-2">Monto</th>
                 </tr>
                 </thead>
                 <tbody>
                 {grouped.map((row, i) => {
-                    return (<tr key={i} >
-                    <td>
+                    return (<tr key={i} className="row" >
+                    <td className="col-md-2">
                         <input 
                         className="form-check" 
                         type="checkbox" 
@@ -61,10 +61,10 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                         onChange={handleChange}
                         />
                     </td>
-                    <td>{row.concepto}</td>
-                    <td>
+                    <td className={`col-md-8 ${onlyRead && "text-muted"}`}>{row.concepto}</td>
+                    <td className="col-md-2">
                         <input 
-                        className="form-control input-sm" 
+                        className="form-control input-sm "
                         type="number" 
                         value={row.monto} 
                         name={`${i}.monto`} 

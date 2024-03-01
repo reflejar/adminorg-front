@@ -26,7 +26,7 @@ const Listado = ({ items, columns, paginator }) => {
 
                 <CSVLink
                 target="_blank"
-                filename="adminorg.csv"
+                filename="listado.csv"
                 headers={columns}          
                 data={dataForTable}>
                     <button className='btn btn-sm bi-filetype-csv btn-outline-success' />

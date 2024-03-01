@@ -10,7 +10,7 @@ import { gastosActions } from '@/redux/actions/gastos';
 import { toastr } from "react-redux-toastr";
 
 import { gastos } from '@/utility/options/taxones';
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';

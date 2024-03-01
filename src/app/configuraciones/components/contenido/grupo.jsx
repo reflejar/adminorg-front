@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux'
 
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import Listado from '@/components/listados';
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 
 import { clientesActions } from '@/redux/actions/clientes';
 import { proveedoresActions } from '@/redux/actions/proveedores';

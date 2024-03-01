@@ -1,11 +1,11 @@
 'use client'
 import React, { useState } from 'react';
 import { useEstadoCuenta } from '@/utility/hooks';
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinner';
 import Listado from '@/components/listados';
 
 
-import BasicModal from '@/components/modal/basic';
+import BasicModal from '@/components/modal';
 import Comprobante from '@/components/CRUDL/comprobante/CU';
 
 

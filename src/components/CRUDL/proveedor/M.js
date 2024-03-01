@@ -8,8 +8,8 @@ import { CSVLink } from "react-csv";
 import { useDispatch } from 'react-redux';
 
 // Components
-import Spinner from '@/components/spinner/spinner';
-import { ImportFileDropzone } from '@/components/dropzone/ImportFileDropzone';
+import Spinner from '@/components/spinner';
+import { ImportFileDropzone } from '@/components/ImportFileDropzone';
 import { useTitulos } from "@/utility/hooks";
 import { tipo_documentos } from '@/utility/options/documentos';
 
