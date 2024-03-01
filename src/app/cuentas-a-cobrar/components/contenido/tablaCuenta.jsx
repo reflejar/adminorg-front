@@ -11,7 +11,7 @@ import Comprobante from '@/components/CRUDL/comprobante/CU';
 
 export default function Deudas(props) {
   const { selected } = props;
-  const [cuentas, loadingCuentas] = useEstadoCuenta(selected);
+  const [cuentas, loadingCuentas, infoPaginator] = useEstadoCuenta(selected);
   const [modal, setModal] = useState({
             open: false,
             item: null
@@ -68,7 +68,7 @@ export default function Deudas(props) {
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={data} columns={columns} />
+    <Listado items={data} columns={columns} paginator={infoPaginator} />
     </>
     );
 };

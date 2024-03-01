@@ -1,18 +1,43 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 
-import {Numero} from "@/utility/formats";
-import { useDeudas, useSaldos } from '@/utility/hooks';
 import Spinner from '@/components/spinner/spinner';
+import moment from 'moment';
 
 import BasicModal from '@/components/modal/basic';
 import Comprobante from '@/components/CRUDL/comprobante/CU';
 import Listado from '@/components/listados';
+import { useDispatch, useSelector } from 'react-redux';
+import { deudasActions } from '@/redux/actions/deudas';
+import { saldosActions } from '@/redux/actions/saldos';
 
 export default function Deudas(props) {
   const { selected } = props;
-  const [deudas, loadingDeudas] = useDeudas(selected);
-  const [saldos, loadingSaldos] = useSaldos(selected);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const deudas = useSelector(state => state.deudas.list)
+  const saldos = useSelector(state => state.saldos.list)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Despacha las acciones de forma secuencial
+        await dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(new Date()).format('YYYY-MM-DD'), save: true }));
+        await dispatch(saldosActions.get({ destinatario: selected.id, fecha: moment(new Date()).format('YYYY-MM-DD'), save: true }));
+      } catch (error) {
+        console.error('Error al despachar acciones:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selected) {
+      fetchData();
+    }
+  }, [selected, dispatch]);
+
+
   const [modal, setModal] = useState({
             open: false,
             item: null
@@ -23,7 +48,6 @@ export default function Deudas(props) {
         item: rowInfo
     });
   };
-
   const data = [...saldos.map((saldo) => ({...saldo, monto: -saldo.monto, saldo: -saldo.saldo})), ...deudas];
   const columns = [{
       label: 'Fecha',
@@ -58,7 +82,6 @@ export default function Deudas(props) {
             onToggle={handleModal}
             header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
             footer={false}
-            // component={selectDocument(modal.item.causante, modal.item.documento.receipt.receipt_type)}
             component={<Comprobante 
                 moduleHandler={modal.item.causante} 
                 destinatario={selected}
@@ -72,7 +95,7 @@ export default function Deudas(props) {
     } 
   }
 
-  if (loadingDeudas || loadingSaldos) return <Spinner />
+  if (loading) return <Spinner />
 
   return (<>
     {modal && modal.item && renderModal()}

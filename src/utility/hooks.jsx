@@ -220,7 +220,7 @@ export const useDeudas = (selected, date) => {
     if (selected) {
       setLoading(true);
       dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD') }))
-        .then((response) => setDeudas(response))
+        .then((response) => setDeudas(response.data))
         .finally(() => setLoading(false));
     }
   }, [selected]);
@@ -232,25 +232,42 @@ export const useDeudas = (selected, date) => {
 
 export const useEstadoCuenta = (selected) => {
   const [loading, setLoading] = useState(false);
-  const [cuentas, setCuentas] = useState([]);
+  const cuentas = useSelector(state => state.cuentas.list);
+  const page = useSelector(state => state.cuentas.page);
+  const [paginator, setPaginator] = useState({});
   const dispatch = useDispatch();
+
+  const setPage = (number) => {
+    dispatch({
+      type: 'SET_PAGE_STATUS_CUENTAS',
+      payload: number
+    });
+  }
   
   useEffect(() => {
     if (selected) {
       setLoading(true);
       const esTitulo = selected.hasOwnProperty("supertitulo");
-      let query = { destinatario: selected.id, fecha: moment().format('YYYY-MM-DD') }
+      let query = { destinatario: selected.id, fecha: moment().format('YYYY-MM-DD'), page: page, save:true }
       if (esTitulo) {
         query = {...query, titulo:1};
       }
 
       dispatch(cuentasActions.get(query))
-        .then((response) => setCuentas(response))
+        .then((response) => {
+          setPaginator(response.paginator)
+        })
         .finally(() => setLoading(false));
     }
-  }, [selected.id]);
+  }, [selected.id, page]);
 
-  return [cuentas, loading];
+  const infoPaginator = {
+    page,
+    ...paginator,
+    setPage
+  }
+
+  return [cuentas, loading, infoPaginator];
 };
 
 export const useSaldos = (selected, date) => {
@@ -262,7 +279,7 @@ export const useSaldos = (selected, date) => {
     if (selected) {
       setLoading(true);
       dispatch(saldosActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD') }))
-        .then((response) => setSaldos(response))
+        .then((response) => setSaldos(response.data))
         .finally(() => setLoading(false));
     }
   }, [selected]);

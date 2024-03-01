@@ -140,13 +140,12 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
 
     useEffect(() => {
         setCanSend(validate(documento))
-
     }, [documento])
     
     const updateSituation = useCallback(() => {
-        dispatch(deudasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD') }));
-        dispatch(saldosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD') }));
-        dispatch(cuentasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD') }));
+        dispatch(deudasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true }));
+        dispatch(saldosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true }));
+        dispatch(cuentasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true, page: 1 }));
     }, [dispatch, destinatario] );
 
     const handleSubmit = useCallback((event) => {

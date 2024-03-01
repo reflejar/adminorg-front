@@ -7,7 +7,15 @@ const get = (params) => async (dispatch) => {
   path = path + "&condonacion=1";
 
   const response = await Service.get(path);
-  if (response && response.data) return response.data
+  if (response && response.data) {
+    if (params.save) {
+      dispatch({
+        type: 'GET_DEUDAS',
+        payload: response.data.data
+      })
+    }
+    return response.data
+  }
 };
 
 export const deudasActions = {

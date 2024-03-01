@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import ReactToPrint from 'react-to-print';
 import {Numero} from "@/utility/formats";
 
-const Listado = ({ items, columns }) => {
+const Listado = ({ items, columns, paginator }) => {
     const ref = useRef(null);
 
     const dataForTable = useMemo(() => {
@@ -17,9 +17,11 @@ const Listado = ({ items, columns }) => {
 
     return (
         <div>
+            <div className="d-flex justify-content-between">
+            <div>
                 <ReactToPrint
-                trigger={() => <button className='btn btn-sm bi-printer btn-outline-secondary mx-2'/>}
-                content={() => ref.current}
+                    trigger={() => <button className='btn btn-sm bi-printer btn-outline-secondary me-2'/>}
+                    content={() => ref.current}
                 />
 
                 <CSVLink
@@ -29,8 +31,28 @@ const Listado = ({ items, columns }) => {
                 data={dataForTable}>
                     <button className='btn btn-sm bi-filetype-csv btn-outline-success' />
                 </CSVLink>
+            </div>
+            <div className="btn-toolbar">
+                
+                    {paginator && <div className='d-flex '>
+                        <div className="btn-group mr-2">
+                            {paginator.has_previous && <button onClick={()=> paginator.setPage(paginator.page - 1)} className="btn btn-sm btn-outline-dark"><i className="bi-chevron-left" /></button>}
+                            <button className="btn btn-sm btn-outline-dark active">{paginator.page}</button>
+                            {paginator.has_next && <button onClick={()=> paginator.setPage(paginator.page + 1)} className="btn btn-sm btn-outline-dark"><i className="bi-chevron-right" /></button>}
+                        </div>
+                        {/* <input type="number" className='ms-3' style={{width: 40}} onChange={(e) => {
+                            e.preventDefault()
+                            e.target.value && paginator.setPage(e.target.value)
+                        }} value={paginator.page} min={1} max={paginator.num_pages} /> */}
+                    </div>}
 
-            <table className='table table-responsive table-sm table-striped'>
+                
+                </div>
+            </div>
+
+
+
+            <table className='mt-3 table table-responsive table-sm table-striped'>
                 <thead>
                 <tr>
                     {columns.map(t => (
