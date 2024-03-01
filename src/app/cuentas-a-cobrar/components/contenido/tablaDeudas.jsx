@@ -7,6 +7,7 @@ import Spinner from '@/components/spinner/spinner';
 
 import BasicModal from '@/components/modal/basic';
 import Comprobante from '@/components/CRUDL/comprobante/CU';
+import Listado from '@/components/listados';
 
 export default function Deudas(props) {
   const { selected } = props;
@@ -16,38 +17,37 @@ export default function Deudas(props) {
             open: false,
             item: null
         });
-
-
-  const data = [...saldos.map((saldo) => ({...saldo, monto: -saldo.monto, saldo: -saldo.saldo})), ...deudas];
-  const columns = [{
-      Header: 'Fecha',
-      accessor: 'fecha'
-    }, {
-      Header: 'Documento',
-      accessor: 'nombre'
-    }, {
-      Header: 'Concepto',
-      accessor: 'concepto'
-    }, {
-      Header: 'Periodo',
-      accessor: 'periodo'
-    }, {
-      Header: 'Monto',
-      accessor: 'monto',
-    }, {
-      Header: 'Pagado/Utilizado',
-      accessor: 'pago_capital',      
-    }, {
-      Header: 'Saldo',
-      accessor: 'saldo',
-  }];    
-
-  const handleToggle = (rowInfo) => {
+  const handleModal = (rowInfo) => {
     setModal({
         open: !modal.open,
         item: rowInfo
     });
   };
+
+  const data = [...saldos.map((saldo) => ({...saldo, monto: -saldo.monto, saldo: -saldo.saldo})), ...deudas];
+  const columns = [{
+      label: 'Fecha',
+      key: 'fecha'
+    }, {
+      label: 'Documento',
+      key: 'nombre',
+      onClick: handleModal
+    }, {
+      label: 'Concepto',
+      key: 'concepto'
+    }, {
+      label: 'Periodo',
+      key: 'periodo'
+    }, {
+      label: 'Monto',
+      key: 'monto',
+    }, {
+      label: 'Pagado/Utilizado',
+      key: 'pago_capital',      
+    }, {
+      label: 'Saldo',
+      key: 'saldo',
+  }];    
 
   const renderModal = () => {
     if (modal.item && modal.item.documento) {
@@ -55,7 +55,7 @@ export default function Deudas(props) {
       return (
           <BasicModal
             open={modal.open}
-            onToggle={handleToggle}
+            onToggle={handleModal}
             header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
             footer={false}
             // component={selectDocument(modal.item.causante, modal.item.documento.receipt.receipt_type)}
@@ -63,7 +63,7 @@ export default function Deudas(props) {
                 moduleHandler={modal.item.causante} 
                 destinatario={selected}
                 documentoId={modal.item.documento.id}
-                onClose={handleToggle}
+                onClose={handleModal}
                 onlyRead={true} 
               />}
             
@@ -74,33 +74,11 @@ export default function Deudas(props) {
 
   if (loadingDeudas || loadingSaldos) return <Spinner />
 
-  return (
-      <div className="table-responsive min-vh-75">
-        {modal && modal.item && renderModal()}
-          <table className='table table-sm table-striped table-bordered text-nowrap'>
-            <thead>
-              <tr>
-                {columns.map((col, key) => <th key={key}>{col.Header}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row, keyTr) => <tr key={keyTr}>
-                {columns.map((col, keyTd) => {
-                  const val = row[col.accessor]
-                  return <td 
-                            key={keyTd} 
-                            className={`${typeof val === "number" && "text-end"} ${col.Header === "Documento" && "pointer link-primary text-primary"}`}
-                            onClick={() => {col.Header === "Documento" && handleToggle(row)}}
-                            >
-                              {typeof val === "number" ? Numero(val) : val}
-                          </td>
-                })}
-              </tr>)}
-            </tbody>
-          </table>
-      </div>
-
-  );
+  return (<>
+    {modal && modal.item && renderModal()}
+    <Listado items={data} columns={columns} />
+    </>
+    );
 };
 
 

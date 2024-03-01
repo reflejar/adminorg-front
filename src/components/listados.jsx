@@ -3,7 +3,7 @@ import React, { useMemo, useRef } from 'react';
 import { CSVLink } from 'react-csv';
 import { get } from 'lodash';
 import ReactToPrint from 'react-to-print';
-
+import {Numero} from "@/utility/formats";
 
 const Listado = ({ items, columns }) => {
     const ref = useRef(null);
@@ -16,23 +16,19 @@ const Listado = ({ items, columns }) => {
     }, [items]);
 
     return (
-        <div className="registration__results">
-            <div className="registration__actions">
+        <div>
                 <ReactToPrint
-                trigger={() => <div className='btn btn-outline-secondary mx-2' outline>Imprimir</div>}
+                trigger={() => <button className='btn btn-sm bi-printer btn-outline-secondary mx-2'/>}
                 content={() => ref.current}
                 />
 
                 <CSVLink
                 target="_blank"
-                filename="adminorg-clientes.csv"
+                filename="adminorg.csv"
                 headers={columns}          
                 data={dataForTable}>
-                <div className='btn btn-outline-secondary'>
-                    CSV
-                </div>
+                    <button className='btn btn-sm bi-filetype-csv btn-outline-success' />
                 </CSVLink>
-            </div>
 
             <table className='table table-responsive table-sm table-striped'>
                 <thead>
@@ -47,7 +43,16 @@ const Listado = ({ items, columns }) => {
                 <tbody>
                     {items.map((item) => (
                         <tr key={item.id}>
-                            {columns.map((te, k) => (<td key={k}>{get(item, te.key, null)}</td>))}
+                            {columns.map((te, k) => {
+                                const value = get(item, te.key, null)
+                                return <td 
+                                        className={`${te.onClick !== undefined && "pointer link-primary text-primary"} ${typeof value === "number" && "text-end"}`} 
+                                        key={k}
+                                        onClick={() => {te.onClick !== undefined && te.onClick(item)}}
+                                        >
+                                            {te.key === "" ? <i className='bi-pencil' />: typeof value === "number" ? Numero(value) : value}
+                                        </td>
+                            })}
                         </tr>
                     ))}
                 </tbody>
