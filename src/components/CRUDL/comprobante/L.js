@@ -1,10 +1,6 @@
 'use client'
 import React, { useMemo, useState, useRef, useCallback } from 'react';
-import moment from "moment";
 import { useDispatch } from 'react-redux';
-import ReactToPrint from 'react-to-print';
-import { CSVLink } from 'react-csv';
-import { Table, Button, Form, Input, Row, Col, FormGroup, Label } from 'reactstrap';
 
 import Spinner from '@/components/spinner/spinner';
 import { documentosActions } from '@/redux/actions/documentos';
@@ -84,62 +80,63 @@ const LStep = ({ causante, documentosTypes }) => {
 
   if (!table) {
     return (
-      <Form className="row" onSubmit={handleSearch}>
-        <FormGroup className='col-sm-4 px-3'>
-          <Label>Tipo de documento</Label>
-          <Input type="select" name="select" onChange={handleChange('receipt_type')}>
+      <form className="row" onSubmit={handleSearch}>
+        <div className='col-sm-4 px-3 my-2'>
+          <label className='form-label'>Tipo de documento</label>
+          <select type="select" name="select" className='form-select' onChange={handleChange('receipt_type')}>
             <option value=''>---</option>
             {documentosTypes.map((type, i) => (
               <option key={i} value={type}>{type}</option>
             ))}
-          </Input>
-        </FormGroup>  
+          </select>
+        </div>  
 
-        <FormGroup className='col-sm-4 px-3'>
-          <Label>Punto de venta</Label>
+        <div className='col-sm-4 px-3 my-2'>
+          <label className='form-label'>Punto de venta</label>
 
-          <Input type="select" name="select" onChange={handleChange('point')}>
+          <select type="select" name="select" className='form-select' onChange={handleChange('point')}>
             <option value=''>---</option>
             {puntos.map((punto, i) => (
               <option key={i} value={punto.number}>{punto.number}</option>
             ))}
-          </Input>
-        </FormGroup>
+          </select>
+        </div>
 
-        <FormGroup className='col-sm-4 px-3'>
-          <Label>Numero de documento</Label>
-          <Input
+        <div className='col-sm-4 px-3 my-2'>
+          <label className='form-label'>Numero de documento</label>
+          <input
             value={fields.numero}
+            className='form-control'
             placeholder="#12345"
             label="Numero de documento"
             onChange={handleChange('numero')} />
-        </FormGroup>
-
-            <FormGroup className='col-sm-4 px-3'>
-              <Label>Desde</Label>
-              <Input
-                type="date"
-                name="start_date"
-                placeholder="Fecha desde"
-                onChange={handleChange('startDate')}
-              />
-            </FormGroup>
-
-            <FormGroup className='col-sm-4 px-3'>
-              <Label>Hasta</Label>
-              <Input
-                type="date"
-                name="end_date"
-                placeholder="Fecha hasta"
-                onChange={handleChange('endDate')}
-              />
-            </FormGroup>
-        <div className="text-end">
-        <Button type="submit" color="primary" className='mb-2 '>
-          Buscar
-        </Button>
         </div>
-      </Form>
+
+        <div className='col-sm-4 px-3 my-2'>
+          <label className='form-label'>Desde</label>
+          <input
+            type="date"
+            className='form-control'
+            name="start_date"
+            placeholder="Fecha desde"
+            onChange={handleChange('startDate')}
+          />
+        </div>
+
+        <div className='col-sm-4 px-3 my-2'>
+          <label className='form-label'>Hasta</label>
+          <input
+            type="date"
+            name="end_date"
+            className='form-control'
+            placeholder="Fecha hasta"
+            onChange={handleChange('endDate')}
+          />
+        </div>
+        <div className="text-end">
+          <button type="submit" className='btn btn-primary mb-2'>Buscar</button>
+        </div>
+      </form>
     );
   }
 

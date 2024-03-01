@@ -9,7 +9,6 @@ import {
     DropdownItem,
  } from "reactstrap";
 
-import {Select} from "@/components/Select"
 import { useAuthContext } from "@/contexts/authContext";
 
 
@@ -54,14 +53,15 @@ export default function Sidebar() {
                                 <i className="bi-person"></i> Ver Perfil
                             </DropdownItem>
                             {/* </Link> */}
-                            {currentUser && currentUser.admin_of.length > 0 && <Select
+                            {currentUser && currentUser.admin_of.length > 0 && <select
                                 name="comunidad"
                                 id="comunidad"
-                                classNamePrefix="select"
-                                options={currentUser.admin_of.map(c => ({label: c, value: c}))}    
+                                className="form-select my-2"
                                 onChange={(option) => changeCommunity(option.value)}
                                 value={currentUser.community}
-                                />}
+                                >
+                                    {currentUser.admin_of.map(c => (<option value={c}>{c}</option>))}
+                                </select>}
                             
                             {/* <Link disabled to="/faq" className="p-0"> */}
                             <DropdownItem disabled>
