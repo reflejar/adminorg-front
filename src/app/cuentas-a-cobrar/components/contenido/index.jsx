@@ -41,7 +41,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}
                             onClick={() => {setActiveTab("cuentas");}}
                         >
-                            Cuenta historica
+                            Movimientos
                         </a>
                     </li>
                     <li className="nav-item">

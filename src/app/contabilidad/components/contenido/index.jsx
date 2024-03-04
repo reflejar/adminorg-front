@@ -35,7 +35,7 @@ function Contenido(props) {
                         setActiveTab("1");
                         }}
                     >
-                        Cuenta historica
+                        Movimientos
                     </NavLink>
                     </NavItem>
                     <NavItem>
