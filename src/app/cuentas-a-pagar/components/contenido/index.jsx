@@ -2,18 +2,21 @@
 import { useState } from "react";
 import { connect } from 'react-redux'
 
+import Deudas from './tablaDeudas';
 import Cuenta from './tablaCuenta';
-import Info from "@/components/CRUDL/titulo/CU";
+import Info from "@/components/CRUDL/proveedor/CU";
 
 import ModalComprobante from './modalComprobante';
 import ModalRegistros from './modalRegistros';
 
 function Contenido({ selected }) {
 
-    const [activeTab, setActiveTab] = useState("cuentas");
+    const [activeTab, setActiveTab] = useState("deudas");
 
     const showContent = () => {
         switch (activeTab) {
+            case "deudas":
+                return <Deudas selected={selected}/>
             case "cuentas":
                 return <Cuenta selected={selected}/>
             case "info":
@@ -21,9 +24,18 @@ function Contenido({ selected }) {
         }  
     }
 
-    return (<div className="col-lg-7  min-vh-100">
+    return (<div className="col-lg-8  min-vh-100">
+
             <section className="monitor-head pt-3 px-4">
                 <ul className="nav nav-tabs" >
+                    <li className="nav-item">
+                        <a
+                            className={`nav-link ${activeTab === "deudas" && "active"} pointer`}
+                            onClick={() => {setActiveTab("deudas");}}
+                        >
+                            A pagar
+                        </a>
+                    </li>
                     <li className="nav-item">
                         <a
                             className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}
@@ -37,7 +49,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "info" && "active"} pointer`}
                             onClick={() => {setActiveTab("info");}}
                         >
-                            Información del titulo
+                            Información del proveedor
                         </a>
                     </li>
                 </ul>
@@ -61,7 +73,7 @@ function Contenido({ selected }) {
   }
   
 const mapStateToProps = state => ({
-    selected: state.titulos.instance,
+    selected: state.proveedores.instance,
 })
 
 export default connect(mapStateToProps, null)(Contenido);

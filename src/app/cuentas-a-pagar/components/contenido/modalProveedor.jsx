@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Titulo from "@/components/CRUDL/titulo/CU";
+import Proveedor from "@/components/CRUDL/proveedor/CU";
 import BasicModal from '@/components/modal';
 
 
@@ -18,8 +18,8 @@ export default function Modal () {
         open={modal}
         onToggle={handleToggle}
         button={<i onClick={handleToggle} className="bi-person-plus" ></i>}
-        header="Nuevo Titulo"
-        component={<Titulo onClose={() => handleToggle(false)} />}
+        header="Nuevo Proveedor"
+        component={<Proveedor onClose={() => handleToggle(false)} />}
         footer={false}
       />
     </>

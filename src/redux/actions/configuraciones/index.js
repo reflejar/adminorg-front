@@ -9,7 +9,7 @@ const get_all = () => async (dispatch) => {
       {id: "cliente",full_name: "Clientes y Socios"},
       {id: "proveedor",full_name: "Proveedores"},
       {id: "",full_name: "Area Economica"},
-      {id: "caja",full_name: "Tesoreria"},
+      {id: "caja",full_name: "Tesorería"},
       {id: "ingreso",full_name: "Ingresos"},
       {id: "gasto",full_name: "Gastos"},
       {id: "interes",full_name: "Metodologia de Intereses"},

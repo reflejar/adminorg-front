@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { proveedoresActions } from "@/redux/actions/proveedores";
-import ModalNew from './contenido/modals/proveedor';
+import ModalNew from './contenido/modalProveedor';
 
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
@@ -59,6 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
   searchOnChange: searchTerm => dispatch(proveedoresActions.search(searchTerm)),
   getItems: () => dispatch(proveedoresActions.get_all()),
   setSelectedObject: payload => dispatch(proveedoresActions.select(payload))
+
 });
 
 

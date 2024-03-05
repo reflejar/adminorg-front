@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { connect } from 'react-redux'
 
+import Deudas from './tablaDeudas';
 import Cuenta from './tablaCuenta';
-import Info from "@/components/CRUDL/titulo/CU";
+import Info from "@/components/CRUDL/caja/CU";
 
 import ModalComprobante from './modalComprobante';
 import ModalRegistros from './modalRegistros';
@@ -14,6 +15,8 @@ function Contenido({ selected }) {
 
     const showContent = () => {
         switch (activeTab) {
+            case "deudas":
+                return <Deudas selected={selected}/>
             case "cuentas":
                 return <Cuenta selected={selected}/>
             case "info":
@@ -21,9 +24,17 @@ function Contenido({ selected }) {
         }  
     }
 
-    return (<div className="col-lg-7  min-vh-100">
+    return (<div className="col-lg-8  min-vh-100">
             <section className="monitor-head pt-3 px-4">
                 <ul className="nav nav-tabs" >
+                    <li className="nav-item">
+                        <a
+                            className={`nav-link ${activeTab === "deudas" && "active"} ${selected && selected.taxon === "stockeable" ? "pointer" : "disabled"}`}
+                            onClick={() => {selected && selected.taxon === "stockeable" && setActiveTab("deudas");}}
+                        >
+                            Disponible
+                        </a>
+                    </li>
                     <li className="nav-item">
                         <a
                             className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}
@@ -37,7 +48,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "info" && "active"} pointer`}
                             onClick={() => {setActiveTab("info");}}
                         >
-                            Información del titulo
+                            Información de la caja
                         </a>
                     </li>
                 </ul>
@@ -61,7 +72,7 @@ function Contenido({ selected }) {
   }
   
 const mapStateToProps = state => ({
-    selected: state.titulos.instance,
+    selected: state.cajas.instance,
 })
 
 export default connect(mapStateToProps, null)(Contenido);

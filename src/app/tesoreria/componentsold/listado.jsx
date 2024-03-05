@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { cajasActions } from "@/redux/actions/cajas";
-import ModalNew from './contenido/modalCaja';
+import ModalNew from './contenido/modals/caja';
 
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
@@ -37,7 +37,7 @@ function Listado({searchTerm, searchOnChange, items, instance, getItems, setSele
                         onClick={() => setSelectedObject(item)}
                         key={key}
                       >
-                        <td className=' pointer'>{item.full_name}</td>  
+                        <td className='pointer'>{item.full_name}</td>  
                       </tr>                
                     ))}
                   </tbody>
@@ -59,7 +59,6 @@ const mapDispatchToProps = (dispatch) => ({
   searchOnChange: searchTerm => dispatch(cajasActions.search(searchTerm)),
   getItems: () => dispatch(cajasActions.get_all()),
   setSelectedObject: payload => dispatch(cajasActions.select(payload))
-
 });
 
 

@@ -9,8 +9,8 @@ export const cajas = [
     { id: null, nombre: "---"},
     { id: 'efectivo', nombre: 'Efectivo' },
     { id: 'banco', nombre: 'Banco' },
-    { id: 'plataformas', nombre: 'Plataformas' },
-    { id: 'stockeable', nombre: 'Stockeable' },
+    { id: 'plataformas', nombre: 'Billeteras' },
+    { id: 'stockeable', nombre: 'Seguimiento' },
 ];
 
 

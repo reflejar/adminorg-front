@@ -50,7 +50,6 @@ export default function AuthContextProvider({children}) {
         
         Cookies.set('currentUser', JSON.stringify(currentUser));
         Cookies.set('token', response.data.access_token);
-        console.log(response.data.access_token)
         setCurrentUser(currentUser)
         
         return currentUser;

@@ -55,54 +55,83 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     useEffect(() => {
 
         if (moduleHandler === "cliente") {
-            switch (documento.receipt.receipt_type) {
-                case "Factura X":
-                    setDocumento(({ 
-                        resultados,
-                        cobros,
-                        cajas,
-                        utilizaciones_saldos,
-                        utilizaciones_disponibilidades,
-                        ...documento}) => ({
-                            ...documento,
-                            creditos: (documento && documento.creditos) ? documento.creditos : []
-                        }));
-                    break;
-                case "Nota de Credito X":
-                    setDocumento(({ 
-                        creditos,
-                        cajas,
-                        utilizaciones_saldos,
-                        utilizaciones_disponibilidades,
-                        ...documento }) => ({
-                            ...documento,
-                            cobros: (documento && documento.cobros) ? documento.cobros : [],
-                            resultados: (documento && documento.resultados) ? documento.resultados : []
-                        }));
-                    break;
-                case "Recibo X":
-                    setDocumento(({ 
-                        creditos,
-                        resultados,
-                        ...documento }) => ({
-                            ...documento,
-                            cobros: (documento && documento.cobros) ? documento.cobros : [],
-                            cajas: (documento && documento.cajas) ? documento.cajas : [],
-                            utilizaciones_saldos: (documento && documento.utilizaciones_saldos) ? documento.utilizaciones_saldos : [],
-                            utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : []
-                        }));
-                    break;                         
-                        
-                default:
-                    setDocumento(({
-                        creditos,
-                        cobros,
-                        resultados,
-                        cajas,
-                        utilizaciones_saldos,
-                        utilizaciones_disponibilidades,
-                        ...documento}) => ({...documento}))
-                    break;
+            if (["Factura X", "Factura C"].includes(documento.receipt.receipt_type)) {
+                setDocumento(({ 
+                    resultados,
+                    cobros,
+                    cajas,
+                    utilizaciones_saldos,
+                    utilizaciones_disponibilidades,
+                    ...documento}) => ({
+                        ...documento,
+                        creditos: (documento && documento.creditos) ? documento.creditos : []
+                    }));
+            } else if (["Nota de Credito X", "Nota de Credito C"].includes(documento.receipt.receipt_type)) {
+                setDocumento(({ 
+                    creditos,
+                    cajas,
+                    utilizaciones_saldos,
+                    utilizaciones_disponibilidades,
+                    ...documento }) => ({
+                        ...documento,
+                        cobros: (documento && documento.cobros) ? documento.cobros : [],
+                        resultados: (documento && documento.resultados) ? documento.resultados : []
+                    }))
+            } else if (["Recibo X", "Recibo C"].includes(documento.receipt.receipt_type)) {
+                setDocumento(({ 
+                    creditos,
+                    resultados,
+                    ...documento }) => ({
+                        ...documento,
+                        cobros: (documento && documento.cobros) ? documento.cobros : [],
+                        cajas: (documento && documento.cajas) ? documento.cajas : [],
+                        utilizaciones_saldos: (documento && documento.utilizaciones_saldos) ? documento.utilizaciones_saldos : [],
+                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : []
+                    }))
+            } else {
+                setDocumento(({
+                    creditos,
+                    cobros,
+                    resultados,
+                    cajas,
+                    utilizaciones_saldos,
+                    utilizaciones_disponibilidades,
+                    ...documento}) => ({...documento}))
+            }
+        } else if (moduleHandler === "proveedor") {
+            if (["Nota de Credito A", "Nota de Credito B", "Nota de Credito C", "Nota de Credito X"].includes(documento.receipt.receipt_type)) {
+                setDocumento(({ 
+                    debitos,
+                    cajas,
+                    utilizaciones_saldos,
+                    utilizaciones_disponibilidades,
+                    ...documento }) => ({
+                        ...documento,
+                        pagos: (documento && documento.pagos) ? documento.pagos : [],
+                        resultados: (documento && documento.resultados) ? documento.resultados : []
+                    }))
+            } else if (["Orden de Pago X", "Recibo X"].includes(documento.receipt.receipt_type)) {
+                setDocumento(({ 
+                    debitos,
+                    resultados,
+                    ...documento }) => ({
+                        ...documento,
+                        pagos: (documento && documento.pagos) ? documento.pagos : [],
+                        cajas: (documento && documento.cajas) ? documento.cajas : [],
+                        utilizaciones_saldos: (documento && documento.utilizaciones_saldos) ? documento.utilizaciones_saldos : [],
+                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : []
+                    }))
+            } else {
+                setDocumento(({ 
+                    resultados,
+                    pagos,
+                    cajas,
+                    utilizaciones_saldos,
+                    utilizaciones_disponibilidades,
+                    ...documento}) => ({
+                        ...documento,
+                        debitos: (documento && documento.debitos) ? documento.debitos : []
+                    }));
             }
         }
 
@@ -113,25 +142,42 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         switch (moduleHandler) {
             case 'cliente':
                 if (documento.receipt.point_of_sales === '') return false
-
-                switch (documento.receipt.receipt_type) {
-                    case 'Factura X':
-                        const incomplete = documento.creditos ? documento.creditos.filter(c => (c.destinatario === "" || c.concepto === "" || c.monto === "" || c.monto == 0)) : []
-                        return incomplete.length === 0
-                    case 'Recibo X':
-                        const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
-                        const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
-                        const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                        const totalPagos = totalCajasRecibo + totalSaldosRecibo
-                        if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
-                    case 'Nota de Credito X':
-                        const totalCobrosNotaDeCredito = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
-                        const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
-                        return totalCobrosNotaDeCredito === totalResultadosNotaDeCredito
-                    default:
-                        return false
+                if (['Factura C', 'Factura X'].includes(documento.receipt.receipt_type)){
+                    const incomplete = documento.creditos ? documento.creditos.filter(c => (c.destinatario === "" || c.concepto === "" || c.monto === "" || c.monto == 0)) : []
+                    return incomplete.length === 0
+                } else if (['Recibo C', 'Recibo X'].includes(documento.receipt.receipt_type)){
+                    const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalPagos = totalCajasRecibo + totalSaldosRecibo
+                    if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
+                } else if (['Nota de Credito C', 'Nota de Credito X'].includes(documento.receipt.receipt_type)){
+                    const totalCobrosNotaDeCredito = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
+                    return totalCobrosNotaDeCredito === totalResultadosNotaDeCredito
                 }
-        
+                break;
+
+            case 'proveedor':
+                
+                if (documento.receipt.point_of_sales === '') return false
+                if (['Orden de Pago X', 'Recibo X'].includes(documento.receipt.receipt_type)){
+                    if (documento.receipt.receipt_type === "Recibo X" && documento.receipt.receipt_number === '') return false
+                    const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalPagos = totalCajasRecibo + totalSaldosRecibo
+                    if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
+                } else if (['Nota de Credito A', 'Nota de Credito B', 'Nota de Credito C', 'Nota de Credito X'].includes(documento.receipt.receipt_type)){
+                    const totalCobrosNotaDeCredito = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
+                    const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
+                    return totalCobrosNotaDeCredito === totalResultadosNotaDeCredito
+                } else {
+                    const incomplete = documento.debitos ? documento.debitos.filter(c => (c.destinatario === "" || c.concepto === "" || c.monto === "" || c.monto == 0)) : []
+                    return incomplete.length === 0
+                }
+                break;
+                
             default:
                 return false
         }
@@ -240,7 +286,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             }
 
             {/* Proveedores: Seccion de Debitos */}
-            {/* {Object.keys(fieldsLists).length > 0 && fieldsLists.debitos && <Appendable 
+            {documento.receipt.receipt_type && documento.debitos && ((loadingGastos) ? <Spinner /> : <Appendable 
             documento={documento} 
             setDocumento={setDocumento} 
             onlyRead={onlyRead}
@@ -251,7 +297,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 type: 'select',
                 name: 'cuenta',
                 label: 'Cuenta',
-                choices: CHOICES.debitos.cuenta
+                choices: [...gastos, ...cajas]
                 },
                 {
                 type: 'date',
@@ -284,8 +330,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 cantidad: 0,
                 monto: 0,
             }}
-            />
-            }         */}
+            />)
+            }        
 
             {/* Clientes: Seccion de Cobros */}
             {documento.cobros && (loadingDeudas ? <Spinner /> : <Selectable 
