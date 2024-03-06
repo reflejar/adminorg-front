@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Proveedor from "@/components/CRUDL/proveedor/CU";
+import Proveedor from "@/components/CRUD/proveedor/CU";
 import BasicModal from '@/components/modal';
 
 

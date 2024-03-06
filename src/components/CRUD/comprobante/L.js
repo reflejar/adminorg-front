@@ -6,6 +6,7 @@ import Spinner from '@/components/spinner';
 import { documentosActions } from '@/redux/actions/documentos';
 import { usePuntosDeVenta } from '@/utility/hooks';
 import Listado from '@/components/listados';
+import CHOICES from '@/components/CRUD/comprobante/components/choices'
 
 const initialFields = {
   receipt_type: '',
@@ -22,7 +23,8 @@ const headers = [
   { label: 'Total', key: 'receipt.total_amount' },
 ];
 
-const LStep = ({ causante, documentosTypes }) => {
+const LStep = ({ causante }) => {
+  const documentosTypes = CHOICES.receiptTypes[causante]
   const dispatch = useDispatch();
   const [table, setTable] = useState(false);
   const [fields, setFields] = useState(initialFields);
@@ -30,6 +32,8 @@ const LStep = ({ causante, documentosTypes }) => {
   const [loading, setLoading] = useState(false);
   const [documentos, setDocumentos] = useState([]);
   const ref = useRef(null);
+
+
   
 
   const dataForTable = useMemo(() => {
@@ -67,7 +71,7 @@ const LStep = ({ causante, documentosTypes }) => {
         ...old,
         [key]: value
       }))
-    };
+    }
   };
 
   if (loading) {
@@ -85,8 +89,8 @@ const LStep = ({ causante, documentosTypes }) => {
           <label className='form-label'>Tipo de documento</label>
           <select type="select" name="select" className='form-select' onChange={handleChange('receipt_type')}>
             <option value=''>---</option>
-            {documentosTypes.map((type, i) => (
-              <option key={i} value={type}>{type}</option>
+            {documentosTypes.filter(d => d.value !== "---").map((type, i) => (
+              <option key={i} value={type.value}>{type.value}</option>
             ))}
           </select>
         </div>  

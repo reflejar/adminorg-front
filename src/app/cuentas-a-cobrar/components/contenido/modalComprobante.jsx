@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import BasicModal from '@/components/modal';
-import Comprobante from "@/components/CRUDL/comprobante/CU";
+import Comprobante from "@/components/CRUD/comprobante/CU";
 
 
 export default function Modal ({selected}) {

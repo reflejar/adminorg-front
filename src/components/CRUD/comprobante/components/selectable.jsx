@@ -6,7 +6,8 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
     const [grouped, setGrouped] = useState(rows.map(obj=> ({
             vinculo: obj.id, 
             concepto: obj.concepto + " - " + obj.periodo, 
-            monto:obj.monto, 
+            monto:obj.saldo ? obj.saldo : obj.monto, 
+            max:obj.saldo ? obj.saldo : obj.monto, 
             checked:false,
             detalle: ''
         }))
@@ -20,7 +21,9 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
         if (name === "vinculo") {
             newGrouped[row]['checked'] = !newGrouped[row]['checked'];
         } else {
-            newGrouped[row][name] = e.target.value;
+            if (+e.target.max >= +e.target.value) {
+                newGrouped[row][name] = e.target.value;
+            }
         }
     
         setGrouped(newGrouped);
@@ -70,6 +73,7 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                         name={`${i}.monto`} 
                         disabled={onlyRead}
                         onChange={handleChange}
+                        max={row.max} 
                         />
                     </td>
                     </tr>)

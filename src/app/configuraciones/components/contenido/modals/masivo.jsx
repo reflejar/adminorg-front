@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import BasicModal from '@/components/modal';
 
-import Cliente from "@/components/CRUDL/cliente/M";
-import Proveedor from "@/components/CRUDL/proveedor/M";
-import Caja from "@/components/CRUDL/caja/M";
-import Ingreso from "@/components/CRUDL/ingreso/M";
-import Gasto from "@/components/CRUDL/gasto/M";
+import Cliente from "@/components/CRUD/cliente/M";
+import Proveedor from "@/components/CRUD/proveedor/M";
+import Caja from "@/components/CRUD/caja/M";
+import Ingreso from "@/components/CRUD/ingreso/M";
+import Gasto from "@/components/CRUD/gasto/M";
 
 export default function Modal ({selected}) {
 

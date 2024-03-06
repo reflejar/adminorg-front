@@ -3,7 +3,7 @@ import { useState } from "react";
 import { connect } from 'react-redux'
 
 import Cuenta from './tablaCuenta';
-import Info from "@/components/CRUDL/titulo/CU";
+import Info from "@/components/CRUD/titulo/CU";
 
 import ModalComprobante from './modalComprobante';
 import ModalRegistros from './modalRegistros';

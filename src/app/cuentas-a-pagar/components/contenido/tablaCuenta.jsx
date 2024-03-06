@@ -6,7 +6,7 @@ import Listado from '@/components/listados';
 
 
 import BasicModal from '@/components/modal';
-import Comprobante from '@/components/CRUDL/comprobante/CU';
+import Comprobante from '@/components/CRUD/comprobante/CU';
 
 
 export default function Deudas(props) {
@@ -56,7 +56,7 @@ export default function Deudas(props) {
                 destinatario={selected}
                 documentoId={modal.item.id}
                 onClose={handleModal}
-                onlyRead={true} 
+                onlyRead={modal.item.receipt.receipt_type === "Orden de Pago X"} 
               />}
             
           />          

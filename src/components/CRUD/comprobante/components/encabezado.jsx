@@ -13,20 +13,22 @@ export default function Encabezado ({
     const [point_of_sales] = usePuntosDeVenta();
 
     const handleChange = (e) => {
-    const name = e.target.name
-    const subfields = name.split(".")
-    subfields.length > 1 ?
-        setDocumento({
-        ...documento,
-        [subfields[0]]: {
-            ...documento[subfields[0]],
-            [subfields[1]]: e.target.value
+        if (e.target.value !== "---") {
+            const name = e.target.name
+            const subfields = name.split(".")
+            subfields.length > 1 ?
+                setDocumento({
+                ...documento,
+                [subfields[0]]: {
+                    ...documento[subfields[0]],
+                    [subfields[1]]: e.target.value
+                }
+                }) :
+                setDocumento({
+                ...documento,
+                [name]: e.target.value
+                })
         }
-        }) :
-        setDocumento({
-        ...documento,
-        [name]: e.target.value
-        })
     }
 
     return (
@@ -44,13 +46,13 @@ export default function Encabezado ({
                     >
                     <option value=''> --- </option>
                     {types.map((type, i) => (
-                        <option key={i} value={type}>{type}</option>
+                        <option key={i} value={type.value}>{type.value}</option>
                     ))}
                 </select>
                 </div>
                 <div className="col-md-2 px-1">
                 <label htmlFor="receipt.point_of_sales">Punto Vta</label>
-                {point_of_sales ? <select 
+                {(!(moduleHandler === "proveedor" && documento.receipt.receipt_type !== "Orden de Pago X") && point_of_sales) ? <select 
                 className="form-control"
                 name="receipt.point_of_sales" 
                 id="receipt.point_of_sales" 

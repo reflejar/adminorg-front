@@ -5,7 +5,7 @@ import Spinner from '@/components/spinner';
 import moment from 'moment';
 
 import BasicModal from '@/components/modal';
-import Comprobante from '@/components/CRUDL/comprobante/CU';
+import Comprobante from '@/components/CRUD/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
 import { deudasActions } from '@/redux/actions/deudas';

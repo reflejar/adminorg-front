@@ -6,7 +6,7 @@ import Listado from '@/components/listados';
 
 
 import BasicModal from '@/components/modal';
-import Comprobante from '@/components/CRUDL/comprobante/CU';
+import Comprobante from '@/components/CRUD/comprobante/CU';
 
 
 export default function Deudas(props) {

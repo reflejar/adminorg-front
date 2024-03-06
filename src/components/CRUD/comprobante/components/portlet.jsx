@@ -8,6 +8,11 @@ export default function Portlet ({
   }) {
 
     const [display, setDisplay] = useState(true)
+
+if (!title) return (<div className="row"><div className="col-md-12 px-4">
+        <hr />
+        {children}
+    </div></div>)
 return (
     <div className="row">
     <div className="col-md-12 accordion accordion-flush" id={`accordion-${handler}`}>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import Deudas from './tablaDeudas';
 import Cuenta from './tablaCuenta';
-import Info from "@/components/CRUDL/caja/CU";
+import Info from "@/components/CRUD/caja/CU";
 
 import ModalComprobante from './modalComprobante';
 import ModalRegistros from './modalRegistros';

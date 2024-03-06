@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Caja from "@/components/CRUDL/caja/CU";
+import Caja from "@/components/CRUD/caja/CU";
 import BasicModal from '@/components/modal';
 
 

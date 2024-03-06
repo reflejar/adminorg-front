@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Cliente from "@/components/CRUDL/cliente/CU";
+import Cliente from "@/components/CRUD/cliente/CU";
 import BasicModal from '@/components/modal';
 
 

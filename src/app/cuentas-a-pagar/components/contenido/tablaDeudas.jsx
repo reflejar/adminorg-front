@@ -5,7 +5,7 @@ import Spinner from '@/components/spinner';
 import moment from 'moment';
 
 import BasicModal from '@/components/modal';
-import Comprobante from '@/components/CRUDL/comprobante/CU';
+import Comprobante from '@/components/CRUD/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
 import { deudasActions } from '@/redux/actions/deudas';
@@ -87,7 +87,7 @@ export default function Deudas(props) {
                 destinatario={selected}
                 documentoId={modal.item.documento.id}
                 onClose={handleModal}
-                onlyRead={true} 
+                onlyRead={modal.item.documento.receipt.receipt_type === "Orden de Pago X"} 
               />}
             
           />          

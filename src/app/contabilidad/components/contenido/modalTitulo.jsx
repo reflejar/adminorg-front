@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Titulo from "@/components/CRUDL/titulo/CU";
+import Titulo from "@/components/CRUD/titulo/CU";
 import BasicModal from '@/components/modal';
 
 
