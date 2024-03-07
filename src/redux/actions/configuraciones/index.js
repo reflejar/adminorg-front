@@ -6,7 +6,7 @@ const select = (id) => ({
 const get_all = () => async (dispatch) => {
     const payload = [
       {id: "",full_name: "Area Relaciones Humanas"},
-      {id: "cliente",full_name: "Clientes y Socios"},
+      {id: "cliente",full_name: "Clientes y Financiadores"},
       {id: "proveedor",full_name: "Proveedores"},
       {id: "",full_name: "Area Economica"},
       {id: "caja",full_name: "Tesorería"},

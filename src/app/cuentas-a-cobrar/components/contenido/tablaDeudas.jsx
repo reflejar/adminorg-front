@@ -9,14 +9,13 @@ import Comprobante from '@/components/CRUD/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
 import { deudasActions } from '@/redux/actions/deudas';
-import { saldosActions } from '@/redux/actions/saldos';
 
 export default function Deudas(props) {
   const { selected } = props;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const deudas = useSelector(state => state.deudas.list)
-  const saldos = useSelector(state => state.saldos.list)
+  // const saldos = useSelector(state => state.saldos.list)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +23,6 @@ export default function Deudas(props) {
         setLoading(true);
         // Despacha las acciones de forma secuencial
         await dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(new Date()).format('YYYY-MM-DD'), save: true }));
-        await dispatch(saldosActions.get({ destinatario: selected.id, fecha: moment(new Date()).format('YYYY-MM-DD'), save: true }));
       } catch (error) {
         console.error('Error al despachar acciones:', error);
       } finally {
@@ -48,13 +46,13 @@ export default function Deudas(props) {
         item: rowInfo
     });
   };
-  const data = [...saldos.map((saldo) => ({...saldo, monto: -saldo.monto, saldo: -saldo.saldo})), ...deudas];
+
   const columns = [{
       label: 'Fecha',
       key: 'fecha'
-    }, {
+    }, {      
       label: 'Comprobante',
-      key: 'nombre',
+      key: 'documento',
       onClick: handleModal
     }, {
       label: 'Concepto',
@@ -64,7 +62,7 @@ export default function Deudas(props) {
       key: 'periodo'
     }, {
       label: 'Monto',
-      key: 'monto',
+      key: 'valor',
     }, {
       label: 'Pagado/Utilizado',
       key: 'pago_capital',      
@@ -75,17 +73,16 @@ export default function Deudas(props) {
 
   const renderModal = () => {
     if (modal.item && modal.item.documento) {
-      const { receipt } = modal.item.documento
       return (
           <BasicModal
             open={modal.open}
             onToggle={handleModal}
-            header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
+            header={modal.item.documento}
             footer={false}
             component={<Comprobante 
-                moduleHandler={modal.item.causante} 
+                moduleHandler={"cliente"} 
                 destinatario={selected}
-                documentoId={modal.item.documento.id}
+                documentoId={modal.item.documento__id}
                 onClose={handleModal}
                 onlyRead={true} 
               />}
@@ -99,7 +96,7 @@ export default function Deudas(props) {
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={data} columns={columns} />
+    <Listado items={deudas} columns={columns} />
     </>
     );
 };

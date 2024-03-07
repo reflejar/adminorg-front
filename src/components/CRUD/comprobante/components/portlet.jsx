@@ -9,16 +9,12 @@ export default function Portlet ({
 
     const [display, setDisplay] = useState(true)
 
-if (!title) return (<div className="row"><div className="col-md-12 px-4">
-        <hr />
-        {children}
-    </div></div>)
 return (
     <div className="row">
-    <div className="col-md-12 accordion accordion-flush" id={`accordion-${handler}`}>
-        <div className="accordion-item">
+    <div className="col-md-12 accordion accordion-flush " id={`accordion-${handler}`}>
+        <div className="accordion-item ">
             <h2 class="accordion-header" id={`heading-${handler}`}>
-                <button class="accordion-button" type="button" onClick={() => setDisplay(!display)}>
+                <button class={`accordion-button ${handler === "utilizaciones_disponibilidades" && 'bg-white'}`} type="button" onClick={() => setDisplay(!display)}>
                     {title}
                 </button>
             </h2>

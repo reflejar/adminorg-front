@@ -15,8 +15,8 @@ function Contenido({ selected }) {
 
     const showContent = () => {
         switch (activeTab) {
-            case "deudas":
-                return <Deudas selected={selected}/>
+            // case "deudas":
+            //     return <Deudas selected={selected}/>
             case "cuentas":
                 return <Cuenta selected={selected}/>
             case "info":
@@ -27,14 +27,14 @@ function Contenido({ selected }) {
     return (<div className="col-lg-8  min-vh-100">
             <section className="monitor-head pt-3 px-4">
                 <ul className="nav nav-tabs" >
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <a
                             className={`nav-link ${activeTab === "deudas" && "active"} ${selected && selected.taxon === "stockeable" ? "pointer" : "disabled"}`}
                             onClick={() => {selected && selected.taxon === "stockeable" && setActiveTab("deudas");}}
                         >
                             Disponible
                         </a>
-                    </li>
+                    </li> */}
                     <li className="nav-item">
                         <a
                             className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}

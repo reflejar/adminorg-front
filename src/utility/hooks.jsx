@@ -298,7 +298,7 @@ export const useDisponibilidades = (date) => {
   useEffect(() => {
     setLoading(true);
       dispatch(saldosActions.get({ destinatario: "caja", fecha: moment(date).format('YYYY-MM-DD') }))
-      .then((response) => setDisponibilidades(response))
+      .then((response) => setDisponibilidades(response.data))
       .finally(() => setLoading(false));
   }, []);
 

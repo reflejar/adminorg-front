@@ -71,7 +71,7 @@ const CU = ({ selected, onClose }) => {
       validationSchema={Yup.object().shape({
         nombre: Yup.string(),
         apellido: Yup.string(),
-        razon_social: Yup.string().required(empty),
+        razon_social: Yup.string(),
         tipo_documento: Yup.string().required(empty),
         numero_documento: Yup.number().required(empty),
         fecha_nacimiento: Yup.date().nullable(),

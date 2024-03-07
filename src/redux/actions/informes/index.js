@@ -1,60 +1,52 @@
-import { Service } from '../../services/general';
+import { Service } from "@/redux/services/general";
+import moment from "moment";
 import qs from 'querystring';
 
 let apiEndpoint = 'informes/';
 
-const search = (term) => ({
-    type: 'SEARCH_INFORMES',
-    term
+
+const selectAnalizar = (tipos) => ({
+    type: 'SELECT_ANALIZAR',
+    payload: tipos
 })
 
-const select = (id) => ({
-    type: 'SELECT_INFORMES',
-    id
+const selectAgrupar = (tipos) => ({
+    type: 'SELECT_AGRUPAR',
+    payload: tipos
 })
 
+const selectColumnas = (tipo) => ({
+    type: 'SELECT_COLUMNAS',
+    payload: tipo
+})
 
-const get_data = (params, excel) => async (dispatch) => {
+const selectTotalizar = (tipo) => ({
+    type: 'SELECT_TOTALIZAR',
+    payload: tipo
+})
 
-  dispatch({type: 'SET_INFORMES_LOADING',payload: true});
-  
-  params.fechas.forEach(async f => {
+const fetchData = (params) => async (dispatch) => {
+    
     const query = qs.stringify({
-      start_date: f.start_date,
-      end_date: f.end_date,
-      analisis: JSON.stringify(params.analisis)
-    });
-    if (excel) {
-      Service.getExcel(`${apiEndpoint}xlsx/?${query}`);
-    } else {
-      const response = await Service.get(apiEndpoint + '?' + query);
-      if (response.data) {
-        dispatch({
-          type: 'GET_INFORMES_DATA',
-          payload: response.data
-        });
+        start_date: '',
+        end_date: moment(new Date()).format('YYYY-MM-DD'),
+        analisis: JSON.stringify(params.analisis)
+    })
+    const response = await Service.get(apiEndpoint + '?' + query);
+
+    if (response && response.data) {
+        return response.data
       }
 
-    }
-
-    dispatch({type: 'SET_INFORMES_QUERY', payload: params});
-    dispatch({type: 'SET_INFORMES_LOADING',payload: false});      
-  });
-
-  dispatch({
-    type: 'SET_INFORMES_ALL_FILTERS',
-    payload: params
-  });
-
-
-  return;
-};
-
-
+  
+    return;
+  };
 
 
 export const informesActions = {
-    get_data,
-    search,
-    select,
+    selectAnalizar,
+    selectAgrupar,
+    selectColumnas,
+    selectTotalizar,
+    fetchData
 }

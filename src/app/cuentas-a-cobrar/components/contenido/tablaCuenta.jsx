@@ -24,17 +24,19 @@ export default function Deudas(props) {
     });
   };        
 
-  const data = [...cuentas];
   const columns =[{
       label: 'Fecha',
       key: 'fecha'
     }, {
       label: 'Comprobante',
-      key: 'nombre',
+      key: 'documento',
       onClick: handleModal
     }, {
+      label: 'Concepto',
+      key: 'concepto',
+    }, {
       label: 'Monto',
-      key: 'total',
+      key: 'valor',
     }, {
       label: 'Saldo',
       key: 'saldo',
@@ -43,18 +45,17 @@ export default function Deudas(props) {
 
 
   const renderModal = () => {
-    if (modal.item && modal.item.receipt) {
-      const { receipt } = modal.item
+    if (modal.item && modal.item.documento) {
       return (
           <BasicModal
             open={modal.open}
             onToggle={handleModal}
-            header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
+            header={modal.item.documento}
             footer={false}
             component={<Comprobante 
-                moduleHandler={modal.item.causante} 
+                moduleHandler={'cliente'} 
                 destinatario={selected}
-                documentoId={modal.item.id}
+                documentoId={modal.item.documento__id}
                 onClose={handleModal}
                 onlyRead={true} 
               />}
@@ -68,7 +69,7 @@ export default function Deudas(props) {
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={data} columns={columns} paginator={infoPaginator} />
+    <Listado items={cuentas} columns={columns} paginator={infoPaginator} />
     </>
     );
 };

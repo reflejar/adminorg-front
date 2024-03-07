@@ -52,7 +52,7 @@ export default function Encabezado ({
                 </div>
                 <div className="col-md-2 px-1">
                 <label htmlFor="receipt.point_of_sales">Punto Vta</label>
-                {(!(moduleHandler === "proveedor" && documento.receipt.receipt_type !== "Orden de Pago X") && point_of_sales) ? <select 
+                {(moduleHandler === "cliente") || (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0) && point_of_sales ? <select 
                 className="form-control"
                 name="receipt.point_of_sales" 
                 id="receipt.point_of_sales" 
@@ -86,7 +86,7 @@ export default function Encabezado ({
                     className="form-control" 
                     disabled={
                     (moduleHandler === "cliente") || 
-                    (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) === 0)
+                    (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0)
                     }
                     name="receipt.receipt_number" 
                     id="receipt.receipt_number" 

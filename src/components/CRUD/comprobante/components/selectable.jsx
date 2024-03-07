@@ -5,7 +5,7 @@ import Portlet from "./portlet"
 export default function Selectable ({ documento, setDocumento, onlyRead, title, handler, rows }) {
     const [grouped, setGrouped] = useState(rows.map(obj=> ({
             vinculo: obj.id, 
-            concepto: obj.concepto + " - " + obj.periodo, 
+            concepto: `${obj.cuenta + " - "} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.periodo}`, 
             monto:obj.saldo ? obj.saldo : obj.monto, 
             max:obj.saldo ? obj.saldo : obj.monto, 
             checked:false,
@@ -71,7 +71,7 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                         type="number" 
                         value={row.monto} 
                         name={`${i}.monto`} 
-                        disabled={onlyRead}
+                        disabled={onlyRead || handler === "utilizaciones_disponibilidades"}
                         onChange={handleChange}
                         max={row.max} 
                         />

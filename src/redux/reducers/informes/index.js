@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 
-import filter from './filter';
-import data from './data';
-import instance from './instance';
-import loading from './loading';
-import query from './query';
+import analizar from './analizar';
+import agrupar_por from './agrupar_por';
+import encolumnar from './encolumnar';
+import totalizar from './totalizar';
 
 export default combineReducers({
-  filter,
-  data,
-  instance,
-  loading,
-  query
+  analizar,
+  agrupar_por,
+  encolumnar,
+  totalizar
+  // desde,
+  // hasta,
 });

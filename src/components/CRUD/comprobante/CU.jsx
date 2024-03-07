@@ -22,7 +22,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     const [gastos, loadingGastos] = useGastos();
     const [deudas, loadingDeudas] = useDeudas(destinatario);
     const [saldos, loadingSaldos] = useSaldos(destinatario);
-    const [disponibilidades, loadingDisponibilidades] = useDisponibilidades();
+    // const [disponibilidades, loadingDisponibilidades] = useDisponibilidades();
     const [canSend, setCanSend] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState({})
@@ -87,7 +87,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                         cobros: (documento && documento.cobros) ? documento.cobros : [],
                         cajas: (documento && documento.cajas) ? documento.cajas : [],
                         utilizaciones_saldos: (documento && documento.utilizaciones_saldos) ? documento.utilizaciones_saldos : [],
-                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : []
+                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : [],
                     }))
             } else {
                 setDocumento(({
@@ -160,7 +160,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
                     const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
                     const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalPagos = totalCajasRecibo + totalSaldosRecibo
+                    const totalPagos = totalCajasRecibo + totalSaldosRecibo 
                     if (totalSaldosRecibo > 0 && totalSaldosRecibo > totalCobrosRecibo) return false
                     if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
                 } else if (tipos_doc.filter(t => t.tipo === "nota-credito").map(t => t.value).includes(documento.receipt.receipt_type)){
@@ -192,8 +192,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 }
                 break;
 
-                case 'caja':
-                
+            case 'caja':
+            
                 if (documento.receipt.point_of_sales === '') return false
                 if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)){
                     const totalCargas = documento.cargas ? documento.cargas.reduce((total, current) => total + Number(current['monto']), 0) : []
@@ -496,14 +496,15 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             }
 
             {/* Seccion de Utilización de disponibilidades */}
-            {documento.utilizaciones_disponibilidades && deudas && deudas.length > 0 && (loadingDeudas ? <Spinner /> : <Selectable 
+            {/* {documento.utilizaciones_disponibilidades && disponibilidades && disponibilidades.length > 0 && (loadingDisponibilidades ? <Spinner /> : <Selectable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
+                title={"Utilizar disponibilidades"}
                 handler="utilizaciones_disponibilidades"
-                rows={deudas}
+                rows={disponibilidades}
             />)
-            }            
+            }             */}
 
             {/* Seccion de Resultados */}
             {documento.resultados && ((loadingIngresos || loadingGastos) ? <Spinner /> : <Appendable 

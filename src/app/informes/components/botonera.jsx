@@ -1,45 +1,85 @@
 "use client"
 
-function Botonera() {
+import { connect } from 'react-redux'
+import { informesActions } from "@/redux/actions/informes";
+
+function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgrupar, setColumnas, setTotalizar}) {
+    
+
+    const handleSeleccion = (event) => {
+      const opciones = event.target.options;
+      const seleccionados = [];
+      for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].selected) {
+          seleccionados.push(opciones[i].value);
+        }
+      }
+      const dispatcher = {
+        analizar: setAnalizar,
+        agrupar_por: setAgrupar
+      }
+      dispatcher[event.target.name](seleccionados)
+    };
+
 
     return (<div className="col-lg-2 min-vh-100">
               <div className="monitor-head p-3 d-flex align-items-center">
                 <div className="d-flex justify-content-center align-items-center text-dark "></div>
               </div>
-              <div className="monitor-body-without-footer p-3 bg-white">
-                <label className='mt-5' htmlFor="analizar">Analizar</label>
-                <select type="select" className='form-select' multiple name='analizar'>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
+              <div className="monitor-body-without-footer text-end p-3 bg-white">
+                <label className='mt-3' htmlFor="analizar">Analizar</label>
+                <select type="select" className='form-select' multiple name='analizar' onChange={handleSeleccion}>
+                  <option selected={analizar.indexOf('cliente') >= 0} value="cliente">Clientes</option>
+                  <option selected={analizar.indexOf('proveedor') >= 0} value="proveedor">Proveedores</option>
+                  <option selected={analizar.indexOf('caja') >= 0} value="caja">Tesorería</option>
+                  <option selected={analizar.indexOf('ingreso') >= 0} value="ingreso">Ingresos</option>
+                  <option selected={analizar.indexOf('gasto') >= 0} value="gasto">Gastos</option>
+                  <option selected={analizar.indexOf('titulo') >= 0} value="titulo">Títulos contables</option>
                 </select>
-                <label className='mt-5' htmlFor="agrupar">Agrupar</label>
-                <select type="select" className='form-select' multiple name='agrupar'>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
+                <label className='mt-3' htmlFor="agrupar_por">Agrupar</label>
+                <select type="select" className='form-select' multiple name='agrupar_por' onChange={handleSeleccion}>
+                  <option selected={agrupar_por.indexOf('periodo') >= 0} value="periodo">Período</option>
+                  <option selected={agrupar_por.indexOf('concepto') >= 0} value="concepto">Conceptos</option>
+                  <option selected={agrupar_por.indexOf('tipo_documento') >= 0} value="tipo_documento">Tipo Documento</option>
                 </select>
-                <label className='mt-5' htmlFor="encolumnar">Columnas</label>
-                <select type="select" className='form-select' name='encolumnar'>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
+                <label className='mt-3' htmlFor="encolumnar">Columnas</label>
+                <select type="select" className='form-select' name='encolumnar' onChange={(e) => setColumnas(e.target.value)}>
+                  <option value="">---</option>
+                  <option selected={encolumnar === 'periodo'} value="periodo">Período</option>
+                  <option selected={encolumnar === 'concepto'} value="concepto">Conceptos</option>
+                  <option selected={encolumnar === 'tipo_documento'} value="tipo_documento">Tipo Documento</option>
                 </select>
-                <label className='mt-5' htmlFor="totalizar">Totalizar</label>
-                <select type="select" className='form-select' name='totalizar'>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
-                  <option value="a">a</option>
+                <label className='mt-3' htmlFor="totalizar">Totalizar</label>
+                <select type="select" className='form-select' name='totalizar' onChange={(e) => setTotalizar(e.target.value)}>
+                  <option>---</option>
+                  <option selected={totalizar === 'valor'} value="valor">Valores</option>
+                  <option selected={totalizar === 'debe'} value="debe">Debe y Haber</option>
+                  <option selected={totalizar === 'cantidad'} value="cantidad">Cantidades</option>
                 </select>                                
               </div>
             </div>)
   }
 
 
-export default Botonera
+const mapStateToProps = state => ({
+  analizar: state.informes.analizar,
+  agrupar_por: state.informes.agrupar_por,
+  encolumnar: state.informes.encolumnar,
+  totalizar: state.informes.totalizar,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  setAnalizar: payload => dispatch(informesActions.selectAnalizar(payload)),
+  setAgrupar: payload => dispatch(informesActions.selectAgrupar(payload)),
+  setColumnas: payload => dispatch(informesActions.selectColumnas(payload)),
+  setTotalizar: payload => dispatch(informesActions.selectTotalizar(payload))
+
+});
   
   
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Botonera)
+    
+    
