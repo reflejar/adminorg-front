@@ -3,11 +3,10 @@ import Portlet from "./components/portlet";
 import Encabezado from "./components/encabezado";
 import Selectable from "./components/selectable";
 import Appendable from "./components/appendable";
-import { useCajas, useDeudas, useDisponibilidades, useGastos, useIngresos, useSaldos } from "@/utility/hooks";
+import { useCajas, useDeudas, useGastos, useIngresos } from "@/utility/hooks";
 import { deudasActions } from '@/redux/actions/deudas';
-import { saldosActions } from '@/redux/actions/saldos';
 import { cuentasActions } from '@/redux/actions/cuentas';
-import { documentosActions } from '@/redux/actions/documentos';
+import { comprobantesActions } from '@/redux/actions/comprobantes';
 import { useDispatch } from "react-redux";
 import Spinner from "@/components/spinner";
 import moment from "moment";
@@ -21,8 +20,6 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     const [cajas, loadingCajas] = useCajas();
     const [gastos, loadingGastos] = useGastos();
     const [deudas, loadingDeudas] = useDeudas(destinatario);
-    const [saldos, loadingSaldos] = useSaldos(destinatario);
-    // const [disponibilidades, loadingDisponibilidades] = useDisponibilidades();
     const [canSend, setCanSend] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState({})
@@ -38,6 +35,10 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             issued_date: moment().format('YYYY-MM-DD'),
             receipt_number: '',
         },
+        cargas: [],
+        cobros: [],
+        cajas: [],
+        resultados: [],
     });
 
     useEffect(() => {
@@ -45,169 +46,55 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         if (documentoId) {
             setLoading(true);
     
-            dispatch(documentosActions.get(moduleHandler, documentoId))
+            dispatch(comprobantesActions.get(moduleHandler, documentoId))
             .then((doc) => setDocumento(doc))
             .finally(() => setLoading(false));
           }
     
+    }, []);
     
-    }, []);          
-
     useEffect(() => {
-        const tipos_doc = CHOICES.receiptTypes[moduleHandler]
-        if (moduleHandler === "cliente") {
-            if (tipos_doc.filter(t => t.tipo === "deuda").map(t => t.value).includes(documento.receipt.receipt_type)) {
-                setDocumento(({ 
-                    resultados,
-                    cobros,
-                    cajas,
-                    utilizaciones_saldos,
-                    utilizaciones_disponibilidades,
-                    ...documento}) => ({
-                        ...documento,
-                        creditos: (documento && documento.creditos) ? documento.creditos : []
-                    }));
-            } else if (tipos_doc.filter(t => t.tipo === "nota-credito").map(t => t.value).includes(documento.receipt.receipt_type)) {
-                setDocumento(({ 
-                    creditos,
-                    cajas,
-                    utilizaciones_saldos,
-                    utilizaciones_disponibilidades,
-                    ...documento }) => ({
-                        ...documento,
-                        cobros: (documento && documento.cobros) ? documento.cobros : [],
-                        resultados: (documento && documento.resultados) ? documento.resultados : []
-                    }))
-            } else if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)) {
-                setDocumento(({ 
-                    creditos,
-                    resultados,
-                    ...documento }) => ({
-                        ...documento,
-                        cobros: (documento && documento.cobros) ? documento.cobros : [],
-                        cajas: (documento && documento.cajas) ? documento.cajas : [],
-                        utilizaciones_saldos: (documento && documento.utilizaciones_saldos) ? documento.utilizaciones_saldos : [],
-                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : [],
-                    }))
-            } else {
-                setDocumento(({
-                    creditos,
-                    cobros,
-                    resultados,
-                    cajas,
-                    utilizaciones_saldos,
-                    utilizaciones_disponibilidades,
-                    ...documento}) => ({...documento}))
-            }
-        } else if (moduleHandler === "proveedor") {
-            if (tipos_doc.filter(t => t.tipo === "nota-credito").map(t => t.value).includes(documento.receipt.receipt_type)) {
-                setDocumento(({ 
-                    debitos,
-                    cajas,
-                    utilizaciones_saldos,
-                    utilizaciones_disponibilidades,
-                    ...documento }) => ({
-                        ...documento,
-                        pagos: (documento && documento.pagos) ? documento.pagos : [],
-                        resultados: (documento && documento.resultados) ? documento.resultados : []
-                    }))
-            } else if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)) {
-                setDocumento(({ 
-                    debitos,
-                    resultados,
-                    ...documento }) => ({
-                        ...documento,
-                        pagos: (documento && documento.pagos) ? documento.pagos : [],
-                        cajas: (documento && documento.cajas) ? documento.cajas : [],
-                        utilizaciones_saldos: (documento && documento.utilizaciones_saldos) ? documento.utilizaciones_saldos : [],
-                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : []
-                    }))
-            } else {
-                setDocumento(({ 
-                    resultados,
-                    pagos,
-                    cajas,
-                    utilizaciones_saldos,
-                    utilizaciones_disponibilidades,
-                    ...documento}) => ({
-                        ...documento,
-                        debitos: (documento && documento.debitos) ? documento.debitos : []
-                    }));
-            }
-        } else if (moduleHandler === "caja") {
-            if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)) {
-                setDocumento((documento) => ({
-                        ...documento,
-                        cargas: (documento && documento.cargas) ? documento.cargas : [],
-                        cajas: (documento && documento.cajas) ? documento.cajas : [],
-                        utilizaciones_disponibilidades: (documento && documento.utilizaciones_disponibilidades) ? documento.utilizaciones_disponibilidades : []
-                    }))            
-            }
+        
+        if (documento.receipt.receipt_type.includes("Nota de Credito")) {
+            setDocumento(documento => ({
+                    ...documento,
+                    cajas: []
+                }));
+        } else {
+            setDocumento(documento => ({
+                ...documento,
+                resultados: []
+            }));
         }
-
-
-    }, [documento.receipt.receipt_type])
+    
+    }, [documento.receipt.receipt_type]);     
 
     const validate = () => {
-        const tipos_doc = CHOICES.receiptTypes[moduleHandler]
-        switch (moduleHandler) {
-            case 'cliente':
-                if (documento.receipt.point_of_sales === '') return false
-                if (tipos_doc.filter(t => t.tipo === "deuda").map(t => t.value).includes(documento.receipt.receipt_type)){
-                    const incomplete = documento.creditos ? documento.creditos.filter(c => (c.concepto === "" || c.monto === "" || c.monto == 0)) : []
-                    return incomplete.length === 0
-                } else if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)){
-                    const totalCobrosRecibo = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalPagos = totalCajasRecibo + totalSaldosRecibo 
-                    if (totalSaldosRecibo > 0 && totalSaldosRecibo > totalCobrosRecibo) return false
-                    if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
-                } else if (tipos_doc.filter(t => t.tipo === "nota-credito").map(t => t.value).includes(documento.receipt.receipt_type)){
-                    const totalCobrosNotaDeCredito = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
-                    return totalCobrosNotaDeCredito > 0 && totalCobrosNotaDeCredito === totalResultadosNotaDeCredito
-                }
-                break;
-
-            case 'proveedor':
-                
-                if (documento.receipt.point_of_sales === '') return false
-                if (documento.receipt.receipt_type !== "Orden de Pago X" && documento.receipt.receipt_number === '') return false
-                if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)){
-                    if (documento.receipt.receipt_type === "Recibo X" && documento.receipt.receipt_number === '') return false
-                    const totalCobrosRecibo = documento.pagos ? documento.pagos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalPagos = totalCajasRecibo + totalSaldosRecibo
-                    if (totalSaldosRecibo > 0 && totalSaldosRecibo > totalCobrosRecibo) return false
-                    if (totalPagos > 0) return totalPagos >= totalCobrosRecibo
-                } else if (tipos_doc.filter(t => t.tipo === "nota-credito").map(t => t.value).includes(documento.receipt.receipt_type)){
-                    const totalCobrosNotaDeCredito = documento.pagos ? documento.pagos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalResultadosNotaDeCredito = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : []
-                    return totalCobrosNotaDeCredito === totalResultadosNotaDeCredito
-                } else {
-                    const incomplete = documento.debitos ? documento.debitos.filter(c => (c.cuenta === "" || c.monto === "" || c.monto == 0)) : []
-                    return incomplete.length === 0
-                }
-                break;
-
-            case 'caja':
-            
-                if (documento.receipt.point_of_sales === '') return false
-                if (tipos_doc.filter(t => t.tipo === "pago").map(t => t.value).includes(documento.receipt.receipt_type)){
-                    const totalCargas = documento.cargas ? documento.cargas.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalCajasRecibo = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalSaldosRecibo = documento.utilizaciones_saldos ? documento.utilizaciones_saldos.reduce((total, current) => total + Number(current['monto']), 0) : []
-                    const totalPagos = totalCajasRecibo + totalSaldosRecibo
-                    if (totalSaldosRecibo > 0 && totalSaldosRecibo > totalCargas) return false
-                    if (totalPagos > 0) return totalPagos >= totalCargas
-                }
-                break;                
-                
-            default:
-                return false
+        if (documento.receipt.receipt_type === '') return false
+        if (documento.receipt.point_of_sales === '') return false
+        if (documento.receipt.receipt_type !== '') {
+            if(CHOICES.receiptTypes[moduleHandler].find(t => t.value === documento.receipt.receipt_type).receipt_number === "manual" && documento.receipt.receipt_number === "") 
+            return false
         }
+
+        const totalCargas = documento.cargas ? documento.cargas.filter(c => (c.concepto !== "" || Number(c.monto) > 0)).reduce((total, current) => total + Number(current['monto']), 0) : 0
+        const totalCobros = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : 0
+        const totalCajas = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : 0
+        const totalResultados = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : 0
+        const totalDeudas = totalCargas + totalCobros
+        
+        // Si es nota de credito el valor de los resultados debe ser IGUAL a la suma de cobros y cargas
+        if (totalResultados > 0) return totalResultados === totalDeudas
+        
+        // Si se crean cargas o si se intenta pagar cobros y existen cajas
+        // las cajas deben ser IGUAL a la suma de cobros y cargas
+        if (totalDeudas>0 && totalCajas>0) return totalCajas === totalDeudas
+        
+        if (totalDeudas < 0) return false// Significa que SOLAMENTE HAY SALDOS A FAVOR. No pase
+        if (totalCajas > 0) return false // Significa que SOLAMENTE HAY CAJAS. Pase pase
+        if (totalCobros > 0) return false // Significa que SOLAMENTE HAY COBROS. No pase
+        return totalCargas > 0 // Significa que SOLAMENTE HAY CARGAS. Pase pase
+
     }
 
 
@@ -217,15 +104,22 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     
     const updateSituation = useCallback(() => {
         dispatch(deudasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true }));
-        dispatch(saldosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true }));
         dispatch(cuentasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true, page: 1 }));
     }, [dispatch, destinatario] );
 
     const handleSubmit = useCallback((event) => {
         event.preventDefault();
         setLoading(true);
+
+        const payload = {
+            ...documento,
+            cargas: documento.cargas.filter(c => (Number(c.monto) > 0)),
+            cobros: documento.cobros.filter(c => (Number(c.monto) !== 0)),
+            cajas: documento.cajas.filter(c => (Number(c.monto) > 0)),
+            resultados: documento.resultados.filter(r => (Number(r.monto) > 0)),
+        }
         
-        dispatch(documentosActions.send(moduleHandler, documento))
+        dispatch(comprobantesActions.send(moduleHandler, payload))
             .then(() => {
                 updateSituation();      
             })
@@ -250,18 +144,18 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 moduleHandler={moduleHandler}
             />
 
-            {/* Clientes: Seccion de Creditos */}
-            {documento.creditos && ((loadingIngresos || loadingCajas) ? <Spinner /> : <Appendable 
+            {/* Seccion de Cargas */}
+            {documento.receipt.receipt_type && ((loadingIngresos || loadingCajas) ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
-                title="Creditos"
-                handler="creditos"
-                fields={[
-                    {
-                    type: 'hidden',
-                    name: 'destinatario',
-                    },                    
+                title={{
+                    cliente: "Creditos",
+                    proveedor: "Deudas",
+                    caja: "Cargar dinero"
+                }[moduleHandler]}
+                handler="cargas"
+                fields={[           
                     {
                     type: 'select',
                     name: 'concepto',
@@ -300,7 +194,6 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     },                        
                 ]}
                 cleanedField={{
-                    destinatario: destinatario.id,
                     concepto: '',
                     periodo: moment().format('YYYY-MM-DD'),
                     fecha_gracia: moment().format('YYYY-MM-DD'),
@@ -312,152 +205,25 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             />)
             }
 
-            {/* Proveedores: Seccion de Debitos */}
-            {documento.receipt.receipt_type && documento.debitos && ((loadingGastos) ? <Spinner /> : <Appendable 
-            documento={documento} 
-            setDocumento={setDocumento} 
-            onlyRead={onlyRead}
-            title="Debitos"
-            handler="debitos"
-            fields={[
-                {
-                type: 'select',
-                name: 'cuenta',
-                label: 'Cuenta',
-                choices: [...gastos, ...cajas]
-                },
-                {
-                type: 'date',
-                name: 'periodo',
-                label: 'Periodo',
-                },       
-                {
-                type: 'date',
-                name: 'fecha_vencimiento',
-                label: 'Vencimiento',
-                },
-                {
-                type: 'text',
-                name: 'detalle',
-                label: 'Detalle',
-                },
-                {
-                type: 'number',
-                name: 'cantidad',
-                label: 'Cantidad',
-                },                
-                {
-                type: 'number',
-                name: 'monto',
-                label: 'Monto',
-                },                        
-            ]}
-            cleanedField={{
-                concepto: '',
-                periodo: moment().format('YYYY-MM-DD'),
-                fecha_gracia: moment().format('YYYY-MM-DD'),
-                fecha_vencimiento: moment().format('YYYY-MM-DD'),
-                detalle: '',
-                cantidad: 0,
-                monto: 0,
-            }}
-            />)
-            }
-
-            {/* Clientes: Seccion de Cargas */}
-            {documento.cargas && ( loadingCajas ? <Spinner /> : <Appendable 
-                documento={documento} 
-                setDocumento={setDocumento} 
-                onlyRead={onlyRead}
-                title="Cargar dinero"
-                handler="cargas"
-                fields={[
-                    {
-                    type: 'select',
-                    name: 'cuenta',
-                    label: 'Cuenta',
-                    choices: [...cajas]
-                    },
-                    {
-                    type: 'date',
-                    name: 'periodo',
-                    label: 'Periodo',
-                    },
-                    {
-                    type: 'date',
-                    name: 'fecha_gracia',
-                    label: 'Descuento',
-                    },            
-                    {
-                    type: 'date',
-                    name: 'fecha_vencimiento',
-                    label: 'Vencimiento',
-                    },
-                    {
-                    type: 'text',
-                    name: 'detalle',
-                    label: 'Detalle',
-                    },
-                    {
-                    type: 'number',
-                    name: 'cantidad',
-                    label: 'Cantidad',
-                    },            
-                    {
-                    type: 'number',
-                    name: 'monto',
-                    label: 'Monto',
-                    },                        
-                ]}
-                cleanedField={{
-                    destinatario: destinatario.id,
-                    concepto: '',
-                    periodo: moment().format('YYYY-MM-DD'),
-                    fecha_gracia: moment().format('YYYY-MM-DD'),
-                    fecha_vencimiento: moment().format('YYYY-MM-DD'),
-                    detalle: '',
-                    cantidad: 0,
-                    monto: 0,
-                }}
-            />)
-            }            
 
             {/* Clientes: Seccion de Cobros */}
-            {documento.cobros && (loadingDeudas ? <Spinner /> : <Selectable 
+            {documento.receipt.receipt_type && (loadingDeudas ? <Spinner /> : <Selectable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
-                title="Items pendientes de cobro"
+                color='bg-light'
+                title={{
+                    cliente: "Items pendientes de cobro",
+                    proveedor: "Items pendientes de pago",
+                    caja: "Items pendientes de cobro"
+                }[moduleHandler]}
                 handler="cobros"
-                rows={deudas}
+                rows={documento.cobros.length > 0 ? documento.cobros: deudas}
             />)
             }
-
-            {/* Proveedores: Seccion de Deudas */}
-            {documento.pagos && (loadingDeudas ? <Spinner /> : <Selectable 
-                documento={documento} 
-                setDocumento={setDocumento} 
-                onlyRead={onlyRead}
-                title="Items pendientes de pago"
-                handler="pagos"
-                rows={deudas}
-            />)
-            }
-            
-            {/* Seccion de Utilización de saldos */}
-            {documento.utilizaciones_saldos && saldos.length > 0 && (loadingSaldos ? <Spinner /> : <Selectable 
-                documento={documento} 
-                setDocumento={setDocumento} 
-                onlyRead={onlyRead}
-                title="Utilizar saldos anteriores"
-                handler="utilizaciones_saldos"
-                rows={saldos}
-            />)
-            }   
-
 
             {/* Seccion de Cajas */}
-            {documento.cajas && (loadingCajas ? <Spinner /> : <Appendable 
+            {documento.receipt.receipt_type && !documento.receipt.receipt_type.includes("Nota de Credito") && (loadingCajas ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -495,19 +261,9 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             />)
             }
 
-            {/* Seccion de Utilización de disponibilidades */}
-            {/* {documento.utilizaciones_disponibilidades && disponibilidades && disponibilidades.length > 0 && (loadingDisponibilidades ? <Spinner /> : <Selectable 
-                documento={documento} 
-                setDocumento={setDocumento} 
-                onlyRead={onlyRead}
-                title={"Utilizar disponibilidades"}
-                handler="utilizaciones_disponibilidades"
-                rows={disponibilidades}
-            />)
-            }             */}
 
             {/* Seccion de Resultados */}
-            {documento.resultados && ((loadingIngresos || loadingGastos) ? <Spinner /> : <Appendable 
+            {documento.receipt.receipt_type && documento.receipt.receipt_type.includes("Nota de Credito") && ((loadingIngresos || loadingGastos) ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}

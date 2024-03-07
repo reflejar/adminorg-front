@@ -53,7 +53,7 @@ export default function Appendable ({ documento, setDocumento, onlyRead, title, 
         case 'text':
             return <td><input disabled={onlyRead}  className="form-control input-sm" type="text" name={`${fi}.${field.name}`} value={value || ''} onChange={handleChange} /></td>
         case 'number':
-            return <td><input disabled={onlyRead}  className="form-control input-sm" type="number" name={`${fi}.${field.name}`} value={value || ''} onChange={handleChange} /></td>
+            return <td><input disabled={onlyRead}  className="form-control input-sm" type="number" min={0} name={`${fi}.${field.name}`} value={value || ''} onChange={handleChange} /></td>
         case 'hidden':
             return <input disabled={onlyRead}  type="hidden" className="d-none" name={`${fi}.${field.name}`} value={value} />
         default:

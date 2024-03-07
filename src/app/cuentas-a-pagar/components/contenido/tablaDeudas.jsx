@@ -61,7 +61,7 @@ export default function Deudas(props) {
       key: 'periodo'
     }, {
       label: 'Monto',
-      key: 'monto',
+      key: 'valor',
     }, {
       label: 'Pagado/Utilizado',
       key: 'pago_capital',      

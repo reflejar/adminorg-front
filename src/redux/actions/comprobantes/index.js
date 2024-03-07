@@ -3,7 +3,7 @@ import qs from 'querystring';
 
 import { Service } from '../../services/general';
 
-let apiEndpoint = 'operative/documentos/';
+let apiEndpoint = 'operative/comprobantes/';
 
 const get = (type, id) => async (dispatch) => {
   if (!type) {
@@ -72,7 +72,7 @@ const remove = (type, payload) => async (dispatch) => {
   
 };
 
-export const documentosActions = {
+export const comprobantesActions = {
   get,
   getList,
   send,

@@ -5,16 +5,17 @@ export default function Portlet ({
     title,
     handler,
     children,
+    color,
   }) {
 
-    const [display, setDisplay] = useState(true)
+    const [display, setDisplay] = useState(color === "bg-light" ? false : true)
 
 return (
     <div className="row">
     <div className="col-md-12 accordion accordion-flush " id={`accordion-${handler}`}>
         <div className="accordion-item ">
             <h2 class="accordion-header" id={`heading-${handler}`}>
-                <button class={`accordion-button ${handler === "utilizaciones_disponibilidades" && 'bg-white'}`} type="button" onClick={() => setDisplay(!display)}>
+                <button class={`accordion-button ${color}`} type="button" onClick={() => setDisplay(!display)}>
                     {title}
                 </button>
             </h2>

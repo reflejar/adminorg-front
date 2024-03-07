@@ -3,7 +3,7 @@ import React, { useMemo, useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Spinner from '@/components/spinner';
-import { documentosActions } from '@/redux/actions/documentos';
+import { comprobantesActions } from '@/redux/actions/comprobantes';
 import { usePuntosDeVenta } from '@/utility/hooks';
 import Listado from '@/components/listados';
 import CHOICES from '@/components/CRUD/comprobante/components/choices'
@@ -49,7 +49,7 @@ const LStep = ({ causante }) => {
     event.preventDefault();
     setLoading(true);
 
-    const response = await dispatch(documentosActions.getList(causante, fields))
+    const response = await dispatch(comprobantesActions.getList(causante, fields))
     .then((response) => {
       setDocumentos(response);
       setTable(true);

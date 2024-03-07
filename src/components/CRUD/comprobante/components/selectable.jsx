@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import Portlet from "./portlet"
 
 
-export default function Selectable ({ documento, setDocumento, onlyRead, title, handler, rows }) {
+export default function Selectable ({ documento, setDocumento, onlyRead, color, title, handler, rows }) {
     const [grouped, setGrouped] = useState(rows.map(obj=> ({
             vinculo: obj.id, 
-            concepto: `${obj.cuenta + " - "} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.periodo}`, 
+            concepto: `${obj.cuenta ? obj.cuenta + " - " : ''} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.periodo}`, 
             monto:obj.saldo ? obj.saldo : obj.monto, 
             max:obj.saldo ? obj.saldo : obj.monto, 
             checked:false,
@@ -32,14 +32,14 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
     useEffect(() => {
         setDocumento(() => ({
         ...documento,
-        [handler]: grouped.filter(g => (g.monto > 0 && g.checked === true))
+        [handler]: grouped.filter(g => (g.monto !== 0 && g.checked === true))
         }))
 
     }, [grouped])
 
 
     return (
-        <Portlet title={title} handler={handler} display={(["utilizaciones_disponibilidades", "utilizaciones_saldos"].includes(handler) ? "" : "in")}>
+        <Portlet title={title} handler={handler} color={color} display={(["utilizaciones_disponibilidades", "utilizaciones_saldos"].includes(handler) ? "" : "in")}>
         <div className="row">
             <div className="col-md-12">
             {grouped.length === 0 ? <div className="text-center fs-4">...No hay items...</div> : <table className="table table-condensed table-responsive">
@@ -71,7 +71,7 @@ export default function Selectable ({ documento, setDocumento, onlyRead, title, 
                         type="number" 
                         value={row.monto} 
                         name={`${i}.monto`} 
-                        disabled={onlyRead || handler === "utilizaciones_disponibilidades"}
+                        disabled={onlyRead || handler === "utilizaciones_disponibilidades" || row.monto < 0}
                         onChange={handleChange}
                         max={row.max} 
                         />
