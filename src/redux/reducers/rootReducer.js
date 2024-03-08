@@ -14,8 +14,7 @@ import configuraciones from './configuraciones';
 import contabilidad from './contabilidad';
 import titulos from './titulos';
 import puntos from './puntos';
-import deudas from './deudas';
-import cuentas from './cuentas';
+import movimientos from './movimientos';
 import preconceptos from './preconceptos';
 import documentos from './documentos';
 import plataforma from './plataforma';
@@ -40,8 +39,7 @@ const appReducer = combineReducers({
    configuraciones,
    titulos,
    puntos,
-   deudas,
-   cuentas,
+   movimientos,
    preconceptos,
    documentos,
    plataforma,

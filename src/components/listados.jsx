@@ -18,20 +18,20 @@ const Listado = ({ items, columns, paginator }) => {
     return (
         <div>
             <div className="d-flex justify-content-between">
-            <div>
-                <ReactToPrint
-                    trigger={() => <button className='btn btn-sm bi-printer btn-outline-secondary me-2'/>}
-                    content={() => ref.current}
-                />
+                <div>
+                    <ReactToPrint
+                        trigger={() => <button className='btn btn-sm bi-printer btn-outline-secondary me-2'/>}
+                        content={() => ref.current}
+                    />
 
-                <CSVLink
-                target="_blank"
-                filename="listado.csv"
-                headers={columns}          
-                data={dataForTable}>
-                    <button className='btn btn-sm bi-filetype-csv btn-outline-success' />
-                </CSVLink>
-            </div>
+                    <CSVLink
+                    target="_blank"
+                    filename="listado.csv"
+                    headers={columns}          
+                    data={dataForTable}>
+                        <button className='btn btn-sm bi-filetype-csv btn-outline-success' />
+                    </CSVLink>
+                </div>
             <div className="btn-toolbar">
                 
                     {paginator && <div className='d-flex '>

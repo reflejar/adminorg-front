@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Table } from 'reactstrap';
 import { useTitulos } from "@/utility/hooks";
 import { titulosActions } from "@/redux/actions/titulos";
@@ -7,8 +7,10 @@ import ModalNew from './contenido/modalTitulo';
 
 import Spinner from "@/components/spinner";
 
-const Item = ({ indentation, item, children, titulos, filterChildren, selected, setSelected }) => {
+const Item = ({ indentation, item, children, titulos, filterChildren, setSelected }) => {
     const indentationItem = indentation + "px";
+
+    const selected = useSelector(state => state.titulos.instance)
 
     const [openItem, setOpenItem] = useState(false);
 
@@ -19,12 +21,13 @@ const Item = ({ indentation, item, children, titulos, filterChildren, selected, 
 
     return (
         <Fragment>
+            {console.log({selected, item})}
             <tr 
-            className={selected === item ? "bg-primary white" : ""} 
+            className={selected === item ? "table-primary" : ""}
             style={{cursor: 'pointer'}}
-            onClick={() => selectItem()}
+            onClick={selectItem}
             > 
-                <td style={{"paddingLeft": indentationItem}}>
+                <td style={{"paddingLeft": indentationItem}} >
                     {children && (openItem ? <i className="bi-chevron-down" /> : <i className="bi-chevron-right" />)}
                     {children ? <i className="bi-folder" /> : <i className="bi-file-text" /> } {children ? item.full_name : item.nombre}
                 </td>
@@ -61,10 +64,9 @@ const fitlerParents = (arr) => arr.filter(x => !x.supertitulo);
 const filterChildren = (arr, item) => arr.filter(x => x.supertitulo === item.id);
 
 
-const List = ({selected, setSelected}) => {
+const List = ({setSelected}) => {
     
     const [titulos, loadingTitulos] = useTitulos(true);
-
 
     if (loadingTitulos) {
         return <Spinner />
@@ -97,7 +99,6 @@ const List = ({selected, setSelected}) => {
                     children={filterChildren(titulos, item)}
                     titulos={titulos}
                     filterChildren={filterChildren}
-                    selected={selected}
                     setSelected={setSelected}
                 />))}
 
@@ -108,6 +109,8 @@ const List = ({selected, setSelected}) => {
       );
 
 }
+ 
+
 const mapDispatchToProps = dispatch => ({
     setSelected: payload => dispatch(titulosActions.select(payload))
 })

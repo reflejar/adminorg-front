@@ -7,10 +7,14 @@ const search = (term) => ({
   payload: term
 });
 
-const select = item => ({
-  type: 'SELECT_CONTABILIDAD',
-  payload: item
-});
+const select = item => {
+  console.log(item)
+  return ({
+    type: 'SELECT_TITULO',
+    payload: item
+  })
+
+};
 
 const get_all = () => async (dispatch) => {
 

@@ -2,7 +2,7 @@ import { Service } from "@/redux/services/general";
 import moment from "moment";
 import qs from 'querystring';
 
-let apiEndpoint = 'informes/';
+let apiEndpoint = 'reportes/';
 
 
 const selectAnalizar = (tipos) => ({

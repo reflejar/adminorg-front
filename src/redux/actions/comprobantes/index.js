@@ -3,13 +3,11 @@ import qs from 'querystring';
 
 import { Service } from '../../services/general';
 
-let apiEndpoint = 'operative/comprobantes/';
+let apiEndpoint = 'operative/comprobantes';
 
-const get = (type, id) => async (dispatch) => {
-  if (!type) {
-    return null;
-  }  
-  const response = await Service.get(`${apiEndpoint}${type}/${id}/`);
+const get = (id) => async (dispatch) => {
+
+  const response = await Service.get(`${apiEndpoint}/${id}/`);
 
   if (response && response.data) {
     dispatch({
@@ -21,8 +19,8 @@ const get = (type, id) => async (dispatch) => {
   }
 };
 
-const getList = (type, params) => async (dispatch) => {
-  if (!type) {
+const getList = (modulo, params) => async (dispatch) => {
+  if (!modulo) {
     return null;
   }
 
@@ -32,9 +30,11 @@ const getList = (type, params) => async (dispatch) => {
     receipt__receipt_number: params.numero,
     receipt__issued_date_from: params.startDate,
     receipt__issued_date_to: params.endDate,
+    modulo: modulo
+
   });
 
-  const response = await Service.get(apiEndpoint + type + '/?' + query);
+  const response = await Service.get(apiEndpoint + '/?' + query);
 
   if (response.data) {
     dispatch({
@@ -47,12 +47,9 @@ const getList = (type, params) => async (dispatch) => {
   return response.data.results;
 };
 
-const send = (type, payload) => async (dispatch) => {
+const send = (payload) => async (dispatch) => {
   set(payload, 'receipt.point_of_sales', Number(payload.receipt.point_of_sales));
-  let endpoint = apiEndpoint + type + "/";
-  if ("distribuciones" in payload) {
-    endpoint = endpoint + "masivo/"
-  }
+  let endpoint = apiEndpoint + "/";
   if (payload.id) {
     const response = await Service.put(endpoint + payload.id + "/", payload)
     if (response.status >= 400) throw response;  

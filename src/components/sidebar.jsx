@@ -24,7 +24,7 @@ export default function Sidebar() {
                     </Link>
                     <hr />
                     {currentUser && <ul className="nav nav-pills flex-column mb-auto">
-                        <Link href="/informes" className={`nav-link ${pathname == '/informes' ? 'active' : 'link-dark'}`}><i className="bi-bar-chart-line me-2" /> Informes</Link>
+                        <Link href="/reportes" className={`nav-link ${pathname == '/reportes' ? 'active' : 'link-dark'}`}><i className="bi-bar-chart-line me-2" /> Reportes</Link>
                         <Link href="/cuentas-a-cobrar" className={`nav-link ${pathname == '/cuentas-a-cobrar' ? 'active' : 'link-dark'}`}> <i className="bi-download me-2" /> Cuentas a cobrar</Link>
                         <Link href="/cuentas-a-pagar" className={`nav-link ${pathname == '/cuentas-a-pagar' ? 'active' : 'link-dark'}`}><i className="bi-upload me-2" /> Cuentas a pagar</Link>
                         <Link href="/tesoreria" className={`nav-link ${pathname == '/tesoreria' ? 'active' : 'link-dark'}`}><i className="bi-currency-dollar me-2" /> Tesorería</Link>

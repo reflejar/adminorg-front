@@ -2,7 +2,6 @@
 import Listado from "@/components/listados";
 import Spinner from "@/components/spinner";
 import { informesActions } from "@/redux/actions/informes";
-import { useDeudas } from "@/utility/hooks";
 import { useEffect, useState } from "react";
 import { connect, useDispatch } from 'react-redux'
 
@@ -31,22 +30,14 @@ function Contenido({ analizar,agrupar_por,encolumnar,totalizar }) {
                             className={`nav-link ${activeTab === "tabla" && "active"} pointer`}
                             onClick={() => {selected && setActiveTab("tabla");}}
                         >
-                            Tabla de Resultados
+                            Reporte
                         </a>
                     </li>
-                    {/* <li className="nav-item">
-                        <a
-                            className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}
-                            onClick={() => {setActiveTab("cuentas");}}
-                        >
-                            Movimientos
-                        </a>
-                    </li> */}
                 </ul>
             </section>
 
             <section className="monitor-body-without-footer bg-white p-3">
-                {loading ? <Spinner /> : data.length > 0 ? <Listado items={data} columns={Object.keys(data[0]).map(k => ({key: k, label: k}))} /> : "Nada"}
+                {loading ? <Spinner /> : data.length > 0 ? <Listado items={data} columns={Object.keys(data[0]).map(k => ({key: k, label: k}))} /> : ""}
             </section>
 
       </div>

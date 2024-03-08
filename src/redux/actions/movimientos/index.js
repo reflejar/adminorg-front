@@ -1,23 +1,24 @@
 import { Service } from '../../services/general';
 
-const apiEndpoint = 'operative/estados/deudas';
+let apiEndpoint = 'operative/estados/movimientos';
 
 const get = (params) => async (dispatch) => {
   let path = `${apiEndpoint}/${params.destinatario}/?end_date=${params.fecha}`;
-  path = path + "&condonacion=1";
-
+  if (params.titulo) {
+    path = path + `&titulo=${params.titulo}`
+  }
   const response = await Service.get(path);
   if (response && response.data) {
     if (params.save) {
       dispatch({
-        type: 'GET_DEUDAS',
+        type: 'GET_MOVIMIENTOS',
         payload: response.data.data
-      })
+      });
     }
     return response.data
   }
 };
 
-export const deudasActions = {
+export const movimientosActions = {
   get
 };

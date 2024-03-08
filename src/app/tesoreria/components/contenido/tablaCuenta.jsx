@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { useEstadoCuenta } from '@/utility/hooks';
+import { useMovimientos } from '@/utility/hooks';
 import Spinner from '@/components/spinner';
 import Listado from '@/components/listados';
 
@@ -9,9 +9,9 @@ import BasicModal from '@/components/modal';
 import Comprobante from '@/components/CRUD/comprobante/CU';
 
 
-export default function Deudas(props) {
+export default function (props) {
   const { selected } = props;
-  const [cuentas, loadingCuentas, infoPaginator] = useEstadoCuenta(selected);
+  const [movimientos, loadingMovimientos] = useMovimientos(selected);
   const [modal, setModal] = useState({
             open: false,
             item: null
@@ -33,7 +33,7 @@ export default function Deudas(props) {
     onClick: handleModal
   }, {
     label: 'Monto',
-    key: 'valor',
+    key: 'monto',
   }, {
     label: 'Saldo',
     key: 'saldo',
@@ -54,7 +54,7 @@ export default function Deudas(props) {
                   destinatario={selected}
                   documentoId={modal.item.documento__id}
                   onClose={handleModal}
-                  onlyRead={true} 
+                  onlyRead={modal.item.receipt_type != "Transferencia X"}
                 />}
               
             />          
@@ -62,11 +62,11 @@ export default function Deudas(props) {
       } 
     }
 
-  if (loadingCuentas) return <Spinner />
+  if (loadingMovimientos) return <Spinner />
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={cuentas} columns={columns} paginator={infoPaginator} />
+    <Listado items={movimientos} columns={columns} />
     </>
     );
 };

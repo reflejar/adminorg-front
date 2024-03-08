@@ -19,7 +19,7 @@ const initialFields = {
 const headers = [
   { label: 'Fecha', key: 'receipt.issued_date' },
   { label: 'Comprobante', key: 'nombre' },
-  { label: 'Portador', key: 'portador' },
+  { label: 'Portador', key: 'destinatario' },
   { label: 'Total', key: 'receipt.total_amount' },
 ];
 

@@ -3,9 +3,9 @@ import Portlet from "./components/portlet";
 import Encabezado from "./components/encabezado";
 import Selectable from "./components/selectable";
 import Appendable from "./components/appendable";
-import { useCajas, useDeudas, useGastos, useIngresos } from "@/utility/hooks";
-import { deudasActions } from '@/redux/actions/deudas';
-import { cuentasActions } from '@/redux/actions/cuentas';
+import { useCajas, useSaldos, useGastos, useIngresos } from "@/utility/hooks";
+import { saldosActions } from '@/redux/actions/saldos';
+import { movimientosActions } from '@/redux/actions/movimientos';
 import { comprobantesActions } from '@/redux/actions/comprobantes';
 import { useDispatch } from "react-redux";
 import Spinner from "@/components/spinner";
@@ -19,7 +19,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     const [ingresos, loadingIngresos] = useIngresos();
     const [cajas, loadingCajas] = useCajas();
     const [gastos, loadingGastos] = useGastos();
-    const [deudas, loadingDeudas] = useDeudas(destinatario);
+    const [saldos, loadingSaldos] = useSaldos(destinatario);
     const [canSend, setCanSend] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState({})
@@ -28,6 +28,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         id: null,
         fecha_operacion: moment().format('YYYY-MM-DD'),
         destinatario: destinatario.id,
+        modulo: moduleHandler,
         descripcion: '',
         receipt: {
             receipt_type: "",
@@ -46,8 +47,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         if (documentoId) {
             setLoading(true);
     
-            dispatch(comprobantesActions.get(moduleHandler, documentoId))
-            .then((doc) => setDocumento(doc))
+            dispatch(comprobantesActions.get(documentoId))
+            .then((doc) => setDocumento(({...doc, modulo: moduleHandler})))
             .finally(() => setLoading(false));
           }
     
@@ -60,7 +61,14 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     ...documento,
                     cajas: []
                 }));
-        } else {
+        } else if (documento.receipt.receipt_type === "Transferencia X")
+            setDocumento(documento => ({
+                ...documento,
+                cobros: [],
+                cajas: [],
+                resultados: [],
+            }));
+        else {
             setDocumento(documento => ({
                 ...documento,
                 resultados: []
@@ -73,7 +81,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         if (documento.receipt.receipt_type === '') return false
         if (documento.receipt.point_of_sales === '') return false
         if (documento.receipt.receipt_type !== '') {
-            if(CHOICES.receiptTypes[moduleHandler].find(t => t.value === documento.receipt.receipt_type).receipt_number === "manual" && documento.receipt.receipt_number === "") 
+            const tipo = CHOICES.receiptTypes[documento.modulo].find(t => t.value === documento.receipt.receipt_type)
+            if(tipo && tipo.receipt_number === "manual" && documento.receipt.receipt_number === "") 
             return false
         }
 
@@ -82,16 +91,14 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         const totalCajas = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : 0
         const totalResultados = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : 0
         const totalDeudas = totalCargas + totalCobros
+        const totalPagos = totalCajas + totalResultados
         
-        // Si es nota de credito el valor de los resultados debe ser IGUAL a la suma de cobros y cargas
-        if (totalResultados > 0) return totalResultados === totalDeudas
-        
-        // Si se crean cargas o si se intenta pagar cobros y existen cajas
-        // las cajas deben ser IGUAL a la suma de cobros y cargas
-        if (totalDeudas>0 && totalCajas>0) return totalCajas === totalDeudas
+        // Si se crean cargas o si se intenta pagar cobros y existen cajas o resultados
+        // las cajas y resultados deben ser IGUAL a la suma de cobros y cargas
+        if (totalDeudas>0 && totalPagos>0) return totalPagos === totalDeudas
         
         if (totalDeudas < 0) return false// Significa que SOLAMENTE HAY SALDOS A FAVOR. No pase
-        if (totalCajas > 0) return false // Significa que SOLAMENTE HAY CAJAS. Pase pase
+        if (totalPagos > 0) return documento.modulo === "caja" // Significa que SOLAMENTE HAY CAJAS O RESULTADOS. Pase pase solo para transferencias
         if (totalCobros > 0) return false // Significa que SOLAMENTE HAY COBROS. No pase
         return totalCargas > 0 // Significa que SOLAMENTE HAY CARGAS. Pase pase
 
@@ -103,8 +110,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     }, [documento])
     
     const updateSituation = useCallback(() => {
-        dispatch(deudasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true }));
-        dispatch(cuentasActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true, page: 1 }));
+        dispatch(saldosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true }));
+        dispatch(movimientosActions.get({ destinatario: destinatario.id, fecha: moment().format('YYYY-MM-DD'), save:true, page: 1 }));
     }, [dispatch, destinatario] );
 
     const handleSubmit = useCallback((event) => {
@@ -119,7 +126,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             resultados: documento.resultados.filter(r => (Number(r.monto) > 0)),
         }
         
-        dispatch(comprobantesActions.send(moduleHandler, payload))
+        dispatch(comprobantesActions.send(payload))
             .then(() => {
                 updateSituation();      
             })
@@ -141,11 +148,10 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
-                moduleHandler={moduleHandler}
             />
 
             {/* Seccion de Cargas */}
-            {documento.receipt.receipt_type && ((loadingIngresos || loadingCajas) ? <Spinner /> : <Appendable 
+            {documento.receipt.receipt_type && ((loadingIngresos || loadingCajas || loadingGastos) ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -153,14 +159,14 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     cliente: "Creditos",
                     proveedor: "Deudas",
                     caja: "Cargar dinero"
-                }[moduleHandler]}
+                }[documento.modulo]}
                 handler="cargas"
                 fields={[           
                     {
                     type: 'select',
                     name: 'concepto',
-                    label: 'Concepto',
-                    choices: [...ingresos, ...cajas]
+                    label: documento.modulo === "caja" ? "Desde": 'Concepto',
+                    choices: [...ingresos, ...cajas, ...gastos]
                     },
                     {
                     type: 'date',
@@ -193,6 +199,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     label: 'Monto',
                     },                        
                 ]}
+                
                 cleanedField={{
                     concepto: '',
                     periodo: moment().format('YYYY-MM-DD'),
@@ -205,9 +212,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             />)
             }
 
-
             {/* Clientes: Seccion de Cobros */}
-            {documento.receipt.receipt_type && (loadingDeudas ? <Spinner /> : <Selectable 
+            {documento.receipt.receipt_type && (['cliente', 'proveedor'].includes(documento.modulo) || onlyRead) && (loadingSaldos ? <Spinner /> : <Selectable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -216,18 +222,18 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     cliente: "Items pendientes de cobro",
                     proveedor: "Items pendientes de pago",
                     caja: "Items pendientes de cobro"
-                }[moduleHandler]}
+                }[documento.modulo]}
                 handler="cobros"
-                rows={documento.cobros.length > 0 ? documento.cobros: deudas}
+                rows={documento.id ? documento.cobros: saldos}
             />)
             }
 
             {/* Seccion de Cajas */}
-            {documento.receipt.receipt_type && !documento.receipt.receipt_type.includes("Nota de Credito") && (loadingCajas ? <Spinner /> : <Appendable 
+            {documento.receipt.receipt_type && (['cliente', 'proveedor'].includes(documento.modulo) || onlyRead) && !documento.receipt.receipt_type.includes("Nota de Credito") && (loadingCajas ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
-                title={moduleHandler === "caja" ? "Descargar dinero" : "Formas de pago"}
+                title={documento.modulo === "caja" ? "Cargar dinero desde" : "Formas de pago"}
                 handler="cajas"
                 fields={[
                     {

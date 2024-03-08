@@ -1,6 +1,6 @@
 const list = (state = [], action) => {
     switch (action.type) {
-        case 'GET_STATUS_CUENTAS':
+        case 'GET_MOVIMIENTOS':
             return action.payload;
 
         default:

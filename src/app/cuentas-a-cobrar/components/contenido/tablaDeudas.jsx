@@ -8,13 +8,13 @@ import BasicModal from '@/components/modal';
 import Comprobante from '@/components/CRUD/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
-import { deudasActions } from '@/redux/actions/deudas';
+import { saldosActions } from '@/redux/actions/saldos';
 
-export default function Deudas(props) {
+export default function (props) {
   const { selected } = props;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const deudas = useSelector(state => state.deudas.list)
+  const saldos = useSelector(state => state.saldos.list)
   // const saldos = useSelector(state => state.saldos.list)
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Deudas(props) {
       try {
         setLoading(true);
         // Despacha las acciones de forma secuencial
-        await dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(new Date()).format('YYYY-MM-DD'), save: true }));
+        await dispatch(saldosActions.get({ destinatario: selected.id, fecha: moment(new Date()).format('YYYY-MM-DD'), save: true }));
       } catch (error) {
         console.error('Error al despachar acciones:', error);
       } finally {
@@ -62,7 +62,7 @@ export default function Deudas(props) {
       key: 'periodo'
     }, {
       label: 'Monto',
-      key: 'valor',
+      key: 'monto',
     }, {
       label: 'Pagado/Utilizado',
       key: 'pago_capital',      
@@ -96,7 +96,7 @@ export default function Deudas(props) {
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={deudas} columns={columns} />
+    <Listado items={saldos} columns={columns} />
     </>
     );
 };

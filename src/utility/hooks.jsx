@@ -7,9 +7,8 @@ import get from 'lodash/get';
 import { clientesActions } from '@/redux/actions/clientes';
 import { proveedoresActions } from '@/redux/actions/proveedores';
 import { puntosActions } from '@/redux/actions/puntos';
-import { deudasActions } from '@/redux/actions/deudas';
 import { saldosActions } from '@/redux/actions/saldos';
-import { cuentasActions } from '@/redux/actions/cuentas';
+import { movimientosActions } from '@/redux/actions/movimientos';
 import { titulosActions } from '@/redux/actions/titulos';
 import { ingresosActions } from '@/redux/actions/ingresos';
 import { gastosActions } from '@/redux/actions/gastos';
@@ -211,70 +210,11 @@ export const useRetenciones = () => {
 };
 
 // Otros
-export const useDeudas = (selected, date) => {
-  const [loading, setLoading] = useState(false);
-  const [deudas, setDeudas] = useState([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (selected) {
-      setLoading(true);
-      dispatch(deudasActions.get({ destinatario: selected.id, fecha: moment(date).format('YYYY-MM-DD') }))
-        .then((response) => setDeudas(response.data))
-        .finally(() => setLoading(false));
-    }
-  }, [selected]);
-
-  return [deudas, loading];
-};
-
-
-
-export const useEstadoCuenta = (selected) => {
-  const [loading, setLoading] = useState(false);
-  const cuentas = useSelector(state => state.cuentas.list);
-  const page = useSelector(state => state.cuentas.page);
-  const [paginator, setPaginator] = useState({});
-  const dispatch = useDispatch();
-
-  const setPage = (number) => {
-    dispatch({
-      type: 'SET_PAGE_STATUS_CUENTAS',
-      payload: number
-    });
-  }
-  
-  useEffect(() => {
-    if (selected) {
-      setLoading(true);
-      const esTitulo = selected.hasOwnProperty("supertitulo");
-      let query = { destinatario: selected.id, fecha: moment().format('YYYY-MM-DD'), page: page, save:true }
-      if (esTitulo) {
-        query = {...query, titulo:1};
-      }
-
-      dispatch(cuentasActions.get(query))
-        .then((response) => {
-          setPaginator(response.paginator)
-        })
-        .finally(() => setLoading(false));
-    }
-  }, [selected.id, page]);
-
-  const infoPaginator = {
-    page,
-    ...paginator,
-    setPage
-  }
-
-  return [cuentas, loading, infoPaginator];
-};
-
 export const useSaldos = (selected, date) => {
   const [loading, setLoading] = useState(false);
   const [saldos, setSaldos] = useState([]);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (selected) {
       setLoading(true);
@@ -285,23 +225,24 @@ export const useSaldos = (selected, date) => {
   }, [selected]);
 
   return [saldos, loading];
-
 };
 
 
 
-export const useDisponibilidades = (date) => {
+export const useMovimientos = (selected) => {
   const [loading, setLoading] = useState(false);
-  const [disponibilidades, setDisponibilidades] = useState([]);
+  const movimientos = useSelector(state => state.movimientos.list);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
-      dispatch(saldosActions.get({ destinatario: "caja", fecha: moment(date).format('YYYY-MM-DD') }))
-      .then((response) => setDisponibilidades(response.data))
-      .finally(() => setLoading(false));
-  }, []);
+    if (selected) {
+      setLoading(true);
+      const esTitulo = selected.hasOwnProperty("supertitulo");
+      let query = { destinatario: selected.id, fecha: moment().format('YYYY-MM-DD'), save:true }
+      if (esTitulo) {query = {...query, titulo:1};}
+      dispatch(movimientosActions.get(query)).finally(() => setLoading(false));
+    }
+  }, [selected.id]);
 
-  return [disponibilidades, loading];
-
+  return [movimientos, loading];
 };

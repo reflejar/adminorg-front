@@ -22,7 +22,7 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
     };
 
 
-    return (<div className="col-lg-2 min-vh-100">
+    return (<div className="col-lg-2 min-vh-100 pe-3">
               <div className="monitor-head p-3 d-flex align-items-center">
                 <div className="d-flex justify-content-center align-items-center text-dark "></div>
               </div>

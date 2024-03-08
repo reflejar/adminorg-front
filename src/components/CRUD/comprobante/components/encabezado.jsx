@@ -6,10 +6,9 @@ export default function Encabezado ({
     documento,
     setDocumento,
     onlyRead,
-    moduleHandler
     }) {
 
-    const types = CHOICES.receiptTypes[moduleHandler]
+    const types = CHOICES.receiptTypes[documento.modulo]
     const [point_of_sales] = usePuntosDeVenta();
 
     const handleChange = (e) => {
@@ -36,7 +35,16 @@ export default function Encabezado ({
             <div className="row">
                 <div className="col-md-2 px-1">
                 <label htmlFor="receipt.receipt_type">Tipo</label>
-                <select 
+                {onlyRead ? 
+                    <input 
+                    type="number" 
+                    className="form-control" 
+                    name="receipt.receipt_type" 
+                    id="receipt.receipt_type"
+                    disabled={onlyRead}
+                    value={documento.receipt.receipt_type}
+                    />       
+                : <select 
                     className="form-control" 
                     name="receipt.receipt_type" 
                     id="receipt.receipt_type"
@@ -48,11 +56,11 @@ export default function Encabezado ({
                     {types.map((type, i) => (
                         <option key={i} value={type.value}>{type.value}</option>
                     ))}
-                </select>
+                </select>}
                 </div>
                 <div className="col-md-2 px-1">
                 <label htmlFor="receipt.point_of_sales">Punto Vta</label>
-                {(moduleHandler === "cliente") || (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0) && point_of_sales ? <select 
+                {(documento.modulo === "cliente") || (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0) && point_of_sales ? <select 
                 className="form-control"
                 name="receipt.point_of_sales" 
                 id="receipt.point_of_sales" 
@@ -85,7 +93,7 @@ export default function Encabezado ({
                     type="number" 
                     className="form-control" 
                     disabled={
-                    (moduleHandler === "cliente") || 
+                    (documento.modulo === "cliente") || 
                     (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0)
                     }
                     name="receipt.receipt_number" 
