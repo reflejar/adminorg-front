@@ -16,7 +16,6 @@ export const cajas = [
 
 export const ingresos = [
     { id: null, nombre: "---"},
-    { id: 'interes_predeterminado', nombre: 'Cuenta de interes predeterminada' },
     // { id: 'prioritario', nombre: 'Con prioridad de cobro' },
     { id: 'no_prioritario', nombre: 'Comun' },
 ];
@@ -24,6 +23,5 @@ export const ingresos = [
 export const gastos = [
     { id: null, nombre: "---"},
     { id: 'comun', nombre: 'Comun' },
-    { id: 'descuento_predeterminado', nombre: 'Cuenta de descuento predeterminado' },
 ];
 

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 // Components
 import Spinner from '@/components/spinner';
 import { ImportFileDropzone } from '@/components/ImportFileDropzone';
-import { useTitulos, useIntereses, useDescuentos } from "@/utility/hooks";
+import { useTitulos } from "@/utility/hooks";
 import { ingresos } from '@/utility/options/taxones';
 
 // Styles
@@ -23,23 +23,17 @@ const csvValidations = Yup.object({
   tipo: Yup
     .string('Tipo de ingreso debe ser un texto valido')
     .required('Tipo es requerido'),
-  interes: Yup
-    .string('Metodologia de interes debe ser un texto valido'),
-  descuento: Yup
-    .string('Metodologia de descuento debe ser un texto valido'),    
   titulo: Yup
     .string('Titulo debe ser un texto valido')
     .required('Titulo es requerido'),
 });
 
-const tableHeaders = ['Nombre', 'Tipo', 'Interes', 'Descuento', 'Titulo'];
+const tableHeaders = ['Nombre', 'Tipo', 'Titulo'];
 
 const M = ({ onClose }) => {
   const [csvError, setCSVError] = useState([]);
   const [newIngresos, setNewIngresos] = useState([]);
   const [titulos, loadingTitulos] = useTitulos(true);
-  const [intereses, loadingIntereses] = useIntereses();
-  const [descuentos, loadingDescuentos] = useDescuentos();
 
   const dispatch = useDispatch();
 
@@ -48,9 +42,6 @@ const M = ({ onClose }) => {
 
     const mappedNewIngresos = newIngresos.map((x) => ({
         ...x,
-        taxon: get(ingresos.find((val) => val.nombre.toLowerCase() === x.interes.toLowerCase()), "id", ""),
-        interes: get(intereses.find((val) => val.full_name.toLowerCase() === x.interes.toLowerCase()), "id", ""),
-        descuento: get(descuentos.find((val) => val.full_name.toLowerCase() === x.descuento.toLowerCase()), "id", ""),
         titulo: get(titulos.find((val) => val.full_name.toLowerCase() === x.titulo.toLowerCase()), "id", ""),
       }));
 
@@ -101,7 +92,7 @@ const M = ({ onClose }) => {
 
       // All relational fields (e.g destinatario, expensa) match correctly and their ids exists
       csvArr.forEach((row, index) => {
-        const { tipo, interes, descuento } = row;
+        const { tipo } = row;
         const matchedTipo = ingresos.some((val) => val.nombre.toLowerCase() === tipo.toLowerCase());
         if (!matchedTipo) {
           const error = `Tipo "${tipo}" no es posible`;
@@ -109,24 +100,7 @@ const M = ({ onClose }) => {
           const message = `Linea ${errorRowLine}: ` + error;    
           errors.push(message)
         }
-        if (interes) {
-          const matchedInteres = intereses.some((val) => val.nombre.toLowerCase() === interes.toLowerCase());
-          if (!matchedInteres) {
-            const error = `Metodologia de interes "${interes}" no es posible`;
-            const errorRowLine = index + 1;
-            const message = `Linea ${errorRowLine}: ` + error;    
-            errors.push(message)
-          }
-        }
-        if (descuento) {
-          const matchedDescuento = descuentos.some((val) => val.nombre.toLowerCase() === descuento.toLowerCase());
-          if (!matchedDescuento) {
-            const error = `Metodologia de descuento "${descuento}" no es posible`;
-            const errorRowLine = index + 1;
-            const message = `Linea ${errorRowLine}: ` + error;    
-            errors.push(message)
-          }        
-        }
+
       });
 
       if (errors.length > 0) {
@@ -138,7 +112,7 @@ const M = ({ onClose }) => {
     };
   }
 
-  if (loadingTitulos || loadingDescuentos || loadingIntereses) {
+  if (loadingTitulos) {
     return (
       <div className='loading-modal'>
         <Spinner />
@@ -167,8 +141,6 @@ const M = ({ onClose }) => {
                   <tr className={row.id ? "" : "warning"} key={index}>
                     <td>{row.nombre}</td>
                     <td>{row.tipo}</td>
-                    <td>{row.interes}</td>
-                    <td>{row.descuento}</td>
                     <td>{row.titulo}</td>
                   </tr>
                 )

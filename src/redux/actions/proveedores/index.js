@@ -45,7 +45,6 @@ const get_all = () => async (dispatch) => {
 
 
 const send = (values) => async (dispatch) => {
-
     let payload = {
       titulo: values.titulo,
       perfil: {
@@ -65,7 +64,6 @@ const send = (values) => async (dispatch) => {
           provincia: values.provincia
         },
       },
-      retiene: []
     };
   
     let response;
@@ -117,7 +115,6 @@ const send = (values) => async (dispatch) => {
           provincia: x.domicilio_provincia
         },
       },
-      retiene: []
     }))
   
     let response;

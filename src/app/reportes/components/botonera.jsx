@@ -1,7 +1,7 @@
 "use client"
 
 import { connect } from 'react-redux'
-import { informesActions } from "@/redux/actions/informes";
+import { analisisActions } from "@/redux/actions/analisis";
 
 function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgrupar, setColumnas, setTotalizar}) {
     
@@ -62,17 +62,17 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
 
 
 const mapStateToProps = state => ({
-  analizar: state.informes.analizar,
-  agrupar_por: state.informes.agrupar_por,
-  encolumnar: state.informes.encolumnar,
-  totalizar: state.informes.totalizar,
+  analizar: state.analisis.analizar,
+  agrupar_por: state.analisis.agrupar_por,
+  encolumnar: state.analisis.encolumnar,
+  totalizar: state.analisis.totalizar,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  setAnalizar: payload => dispatch(informesActions.selectAnalizar(payload)),
-  setAgrupar: payload => dispatch(informesActions.selectAgrupar(payload)),
-  setColumnas: payload => dispatch(informesActions.selectColumnas(payload)),
-  setTotalizar: payload => dispatch(informesActions.selectTotalizar(payload))
+  setAnalizar: payload => dispatch(analisisActions.selectAnalizar(payload)),
+  setAgrupar: payload => dispatch(analisisActions.selectAgrupar(payload)),
+  setColumnas: payload => dispatch(analisisActions.selectColumnas(payload)),
+  setTotalizar: payload => dispatch(analisisActions.selectTotalizar(payload))
 
 });
   

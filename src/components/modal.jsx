@@ -47,13 +47,4 @@ const BasicModal = ({
     </Modal>
   </Fragment>
 );
-
-BasicModal.propTypes = {
-  button: PropTypes.element,
-  className: PropTypes.string,
-  header: PropTypes.string,
-  component: PropTypes.element.isRequired,
-  onSubmit: PropTypes.func
-};
-
 export default BasicModal;

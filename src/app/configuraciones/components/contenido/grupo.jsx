@@ -11,9 +11,7 @@ import { proveedoresActions } from '@/redux/actions/proveedores';
 import { cajasActions } from '@/redux/actions/cajas';
 import { ingresosActions } from '@/redux/actions/ingresos';
 import { gastosActions } from '@/redux/actions/gastos';
-import { interesesActions } from '@/redux/actions/intereses';
 import { titulosActions } from '@/redux/actions/titulos';
-import { descuentosActions } from '@/redux/actions/descuentos';
 
 
 import Cliente from "@/components/CRUD/cliente/CU";
@@ -21,8 +19,6 @@ import Proveedor from "@/components/CRUD/proveedor/CU";
 import Caja from "@/components/CRUD/caja/CU";
 import Ingreso from "@/components/CRUD/ingreso/CU";
 import Gasto from "@/components/CRUD/gasto/CU";
-import Interes from "@/components/CRUD/interes/CU";
-import Descuento from "@/components/CRUD/descuento/CU";
 import Titulo from "@/components/CRUD/titulo/CU";
 
 
@@ -33,8 +29,6 @@ function Grupo({
     caja,
     ingreso,
     gasto,
-    interes,
-    descuento,
     titulo,
  }) {
     const [modal, setModal] = useState({
@@ -108,27 +102,7 @@ function Grupo({
                 { label: "Editar", key: "", onClick: handleModal},
               ],
               modal: <Gasto selected={modal.item} onClose={handleModal} />
-        },
-        interes: {
-            action: interesesActions,
-            lista: interes,
-            columnas: [
-                { label: "Nombre", key: "nombre" },
-                { label: "Tipo", key: "taxon" },
-                { label: "Editar", key: "", onClick: handleModal},
-              ],
-              modal: <Interes selected={modal.item} onClose={handleModal} />
-        },
-        descuento: {
-            action: descuentosActions,
-            lista: descuento,
-            columnas: [
-                { label: "Nombre", key: "nombre" },
-                { label: "Tipo", key: "taxon" },
-                { label: "Editar", key: "", onClick: handleModal},
-              ],
-              modal: <Descuento selected={modal.item} onClose={handleModal} />
-        },        
+        },  
         titulo: {
             action: titulosActions,
             lista: titulo,
@@ -193,8 +167,6 @@ const mapStateToProps = state => ({
     caja: state.cajas.list,
     ingreso: state.ingresos.list,
     gasto: state.gastos.list,
-    interes: state.intereses.list,
-    descuento: state.descuentos.list,
     titulo: state.titulos.list,
 
 })

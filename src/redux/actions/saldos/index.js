@@ -1,6 +1,6 @@
 import { Service } from '../../services/general';
 
-const apiEndpoint = 'operative/estados/saldos';
+const apiEndpoint = 'operative/reportes/saldos';
 
 const get = (params) => async (dispatch) => {
   let path = `${apiEndpoint}/${params.destinatario}/?end_date=${params.fecha}`;

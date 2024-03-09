@@ -1,7 +1,7 @@
 'use client'
 import Listado from "@/components/listados";
 import Spinner from "@/components/spinner";
-import { informesActions } from "@/redux/actions/informes";
+import { analisisActions } from "@/redux/actions/analisis";
 import { useEffect, useState } from "react";
 import { connect, useDispatch } from 'react-redux'
 
@@ -16,8 +16,8 @@ function Contenido({ analizar,agrupar_por,encolumnar,totalizar }) {
     useEffect(() => {
         if (analizar.length > 0 && totalizar !== '') {
             setLoading(true)
-            dispatch(informesActions.fetchData({analisis: {analizar, agrupar_por, encolumnar, totalizar}}))
-            .then((response) => setData(response))
+            dispatch(analisisActions.fetchData({analizar, agrupar_por, encolumnar, totalizar}))
+            .then((response) => setData(response.data))
             .finally(() => setLoading(false));
         }
     }, [analizar,agrupar_por,encolumnar,totalizar])
@@ -45,10 +45,10 @@ function Contenido({ analizar,agrupar_por,encolumnar,totalizar }) {
   }
   
 const mapStateToProps = state => ({
-    analizar: state.informes.analizar,
-    agrupar_por: state.informes.agrupar_por,
-    encolumnar: state.informes.encolumnar,
-    totalizar: state.informes.totalizar,
+    analizar: state.analisis.analizar,
+    agrupar_por: state.analisis.agrupar_por,
+    encolumnar: state.analisis.encolumnar,
+    totalizar: state.analisis.totalizar,
 })
 
 

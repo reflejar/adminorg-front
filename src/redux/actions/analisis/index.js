@@ -2,7 +2,7 @@ import { Service } from "@/redux/services/general";
 import moment from "moment";
 import qs from 'querystring';
 
-let apiEndpoint = 'reportes/';
+let apiEndpoint = 'operative/reportes/analisis';
 
 
 const selectAnalizar = (tipos) => ({
@@ -26,13 +26,15 @@ const selectTotalizar = (tipo) => ({
 })
 
 const fetchData = (params) => async (dispatch) => {
-    
     const query = qs.stringify({
         start_date: '',
         end_date: moment(new Date()).format('YYYY-MM-DD'),
-        analisis: JSON.stringify(params.analisis)
+        analizar: params.analizar,
+        agrupar_por: params.agrupar_por, 
+        encolumnar: params.encolumnar, 
+        totalizar: params.totalizar
     })
-    const response = await Service.get(apiEndpoint + '?' + query);
+    const response = await Service.get(apiEndpoint + '/?' + query);
 
     if (response && response.data) {
         return response.data
@@ -43,7 +45,7 @@ const fetchData = (params) => async (dispatch) => {
   };
 
 
-export const informesActions = {
+export const analisisActions = {
     selectAnalizar,
     selectAgrupar,
     selectColumnas,

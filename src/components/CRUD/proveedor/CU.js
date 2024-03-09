@@ -12,24 +12,21 @@ import { toastr } from "react-redux-toastr";
 import Spinner from '@/components/spinner';
 import { provincias } from '@/utility/options/provincias';
 import { tipo_documentos } from '@/utility/options/documentos';
-import { useRetenciones, useTitulos } from '@/utility/hooks';
+import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';
 
-const filterAvailables = (arr) => arr.filter((x) => !x.cuenta_set.length > 0);
 
 const CU = ({ selected, onClose }) => {
   const dispatch = useDispatch();
-  const [retenciones, loadingRetenciones] = useRetenciones();
   const [titulos, loadingTitulos] = useTitulos();
   const [tituloPred, setTituloPred] = useState();
-  let retiene = [];
 
   useEffect(() => {
     setTituloPred(titulos.find(titulo => titulo.predeterminado === "proveedor"))
   }, [titulos])
 
-  if (loadingTitulos || loadingRetenciones) {
+  if (loadingTitulos) {
     return (
       <div className="loading-modal">
         <br/><br/>
@@ -52,7 +49,7 @@ const CU = ({ selected, onClose }) => {
     <Formik
     enableReinitialize
     initialValues={{
-      nombre: get(selected, 'perfil.nombre', ''),
+        nombre: get(selected, 'perfil.nombre', ''),
         apellido: get(selected, 'perfil.apellido', ''),
         razon_social: get(selected, 'perfil.razon_social', '') || '',
         tipo_documento: get(selected, 'perfil.tipo_documento', ''),
@@ -66,7 +63,6 @@ const CU = ({ selected, onClose }) => {
         calle: get(selected, 'perfil.domicilio.calle', ''),
         numero: get(selected, 'perfil.domicilio.numero', ''),
         titulo: get(selected, 'titulo', tituloPred.id),
-        retiene
       }}
       validationSchema={Yup.object().shape({
         nombre: Yup.string(),
@@ -83,7 +79,6 @@ const CU = ({ selected, onClose }) => {
         calle: Yup.string(),
         numero: Yup.string(),
         titulo: Yup.number().required(empty),
-        retiene: Yup.array()        
       })}
       onSubmit={async (values, { setSubmitting }) => {
         try {

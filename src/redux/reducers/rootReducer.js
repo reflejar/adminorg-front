@@ -8,8 +8,6 @@ import proveedores from './proveedores';
 import ingresos from './ingresos';
 import gastos from './gastos';
 import cajas from './cajas';
-import intereses from './intereses';
-import descuentos from './descuentos';
 import configuraciones from './configuraciones';
 import contabilidad from './contabilidad';
 import titulos from './titulos';
@@ -20,7 +18,7 @@ import documentos from './documentos';
 import plataforma from './plataforma';
 import saldos from './saldos';
 import retenciones from './retenciones';
-import informes from './informes';
+import analisis from './analisis';
 import carpetas from './carpetas';
 
 const appReducer = combineReducers({
@@ -28,13 +26,11 @@ const appReducer = combineReducers({
    clientes,
    carpetas,
    dominios,
-   informes,
+   analisis,
    proveedores,
    ingresos,
    gastos,
    cajas,
-   intereses,
-   descuentos,
    contabilidad,
    configuraciones,
    titulos,

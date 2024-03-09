@@ -51,20 +51,14 @@ export default function Deudas(props) {
       key: 'fecha'
     }, {
       label: 'Comprobante',
-      key: 'nombre',
+      key: 'documento',
       onClick: handleModal
     }, {
-      label: 'Concepto',
-      key: 'concepto'
+      label: 'Detalle',
+      key: 'detalle'
     }, {
-      label: 'Periodo',
-      key: 'periodo'
-    }, {
-      label: 'Monto',
-      key: 'monto',
-    }, {
-      label: 'Pagado/Utilizado',
-      key: 'pago_capital',      
+      label: 'Vencimiento',
+      key: 'fecha_vencimiento'
     }, {
       label: 'Saldo',
       key: 'saldo',

@@ -7,8 +7,6 @@ import Proveedor from "@/components/CRUD/proveedor/CU";
 import Caja from "@/components/CRUD/caja/CU";
 import Ingreso from "@/components/CRUD/ingreso/CU";
 import Gasto from "@/components/CRUD/gasto/CU";
-import Interes from "@/components/CRUD/interes/CU";
-import Descuento from "@/components/CRUD/descuento/CU";
 import Titulo from "@/components/CRUD/titulo/CU";
 
 export default function Modal ({selected}) {
@@ -25,8 +23,6 @@ export default function Modal ({selected}) {
     caja: <Caja onClose={handleToggle} />,
     ingreso: <Ingreso onClose={handleToggle} />,
     gasto: <Gasto onClose={handleToggle} />,
-    interes: <Interes onClose={handleToggle} />,
-    descuento: <Descuento onClose={handleToggle} />,
     titulo: <Titulo onClose={handleToggle} />,      
   }
 

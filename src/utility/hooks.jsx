@@ -13,9 +13,6 @@ import { titulosActions } from '@/redux/actions/titulos';
 import { ingresosActions } from '@/redux/actions/ingresos';
 import { gastosActions } from '@/redux/actions/gastos';
 import { cajasActions } from '@/redux/actions/cajas';
-import { interesesActions } from '@/redux/actions/intereses';
-import { descuentosActions } from '@/redux/actions/descuentos';
-import { retencionesActions } from '@/redux/actions/retenciones';
 
 // Parametros
 export const useClientes = () => {
@@ -148,65 +145,6 @@ export const useCajas = () => {
   }, []);
 
   return [cajas, loading];
-};
-
-export const useIntereses = () => {
-  const [loading, setLoading] = useState(false);
-  const intereses = useSelector((state) => state.intereses.list);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetch() {
-      setLoading(true);
-      await dispatch(interesesActions.get_all())
-        .finally(() => setLoading(false));
-    }
-    if (intereses.length === 0) {
-      fetch();
-    }
-  }, []);
-
-  return [intereses, loading];
-};
-
-export const useDescuentos = () => {
-  const [loading, setLoading] = useState(false);
-  const descuentos = useSelector((state) => state.descuentos.list);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetch() {
-      setLoading(true);
-      await dispatch(descuentosActions.get_all())
-        .finally(() => setLoading(false));
-    }
-    if (descuentos.length === 0) {
-      fetch();
-    }
-  }, []);
-
-  return [descuentos, loading];
-};
-
-export const useRetenciones = () => {
-  const [loading, setLoading] = useState(false);
-  const retenciones = useSelector((state) => get(state, 'retenciones.list', []));
-  const [listado, setListado] = useState(undefined);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetchRet() {
-      setLoading(true);
-      await dispatch(retencionesActions.get_all())
-        .finally(() => setLoading(false));
-    }
-    if (!listado) {
-      fetchRet();
-      setListado([...retenciones])
-    }
-  }, [setLoading, dispatch, listado, setListado, retenciones]);
-
-  return [retenciones, loading];
 };
 
 // Otros

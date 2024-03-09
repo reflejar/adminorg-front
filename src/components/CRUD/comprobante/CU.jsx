@@ -117,7 +117,8 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
     const handleSubmit = useCallback((event) => {
         event.preventDefault();
         setLoading(true);
-
+        
+        
         const payload = {
             ...documento,
             cargas: documento.cargas.filter(c => (Number(c.monto) > 0)),
@@ -125,7 +126,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             cajas: documento.cajas.filter(c => (Number(c.monto) > 0)),
             resultados: documento.resultados.filter(r => (Number(r.monto) > 0)),
         }
-        
+
         dispatch(comprobantesActions.send(payload))
             .then(() => {
                 updateSituation();      
@@ -172,12 +173,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     type: 'date',
                     name: 'periodo',
                     label: 'Periodo',
-                    },
-                    {
-                    type: 'date',
-                    name: 'fecha_gracia',
-                    label: 'Descuento',
-                    },            
+                    },    
                     {
                     type: 'date',
                     name: 'fecha_vencimiento',
@@ -203,7 +199,6 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 cleanedField={{
                     concepto: '',
                     periodo: moment().format('YYYY-MM-DD'),
-                    fecha_gracia: moment().format('YYYY-MM-DD'),
                     fecha_vencimiento: moment().format('YYYY-MM-DD'),
                     detalle: '',
                     cantidad: 0,

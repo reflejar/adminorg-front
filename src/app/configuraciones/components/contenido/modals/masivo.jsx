@@ -22,8 +22,6 @@ export default function Modal ({selected}) {
     caja: <Caja onClose={handleToggle} />,
     ingreso: <Ingreso onClose={handleToggle} />,
     gasto: <Gasto onClose={handleToggle} />,
-    interes: "No es posible realizar importacion de metodologías de interés",
-    descuento: "No es posible realizar importacion de metodologías de descuento",
     titulo: "No es posible realizar importacion de los titulos contables"
   }
 

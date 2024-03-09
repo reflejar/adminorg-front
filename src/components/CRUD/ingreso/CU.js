@@ -11,7 +11,7 @@ import { toastr } from "react-redux-toastr";
 
 import { ingresos } from '@/utility/options/taxones';
 import Spinner from '@/components/spinner';
-import { useTitulos, useIntereses, useDescuentos } from '@/utility/hooks';
+import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';
 
@@ -19,15 +19,13 @@ const empty = 'Campo requerido';
 const CU = ({ selected, onClose }) => {
   const dispatch = useDispatch();
   const [titulos, loadingTitulos] = useTitulos();
-  const [intereses, loadingIntereses] = useIntereses();
-  const [descuentos, loadingDescuentos] = useDescuentos();
   const [tituloPred, setTituloPred] = useState();
 
   useEffect(() => {
     setTituloPred(titulos.find(titulo => titulo.predeterminado === "ingreso"))
   }, [titulos])
 
-  if (loadingTitulos || loadingIntereses || loadingDescuentos) {
+  if (loadingTitulos) {
     return (
       <div className="loading-modal">
         <br/><br/>
@@ -51,19 +49,11 @@ const CU = ({ selected, onClose }) => {
         nombre: get(selected, 'nombre', ''),
         taxon: get(selected, 'taxon', ''),
         titulo: get(selected, 'titulo', tituloPred.id),
-        interes: get(selected, 'interes', ''),
-        descuento: get(selected, 'descuento', ''),
       }}
       validationSchema={Yup.object().shape({
         nombre: Yup.string(),
         taxon: Yup.string(),
         titulo: Yup.number().required(empty),
-        interes: Yup.number()
-        .transform((value, originalValue) => (originalValue && originalValue === "" ? null: value))
-        .nullable(),
-        descuento: Yup.number()
-          .transform((value, originalValue) => (originalValue && originalValue === "" ? null: value))
-          .nullable(),
       })}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -102,27 +92,6 @@ const CU = ({ selected, onClose }) => {
                 </Field>
                 {errors.taxon && touched.taxon ? <div className="invalid-feedback">{errors.taxon}</div> : null}
               </FormGroup>     
-                          
-              <FormGroup className='col-sm-4 px-3'>
-                <Label for="interes">Metodologia de intereses</Label>
-                <Field component="select" name="interes" id="interes" className={`form-control ${errors.interes && touched.interes && 'is-invalid'}`}>
-                  <option value={""}>---</option>
-                  {intereses.map((interes, i) => {
-                    return <option key={i} value={interes.id}>{interes.full_name}</option>
-                  })}
-                </Field>
-                {errors.interes && touched.interes ? <div className="invalid-feedback">{errors.interes}</div> : null}
-              </FormGroup>
-              <FormGroup className='col-sm-4 px-3'>
-                <Label for="descuento">Metodologia de descuentos</Label>
-                <Field component="select" name="descuento" id="descuento" className={`form-control ${errors.descuento && touched.descuento && 'is-invalid'}`}>
-                <option value={""}>---</option>
-                  {descuentos.map((descuento, i) => {
-                    return <option key={i} value={descuento.id}>{descuento.full_name}</option>
-                  })}
-                </Field>
-                {errors.descuento && touched.descuento ? <div className="invalid-feedback">{errors.descuento}</div> : null}
-              </FormGroup>    
               <FormGroup className='col-sm-4 px-3'>
                 <Label for="titulo">Titulo contable</Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>

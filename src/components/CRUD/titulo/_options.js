@@ -4,7 +4,5 @@ export const naturalezas = [
     { id: 'caja', nombre: 'Tesorería' },
     { id: 'ingreso', nombre: 'Ingresos' },
     { id: 'gasto', nombre: 'Gastos' },
-    { id: 'interes', nombre: 'Intereses' },
-    { id: 'descuento', nombre: 'Descuentos' },
 ];    
 

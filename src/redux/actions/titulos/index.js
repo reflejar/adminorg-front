@@ -8,7 +8,6 @@ const search = (term) => ({
 });
 
 const select = item => {
-  console.log(item)
   return ({
     type: 'SELECT_TITULO',
     payload: item

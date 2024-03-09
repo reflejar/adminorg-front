@@ -21,7 +21,6 @@ const Item = ({ indentation, item, children, titulos, filterChildren, setSelecte
 
     return (
         <Fragment>
-            {console.log({selected, item})}
             <tr 
             className={selected === item ? "table-primary" : ""}
             style={{cursor: 'pointer'}}
