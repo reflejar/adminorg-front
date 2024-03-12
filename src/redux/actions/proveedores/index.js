@@ -45,6 +45,7 @@ const get_all = () => async (dispatch) => {
 
 
 const send = (values) => async (dispatch) => {
+
     let payload = {
       titulo: values.titulo,
       perfil: {
@@ -72,10 +73,9 @@ const send = (values) => async (dispatch) => {
       response = await Service.put(apiEndpoint + values.id + '/', payload);
       await dispatch(get_all());
       return;
-    } else {
-      response = await Service.post(apiEndpoint, payload);
     }
-  
+    
+    response = await Service.post(apiEndpoint, payload);
     if (response) {
       await dispatch(get_all())
       await dispatch({

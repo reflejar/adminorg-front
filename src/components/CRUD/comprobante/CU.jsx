@@ -11,6 +11,9 @@ import { useDispatch } from "react-redux";
 import Spinner from "@/components/spinner";
 import moment from "moment";
 import CHOICES from "./components/choices";
+import {baseUrl, initialHeaders} from "@/redux/config";
+import axios from "axios";
+import { Service } from "@/redux/services/general";
 
 
 export default function Comprobante({ moduleHandler, destinatario, documentoId, onlyRead, onClose }) {
@@ -38,8 +41,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
         },
         cargas: [],
         cobros: [],
-        cajas: [],
-        resultados: [],
+        descargas: [],
     });
 
     useEffect(() => {
@@ -53,29 +55,6 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
           }
     
     }, []);
-    
-    useEffect(() => {
-        
-        if (documento.receipt.receipt_type.includes("Nota de Credito")) {
-            setDocumento(documento => ({
-                    ...documento,
-                    cajas: []
-                }));
-        } else if (documento.receipt.receipt_type === "Transferencia X")
-            setDocumento(documento => ({
-                ...documento,
-                cobros: [],
-                cajas: [],
-                resultados: [],
-            }));
-        else {
-            setDocumento(documento => ({
-                ...documento,
-                resultados: []
-            }));
-        }
-    
-    }, [documento.receipt.receipt_type]);     
 
     const validate = () => {
         if (documento.receipt.receipt_type === '') return false
@@ -88,17 +67,14 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
 
         const totalCargas = documento.cargas ? documento.cargas.filter(c => (c.concepto !== "" || Number(c.monto) > 0)).reduce((total, current) => total + Number(current['monto']), 0) : 0
         const totalCobros = documento.cobros ? documento.cobros.reduce((total, current) => total + Number(current['monto']), 0) : 0
-        const totalCajas = documento.cajas ? documento.cajas.reduce((total, current) => total + Number(current['monto']), 0) : 0
-        const totalResultados = documento.resultados ? documento.resultados.filter(r => r.cuenta !== "").reduce((total, current) => total + Number(current['monto']), 0) : 0
+        const totalDescargas = documento.descargas ? documento.descargas.reduce((total, current) => total + Number(current['monto']), 0) : 0
         const totalDeudas = totalCargas + totalCobros
-        const totalPagos = totalCajas + totalResultados
-        
-        // Si se crean cargas o si se intenta pagar cobros y existen cajas o resultados
-        // las cajas y resultados deben ser IGUAL a la suma de cobros y cargas
-        if (totalDeudas>0 && totalPagos>0) return totalPagos === totalDeudas
+
+        // Si se crean cargas o si se intenta pagar cobros y existen descargas
+        // las descargas deben ser IGUAL a la suma de cobros y cargas
+        if (totalDeudas>0 && totalDescargas>0) return totalDescargas === totalDeudas
         
         if (totalDeudas < 0) return false// Significa que SOLAMENTE HAY SALDOS A FAVOR. No pase
-        if (totalPagos > 0) return documento.modulo === "caja" // Significa que SOLAMENTE HAY CAJAS O RESULTADOS. Pase pase solo para transferencias
         if (totalCobros > 0) return false // Significa que SOLAMENTE HAY COBROS. No pase
         return totalCargas > 0 // Significa que SOLAMENTE HAY CARGAS. Pase pase
 
@@ -123,8 +99,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             ...documento,
             cargas: documento.cargas.filter(c => (Number(c.monto) > 0)),
             cobros: documento.cobros.filter(c => (Number(c.monto) !== 0)),
-            cajas: documento.cajas.filter(c => (Number(c.monto) > 0)),
-            resultados: documento.resultados.filter(r => (Number(r.monto) > 0)),
+            descargas: documento.descargas.filter(c => (Number(c.monto) > 0)),
         }
 
         dispatch(comprobantesActions.send(payload))
@@ -141,6 +116,21 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             })        
     },[documento]);
 
+
+    const showPDF = async (e) => {
+        e.preventDefault()
+        try {
+            setLoading(true)
+            const response = await Service.get(`operative/comprobantes/${documentoId}/?pdf=1`, 'blob')
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            setLoading(false)
+            window.open(url);
+        } catch (error) {
+          console.error('Error al abrir la ventana:', error);
+        }
+      };
+
     if (loading) return <Spinner />
 
     return (
@@ -152,7 +142,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             />
 
             {/* Seccion de Cargas */}
-            {documento.receipt.receipt_type && ((loadingIngresos || loadingCajas || loadingGastos) ? <Spinner /> : <Appendable 
+            {documento.receipt.receipt_type && !documento.receipt.receipt_type.includes("Nota de Credito") && ((loadingIngresos || loadingCajas || loadingGastos) ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
@@ -214,28 +204,27 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 onlyRead={onlyRead}
                 color='bg-light'
                 title={{
-                    cliente: "Items pendientes de cobro",
-                    proveedor: "Items pendientes de pago",
-                    caja: "Items pendientes de cobro"
+                    cliente: "Pendientes de cobro",
+                    proveedor: "Pendientes de pago",
                 }[documento.modulo]}
                 handler="cobros"
                 rows={documento.id ? documento.cobros: saldos}
             />)
             }
 
-            {/* Seccion de Cajas */}
-            {documento.receipt.receipt_type && (['cliente', 'proveedor'].includes(documento.modulo) || onlyRead) && !documento.receipt.receipt_type.includes("Nota de Credito") && (loadingCajas ? <Spinner /> : <Appendable 
+            {/* Seccion de Descargas */}
+            {documento.receipt.receipt_type && (['cliente', 'proveedor'].includes(documento.modulo) || onlyRead) && (loadingCajas ? <Spinner /> : <Appendable 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
-                title={documento.modulo === "caja" ? "Cargar dinero desde" : "Formas de pago"}
-                handler="cajas"
+                title={"Formas de pago"}
+                handler="descargas"
                 fields={[
                     {
                     type: 'select',
                     name: 'cuenta',
                     label: 'Cuenta',
-                    choices: cajas
+                    choices: documento.receipt.receipt_type.includes("Nota de Credito") ? [...ingresos, ...gastos] : cajas
                     },
                     {
                     type: 'text',
@@ -261,46 +250,6 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 }}
             />)
             }
-
-
-            {/* Seccion de Resultados */}
-            {documento.receipt.receipt_type && documento.receipt.receipt_type.includes("Nota de Credito") && ((loadingIngresos || loadingGastos) ? <Spinner /> : <Appendable 
-                documento={documento} 
-                setDocumento={setDocumento} 
-                onlyRead={onlyRead}
-                title="Resultados a generar"
-                handler="resultados"
-                fields={[
-                    {
-                    type: 'select',
-                    name: 'cuenta',
-                    label: 'Cuenta',
-                    choices: [...ingresos, ...gastos]
-                    },
-                    {
-                    type: 'text',
-                    name: 'detalle',
-                    label: 'Detalle',
-                    },                 
-                    {
-                    type: 'date',
-                    name: 'periodo',
-                    label: 'Período',
-                    },          
-                    {
-                    type: 'number',
-                    name: 'monto',
-                    label: 'Monto',
-                    },                        
-                ]}
-                cleanedField={{
-                    cuenta: '',
-                    detalle: '',
-                    periodo: moment().format('YYYY-MM-DD'),
-                    monto: 0,
-                }}
-            />)
-            }    
 
                 
             {documento.receipt.receipt_type && documento.fecha_operacion && <Portlet 
@@ -328,7 +277,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                         <a onClick={onClose} className="btn btn-outline-danger btn-block">Cancelar</a>
                     </div>
                     <div className="col-sm-6 text-end">
-                    {documento.pdf && <a href={documento.pdf} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Imprimir</a>}
+                    {documento.pdf && <button onClick={showPDF} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Imprimir</button>}
                     {!onlyRead && <button disabled={!canSend} onClick={handleSubmit} type="submit" className="btn btn-bordered btn-primary btn-block mx-1">Guardar</button>}
                     </div>
                 </div>

@@ -6,16 +6,15 @@ import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
 import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
-import { proveedoresActions } from '@/redux/actions/proveedores';
 import { toastr } from "react-redux-toastr";
 
+import { proveedoresActions } from '@/redux/actions/proveedores';
 import Spinner from '@/components/spinner';
 import { provincias } from '@/utility/options/provincias';
 import { tipo_documentos } from '@/utility/options/documentos';
 import { useTitulos } from '@/utility/hooks';
 
 const empty = 'Campo requerido';
-
 
 const CU = ({ selected, onClose }) => {
   const dispatch = useDispatch();
@@ -42,8 +41,6 @@ const CU = ({ selected, onClose }) => {
       </div>
     )
   }
-  
-
 
   return (
     <Formik

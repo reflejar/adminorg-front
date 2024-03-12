@@ -18,6 +18,7 @@ const setUserDetails = (data) => {
       user: data.user,
       profile: data.perfil,
       community: data.comunidad.nombre,
+      logo: data.comunidad.logo,
       admin_of: data.admin_of,
       afip: data.comunidad.afip
   }

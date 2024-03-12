@@ -56,7 +56,7 @@ const Listado = ({ items, columns, paginator }) => {
                 <thead>
                 <tr>
                     {columns.map(t => (
-                        <th key={t.key}>
+                        <th key={t.key} className={`${items.length > 0 && (typeof items[0][t.key] === "number") && "text-end"}`}>
                             {t.label}
                         </th>
                     ))}

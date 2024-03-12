@@ -37,23 +37,19 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
                   <option selected={analizar.indexOf('titulo') >= 0} value="titulo">Títulos contables</option>
                 </select>
                 <label className='mt-3' htmlFor="agrupar_por">Agrupar</label>
-                <select type="select" className='form-select' multiple name='agrupar_por' onChange={handleSeleccion}>
-                  <option selected={agrupar_por.indexOf('periodo') >= 0} value="periodo">Período</option>
-                  <option selected={agrupar_por.indexOf('concepto') >= 0} value="concepto">Conceptos</option>
-                  <option selected={agrupar_por.indexOf('tipo_documento') >= 0} value="tipo_documento">Tipo Documento</option>
+                <select type="select" className='form-select' name='agrupar_por' onChange={(e) => setAgrupar(e.target.value)}>
+                <option value="">---</option>
+                  <option selected={agrupar_por === 'concepto'} value="concepto">Conceptos</option>
                 </select>
                 <label className='mt-3' htmlFor="encolumnar">Columnas</label>
                 <select type="select" className='form-select' name='encolumnar' onChange={(e) => setColumnas(e.target.value)}>
                   <option value="">---</option>
                   <option selected={encolumnar === 'periodo'} value="periodo">Período</option>
-                  <option selected={encolumnar === 'concepto'} value="concepto">Conceptos</option>
-                  <option selected={encolumnar === 'tipo_documento'} value="tipo_documento">Tipo Documento</option>
                 </select>
                 <label className='mt-3' htmlFor="totalizar">Totalizar</label>
                 <select type="select" className='form-select' name='totalizar' onChange={(e) => setTotalizar(e.target.value)}>
                   <option>---</option>
                   <option selected={totalizar === 'valor'} value="valor">Valores</option>
-                  <option selected={totalizar === 'debe'} value="debe">Debe y Haber</option>
                   <option selected={totalizar === 'cantidad'} value="cantidad">Cantidades</option>
                 </select>                                
               </div>

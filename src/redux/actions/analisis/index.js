@@ -10,9 +10,9 @@ const selectAnalizar = (tipos) => ({
     payload: tipos
 })
 
-const selectAgrupar = (tipos) => ({
+const selectAgrupar = (tipo) => ({
     type: 'SELECT_AGRUPAR',
-    payload: tipos
+    payload: tipo
 })
 
 const selectColumnas = (tipo) => ({
@@ -29,9 +29,9 @@ const fetchData = (params) => async (dispatch) => {
     const query = qs.stringify({
         start_date: '',
         end_date: moment(new Date()).format('YYYY-MM-DD'),
-        analizar: params.analizar,
-        agrupar_por: params.agrupar_por, 
-        encolumnar: params.encolumnar, 
+        analizar: params.analizar.join(","),
+        agrupar_por: params.agrupar_por || '', 
+        encolumnar: params.encolumnar  || '', 
         totalizar: params.totalizar
     })
     const response = await Service.get(apiEndpoint + '/?' + query);

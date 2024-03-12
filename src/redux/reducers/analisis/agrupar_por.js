@@ -1,4 +1,4 @@
-const agrupar_por = (state = [], action) => {
+const agrupar_por = (state = '', action) => {
     switch (action.type) {
       case 'SELECT_AGRUPAR':
         return action.payload;

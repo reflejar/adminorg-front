@@ -1,43 +1,29 @@
 import axios from 'axios';
-import config from '../config/config';
-import Cookies from 'js-cookie';
-// import FileDownload from 'js-file-download';
+import {baseUrl, initialHeaders} from '../config';
 
 
-const initialHeaders = () => ({
-    'Content-Type': 'application/json',
-    'Authorization': 'Token ' + Cookies.get('token'),
-})
 
-const get = (apiEndpoint) => {
+
+const get = (apiEndpoint, responseType='json') => {
     let headers = initialHeaders();
-    return axios.get(config.baseUrl+apiEndpoint, { headers })
+    return axios.get(
+        baseUrl+apiEndpoint, 
+        { headers, responseType }
+    )
     .then((response) => {return response})
 }
 
-const getExcel = (apiEndpoint) => {
-    let headers = initialHeaders();
-    axios({
-        url: config.baseUrl+apiEndpoint,
-        method: 'GET',
-        responseType: 'blob', // Important
-        headers: headers
-      }).then((response) => {
-        //   FileDownload(response.data, 'reporte.xlsx');
-        console.log("Hola")
-      });
-}
 
 const remove = (apiEndpoint) => {
     let headers = initialHeaders();
-    return axios.delete(config.baseUrl+apiEndpoint, { headers })
+    return axios.delete(baseUrl+apiEndpoint, { headers })
     .then((response) => {return response})
     .catch((err) => { return err.response });
 }
 
 const post = (apiEndpoint, payload) => {
     let headers = initialHeaders();
-    return axios.post(config.baseUrl + apiEndpoint, payload, { headers })
+    return axios.post(baseUrl + apiEndpoint, payload, { headers })
     .then((response) => { return response })
     .catch((err) => { return err.response });
 }
@@ -45,21 +31,20 @@ const post = (apiEndpoint, payload) => {
 const postMultiData = (apiEndpoint, payload) => {
     let headers = initialHeaders();
     headers['Content-Type'] = 'multipart/form-data';
-    return axios.post(config.baseUrl + apiEndpoint, payload, { headers })
+    return axios.post(baseUrl + apiEndpoint, payload, { headers })
     .then((response) => { return response })
     .catch((err) => { return err.response });
 }
 
 const put = (apiEndpoint, payload) => {
     let headers = initialHeaders();
-    return axios.put(config.baseUrl + apiEndpoint, payload, { headers })
+    return axios.put(baseUrl + apiEndpoint, payload, { headers })
     .then((response) => { return response })
     .catch((err) => { return err.response });
 }
 
 export const Service = {
     get,
-    getExcel,
     remove,
     post,
     put,
