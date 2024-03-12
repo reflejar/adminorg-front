@@ -32,6 +32,9 @@ export default function (props) {
     key: 'documento',
     onClick: handleModal
   }, {
+    label: 'Detalle',
+    key: 'detalle',
+  }, {    
     label: 'Monto',
     key: 'monto',
   }, {

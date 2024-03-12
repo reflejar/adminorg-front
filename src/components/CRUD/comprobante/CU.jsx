@@ -203,10 +203,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
                 color='bg-light'
-                title={{
-                    cliente: "Pendientes de cobro",
-                    proveedor: "Pendientes de pago",
-                }[documento.modulo]}
+                title="Saldos adeudados anteriormente"
                 handler="cobros"
                 rows={documento.id ? documento.cobros: saldos}
             />)
@@ -217,7 +214,10 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 documento={documento} 
                 setDocumento={setDocumento} 
                 onlyRead={onlyRead}
-                title={"Formas de pago"}
+                title={{
+                    cliente: "Formas de cobro",
+                    proveedor: "Formas de pago",
+                }[documento.modulo]}
                 handler="descargas"
                 fields={[
                     {
