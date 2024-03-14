@@ -14,11 +14,7 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
           seleccionados.push(opciones[i].value);
         }
       }
-      const dispatcher = {
-        analizar: setAnalizar,
-        agrupar_por: setAgrupar
-      }
-      dispatcher[event.target.name](seleccionados)
+      setAnalizar(seleccionados)
     };
 
 
@@ -49,7 +45,7 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
                 <label className='mt-3' htmlFor="totalizar">Totalizar</label>
                 <select type="select" className='form-select' name='totalizar' onChange={(e) => setTotalizar(e.target.value)}>
                   <option>---</option>
-                  <option selected={totalizar === 'valor'} value="valor">Valores</option>
+                  <option selected={totalizar === 'valor'} value="valor">Saldos</option>
                   <option selected={totalizar === 'cantidad'} value="cantidad">Cantidades</option>
                 </select>                                
               </div>

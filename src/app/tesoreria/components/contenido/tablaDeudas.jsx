@@ -78,7 +78,6 @@ export default function Deudas(props) {
                 destinatario={selected}
                 documentoId={modal.item.documento.id}
                 onClose={handleModal}
-                onlyRead={modal.item.receipt_type != "Transferencia X"}
               />}
             
           />          

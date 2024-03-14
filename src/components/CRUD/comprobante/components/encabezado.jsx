@@ -9,6 +9,7 @@ export default function Encabezado ({
     }) {
 
     const types = CHOICES.receiptTypes[documento.modulo]
+    const tipo = types.find(t => t.value === documento.receipt.receipt_type)
     const [point_of_sales] = usePuntosDeVenta();
 
     const handleChange = (e) => {
@@ -35,13 +36,13 @@ export default function Encabezado ({
             <div className="row">
                 <div className="col-md-2 px-1">
                 <label htmlFor="receipt.receipt_type">Tipo</label>
-                {onlyRead ? 
+                {documento.id ? 
                     <input 
-                    type="number" 
+                    type="text" 
                     className="form-control" 
                     name="receipt.receipt_type" 
                     id="receipt.receipt_type"
-                    disabled={onlyRead}
+                    disabled={true}
                     value={documento.receipt.receipt_type}
                     />       
                 : <select 
@@ -59,32 +60,31 @@ export default function Encabezado ({
                 </select>}
                 </div>
                 <div className="col-md-2 px-1">
-                <label htmlFor="receipt.point_of_sales">Punto Vta</label>
-                {(documento.modulo === "cliente") || (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0) && point_of_sales ? <select 
-                className="form-control"
-                name="receipt.point_of_sales" 
-                id="receipt.point_of_sales" 
-                disabled={onlyRead}
-                onChange={handleChange}
-                value={documento.receipt.point_of_sales || ''}
-                >
-                <option value=''> --- </option>
-                    {point_of_sales.map((point, i) => (
-                        <option key={i} value={point.id}>{point.number}</option>
-                    ))}
-                </select> : 
-                    <input 
-                    type="number" 
-                    className="form-control" 
+                    <label htmlFor="receipt.point_of_sales">Punto Vta</label>
+                    {(tipo && tipo.receipt_number === "auto") && !documento.id && point_of_sales ? <select 
+                    className="form-control"
                     name="receipt.point_of_sales" 
-                    id="receipt.point_of_sales"
-                    min="0" 
+                    id="receipt.point_of_sales" 
+                    disabled={onlyRead}
                     onChange={handleChange}
                     value={documento.receipt.point_of_sales || ''}
-                    />           
-                
-                
-                }
+                    >
+                    <option value=''> --- </option>
+                        {point_of_sales.map((point, i) => (
+                            <option key={i} value={point.id}>{point.number}</option>
+                        ))}
+                    </select> : 
+                        <input 
+                        type="number" 
+                        className="form-control" 
+                        name="receipt.point_of_sales" 
+                        id="receipt.point_of_sales"
+                        disabled={onlyRead || (tipo && tipo.receipt_number === "auto")}
+                        min="0" 
+                        onChange={handleChange}
+                        value={documento.receipt.point_of_sales || ''}
+                        />
+                    }
                 
                 </div>            
                 <div className="col-md-2 px-1">
@@ -92,10 +92,7 @@ export default function Encabezado ({
                 <input 
                     type="number" 
                     className="form-control" 
-                    disabled={
-                    (documento.modulo === "cliente") || 
-                    (documento.receipt && ["Orden de Pago X", "Transferencia X"].indexOf(documento.receipt.receipt_type) >= 0)
-                    }
+                    disabled={onlyRead || (tipo && tipo.receipt_number === "auto")}
                     name="receipt.receipt_number" 
                     id="receipt.receipt_number" 
                     onChange={handleChange}

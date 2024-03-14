@@ -11,15 +11,14 @@ import { useDispatch } from "react-redux";
 import Spinner from "@/components/spinner";
 import moment from "moment";
 import CHOICES from "./components/choices";
-import {baseUrl, initialHeaders} from "@/redux/config";
-import axios from "axios";
 import { Service } from "@/redux/services/general";
 
 
-export default function Comprobante({ moduleHandler, destinatario, documentoId, onlyRead, onClose }) {
+export default function Comprobante({ moduleHandler, destinatario, documentoId, onClose }) {
 
     const dispatch = useDispatch();
     const [ingresos, loadingIngresos] = useIngresos();
+    const [onlyRead, setOnlyRead] = useState();
     const [cajas, loadingCajas] = useCajas();
     const [gastos, loadingGastos] = useGastos();
     const [saldos, loadingSaldos] = useSaldos(destinatario);
@@ -50,14 +49,32 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
             setLoading(true);
     
             dispatch(comprobantesActions.get(documentoId))
-            .then((doc) => setDocumento(({...doc, modulo: moduleHandler})))
+            .then((doc) => {
+                setDocumento(doc)
+                if (doc.afip || doc.modulo !== moduleHandler) setOnlyRead(true)
+            })
             .finally(() => setLoading(false));
           }
     
     }, []);
 
+    useEffect(()=> {
+        if (!documento.id) {
+            setDocumento(doc => ({
+                ...doc, 
+                receipt: {
+                    ...doc.receipt, 
+                    point_of_sales: '', 
+                    receipt_number: ''
+                },
+            }))
+        }
+    }, [documento.receipt.receipt_type])
+
+
     const validate = () => {
         if (documento.receipt.receipt_type === '') return false
+        console.log(documento.receipt.point_of_sales)
         if (documento.receipt.point_of_sales === '') return false
         if (documento.receipt.receipt_type !== '') {
             const tipo = CHOICES.receiptTypes[documento.modulo].find(t => t.value === documento.receipt.receipt_type)

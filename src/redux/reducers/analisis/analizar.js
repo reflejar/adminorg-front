@@ -1,4 +1,4 @@
-const analizar = (state = [], action) => {
+const analizar = (state = ['cliente'], action) => {
     switch (action.type) {
       case 'SELECT_ANALIZAR':
         return action.payload;

@@ -58,7 +58,6 @@ export default function (props) {
                 destinatario={selected}
                 documentoId={modal.item.id}
                 onClose={handleModal}
-                onlyRead={true} 
               />}
             
           />          

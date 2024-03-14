@@ -83,7 +83,6 @@ export default function Deudas(props) {
                 destinatario={selected}
                 documentoId={modal.item.documento__id}
                 onClose={handleModal}
-                onlyRead={modal.item.receipt_type === "Orden de Pago X"} 
               />}
             
           />          

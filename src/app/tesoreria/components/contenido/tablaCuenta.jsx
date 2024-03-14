@@ -57,7 +57,6 @@ export default function (props) {
                   destinatario={selected}
                   documentoId={modal.item.documento__id}
                   onClose={handleModal}
-                  onlyRead={modal.item.receipt_type != "Transferencia X"}
                 />}
               
             />          
