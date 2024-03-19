@@ -29,7 +29,7 @@ export default function (props) {
       key: 'fecha'
     }, {
       label: 'Comprobante',
-      key: 'documento',
+      key: 'comprobante',
       onClick: handleModal
     }, {
       label: 'Concepto',
@@ -48,17 +48,17 @@ export default function (props) {
 
 
   const renderModal = () => {
-    if (modal.item && modal.item.documento) {
+    if (modal.item && modal.item.comprobante) {
       return (
           <BasicModal
             open={modal.open}
             onToggle={handleModal}
-            header={modal.item.documento}
+            header={modal.item.comprobante}
             footer={false}
             component={<Comprobante 
                 moduleHandler={'cliente'}
                 destinatario={selected}
-                documentoId={modal.item.documento__id}
+                comprobanteId={modal.item.comprobante__id}
                 onClose={handleModal}
               />}
             

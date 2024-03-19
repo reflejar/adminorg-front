@@ -1,6 +1,6 @@
 import { Service } from '../../services/general';
 
-const apiEndpoint = 'operative/documentos/cliente';
+const apiEndpoint = 'operative/comprobantes/cliente';
 
 const get = (id) => async (dispatch) => {
   const response = await Service.get(`${apiEndpoint}/${id}/`);

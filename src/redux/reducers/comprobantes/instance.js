@@ -1,9 +1,9 @@
 const selected = (state = null, action) => {
     switch (action.type) {
-      case 'SELECT_DOCUMENTO':
+      case 'SELECT_COMPROBANTE':
         return action.payload;
 
-      case 'POST_DOCUMENTO':
+      case 'POST_COMPROBANTE':
         return action.payload.id;
       default:
         return state

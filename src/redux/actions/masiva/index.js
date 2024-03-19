@@ -1,6 +1,6 @@
 import { Service } from '../../services/general';
 
-const apiEndpoint = 'operative/documentos/cliente/11/masivo/';
+const apiEndpoint = 'operative/comprobantes/cliente/11/masivo/';
 
 const post = (data) => async (dispatch) => {
   const response = await Service.post(apiEndpoint, data);

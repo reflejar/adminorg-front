@@ -3,7 +3,7 @@ import qs from 'querystring';
 
 import { Service } from '../../services/general';
 
-let apiEndpoint = 'operative/documentos/cliente/';
+let apiEndpoint = 'operative/comprobantes/cliente/';
 
 export const FACTURAS_TYPES = {
   'factura_c': 11,

@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import BasicModal from '@/components/modal';
 
-import Documentos from "@/components/CRUD/comprobante/L";
+import Comprobantes from "@/components/CRUD/comprobante/L";
 import CHOICES from "@/components/CRUD/comprobante/components/choices";
 
 export default function Modal () {
@@ -19,7 +19,7 @@ export default function Modal () {
         onToggle={handleToggle}
         button={(<button className="btn btn-outline-danger mx-1 shadow" onClick={handleToggle}> Registros </button>)}
         header="Registros"
-        component={<Documentos causante={"titulo"} />}
+        component={<Comprobantes causante={"titulo"} />}
         footer={false}
       />
     </>

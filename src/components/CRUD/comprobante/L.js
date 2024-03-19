@@ -24,13 +24,13 @@ const headers = [
 ];
 
 const LStep = ({ causante }) => {
-  const documentosTypes = CHOICES.receiptTypes[causante]
+  const comprobantesTypes = CHOICES.receiptTypes[causante]
   const dispatch = useDispatch();
   const [table, setTable] = useState(false);
   const [fields, setFields] = useState(initialFields);
   const [puntos] = usePuntosDeVenta();
   const [loading, setLoading] = useState(false);
-  const [documentos, setDocumentos] = useState([]);
+  const [comprobantes, setComprobantes] = useState([]);
   const ref = useRef(null);
 
 
@@ -38,12 +38,12 @@ const LStep = ({ causante }) => {
 
   const dataForTable = useMemo(() => {
     if (table) {
-      if (documentos && !documentos.length) {
+      if (comprobantes && !comprobantes.length) {
         return [];
       }
-      return documentos;
+      return comprobantes;
     }
-  }, [table, documentos]);
+  }, [table, comprobantes]);
 
   const handleSearch = useCallback(async (event) => {
     event.preventDefault();
@@ -51,7 +51,7 @@ const LStep = ({ causante }) => {
 
     const response = await dispatch(comprobantesActions.getList(causante, fields))
     .then((response) => {
-      setDocumentos(response);
+      setComprobantes(response);
       setTable(true);
     })
     .finally(() => setLoading(false));;
@@ -86,10 +86,10 @@ const LStep = ({ causante }) => {
     return (
       <form className="row" onSubmit={handleSearch}>
         <div className='col-sm-4 px-3 my-2'>
-          <label className='form-label'>Tipo de documento</label>
+          <label className='form-label'>Tipo de comprobante</label>
           <select type="select" name="select" className='form-select' onChange={handleChange('receipt_type')}>
             <option value=''>---</option>
-            {documentosTypes.filter(d => d.value !== "---").map((type, i) => (
+            {comprobantesTypes.filter(d => d.value !== "---").map((type, i) => (
               <option key={i} value={type.value}>{type.value}</option>
             ))}
           </select>
@@ -107,12 +107,12 @@ const LStep = ({ causante }) => {
         </div>
 
         <div className='col-sm-4 px-3 my-2'>
-          <label className='form-label'>Numero de documento</label>
+          <label className='form-label'>Numero de comprobante</label>
           <input
             value={fields.numero}
             className='form-control'
             placeholder="#12345"
-            label="Numero de documento"
+            label="Numero de comprobante"
             onChange={handleChange('numero')} />
         </div>
 

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import Portlet from "./portlet"
 
-export default function Appendable ({ documento, setDocumento, onlyRead, title, handler, fields, cleanedField }) {
+export default function Appendable ({ comprobante, setComprobante, onlyRead, title, handler, fields, cleanedField }) {
 
-    let initialGrouping = [...documento[handler]]
+    let initialGrouping = [...comprobante[handler]]
     if (!onlyRead) initialGrouping.push(cleanedField)
     const [grouped, setGrouped] = useState(initialGrouping)
 
     useEffect(() => {
-        setDocumento(() => ({
-        ...documento,
+        setComprobante(() => ({
+        ...comprobante,
         [handler]: grouped
         }))
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Portlet from "./portlet"
 
 
-export default function Selectable ({ documento, setDocumento, onlyRead, color, title, handler, rows }) {
+export default function Selectable ({ comprobante, setComprobante, onlyRead, color, title, handler, rows }) {
     const [grouped, setGrouped] = useState(rows.map(obj=> ({
             vinculo: obj.id, 
             concepto: `${obj.cuenta ? obj.cuenta + " - " : ''} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.periodo}`, 
@@ -30,8 +30,8 @@ export default function Selectable ({ documento, setDocumento, onlyRead, color, 
     };
 
     useEffect(() => {
-        setDocumento(() => ({
-        ...documento,
+        setComprobante(() => ({
+        ...comprobante,
         [handler]: grouped.filter(g => (g.monto !== 0 && g.checked === true))
         }))
 

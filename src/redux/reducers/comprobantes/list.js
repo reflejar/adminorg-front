@@ -1,9 +1,9 @@
 const list = (state = [], action) => {
     switch (action.type) {
-        case 'GET_DOCUMENTOS':
+        case 'GET_COMPROBANTES':
             return action.payload;
   
-        case 'GET_DOCUMENTO':
+        case 'GET_COMPROBANTE':
             return [...state, action.payload];
   
         default:

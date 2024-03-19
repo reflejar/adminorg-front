@@ -15,7 +15,7 @@ const selectAgrupar = (tipo) => ({
     payload: tipo
 })
 
-const selectColumnas = (tipo) => ({
+const selectColumna = (tipo) => ({
     type: 'SELECT_COLUMNAS',
     payload: tipo
 })
@@ -48,7 +48,7 @@ const fetchData = (params) => async (dispatch) => {
 export const analisisActions = {
     selectAnalizar,
     selectAgrupar,
-    selectColumnas,
+    selectColumna,
     selectTotalizar,
     fetchData
 }

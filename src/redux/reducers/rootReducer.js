@@ -15,7 +15,7 @@ import puntos from './puntos';
 import proyectos from './proyectos';
 import movimientos from './movimientos';
 import preconceptos from './preconceptos';
-import documentos from './documentos';
+import comprobantes from './comprobantes';
 import plataforma from './plataforma';
 import saldos from './saldos';
 import retenciones from './retenciones';
@@ -39,7 +39,7 @@ const appReducer = combineReducers({
    puntos,
    movimientos,
    preconceptos,
-   documentos,
+   comprobantes,
    plataforma,
    saldos,
    retenciones

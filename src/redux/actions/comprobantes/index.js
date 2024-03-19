@@ -11,7 +11,7 @@ const get = (id) => async (dispatch) => {
 
   if (response && response.data) {
     dispatch({
-      type: 'GET_DOCUMENTO',
+      type: 'GET_COMPROBANTE',
       payload: response.data
     });
 
@@ -38,7 +38,7 @@ const getList = (modulo, params) => async (dispatch) => {
 
   if (response.data) {
     dispatch({
-      type: 'GET_DOCUMENTOS',
+      type: 'GET_COMPROBANTES',
       payload: response.data.results
     });
 

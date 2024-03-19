@@ -51,7 +51,7 @@ export default function Deudas(props) {
       key: 'fecha'
     }, {
       label: 'Comprobante',
-      key: 'documento',
+      key: 'comprobante',
       onClick: handleModal
     }, {
       label: 'Detalle',
@@ -65,8 +65,8 @@ export default function Deudas(props) {
   }];    
 
   const renderModal = () => {
-    if (modal.item && modal.item.documento) {
-      const { receipt } = modal.item.documento
+    if (modal.item && modal.item.comprobante) {
+      const { receipt } = modal.item.comprobante
       return (
           <BasicModal
             open={modal.open}
@@ -76,7 +76,7 @@ export default function Deudas(props) {
             component={<Comprobante 
                 moduleHandler={'caja'} 
                 destinatario={selected}
-                documentoId={modal.item.documento.id}
+                comprobanteId={modal.item.comprobante.id}
                 onClose={handleModal}
               />}
             

@@ -29,7 +29,7 @@ export default function (props) {
       key: 'fecha'
     }, {
       label: 'Comprobante',
-      key: 'documento',
+      key: 'comprobante',
       onClick: handleModal
     }, {
       label: 'Debe',
@@ -56,7 +56,7 @@ export default function (props) {
             component={<Comprobante 
                 moduleHandler={'titulo'} 
                 destinatario={selected}
-                documentoId={modal.item.id}
+                comprobanteId={modal.item.id}
                 onClose={handleModal}
               />}
             

@@ -3,17 +3,21 @@
 import { connect } from 'react-redux'
 import { analisisActions } from "@/redux/actions/analisis";
 
-function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgrupar, setColumnas, setTotalizar}) {
+function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgrupar, setColumna, setTotalizar}) {
     
 
     const handleSeleccion = (event) => {
       const opciones = event.target.options;
+      setAgrupar("")
+      setColumna("")
+      setTotalizar("valor")
       const seleccionados = [];
       for (let i = 0; i < opciones.length; i++) {
         if (opciones[i].selected) {
           seleccionados.push(opciones[i].value);
         }
       }
+
       setAnalizar(seleccionados)
     };
 
@@ -39,7 +43,7 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
                   <option selected={agrupar_por === 'proyecto'} value="proyecto">Proyectos</option>
                 </select>
                 <label className='mt-3' htmlFor="encolumnar">Columnas</label>
-                <select type="select" className='form-select' name='encolumnar' onChange={(e) => setColumnas(e.target.value)}>
+                <select type="select" className='form-select' name='encolumnar' onChange={(e) => setColumna(e.target.value)}>
                   <option value="">---</option>
                   <option selected={encolumnar === 'periodo'} value="periodo">Período</option>
                 </select>
@@ -64,7 +68,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => ({
   setAnalizar: payload => dispatch(analisisActions.selectAnalizar(payload)),
   setAgrupar: payload => dispatch(analisisActions.selectAgrupar(payload)),
-  setColumnas: payload => dispatch(analisisActions.selectColumnas(payload)),
+  setColumna: payload => dispatch(analisisActions.selectColumna(payload)),
   setTotalizar: payload => dispatch(analisisActions.selectTotalizar(payload))
 
 });
