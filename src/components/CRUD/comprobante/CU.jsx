@@ -25,6 +25,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
     const [saldos, loadingSaldos] = useSaldos(destinatario);
     const [canSend, setCanSend] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [tipoComprobante, setTipoComprobante] = useState({})
     const [errors, setErrors] = useState({})
 
     const [comprobante, setComprobante] = useState({
@@ -33,6 +34,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
         destinatario: destinatario.id,
         modulo: moduleHandler,
         descripcion: '',
+        link: '',
         receipt: {
             receipt_type: "",
             point_of_sales: '',
@@ -53,6 +55,9 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
             .then((doc) => {
                 setComprobante(doc)
                 if (doc.afip || doc.modulo !== moduleHandler) setOnlyRead(true)
+                const newTipo = CHOICES.receiptTypes[doc.modulo].find(t => t.value === doc.receipt.receipt_type)
+                setTipoComprobante(newTipo)                
+
             })
             .finally(() => setLoading(false));
           }
@@ -69,17 +74,17 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     receipt_number: ''
                 },
             }))
+            const newTipo = CHOICES.receiptTypes[comprobante.modulo].find(t => t.value === comprobante.receipt.receipt_type)
+            setTipoComprobante(newTipo)
         }
     }, [comprobante.receipt.receipt_type])
 
 
     const validate = () => {
         if (comprobante.receipt.receipt_type === '') return false
-        console.log(comprobante.receipt.point_of_sales)
         if (comprobante.receipt.point_of_sales === '') return false
         if (comprobante.receipt.receipt_type !== '') {
-            const tipo = CHOICES.receiptTypes[comprobante.modulo].find(t => t.value === comprobante.receipt.receipt_type)
-            if(tipo && tipo.receipt_number === "manual" && comprobante.receipt.receipt_number === "") 
+            if(tipoComprobante && tipoComprobante.receipt_number === "manual" && comprobante.receipt.receipt_number === "") 
             return false
         }
 
@@ -155,6 +160,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
         <form onSubmit={handleSubmit} name="form_cbte" method="POST">
             <Encabezado 
                 comprobante={comprobante} 
+                tipoComprobante={tipoComprobante}
                 setComprobante={setComprobante} 
                 onlyRead={onlyRead}
             />
@@ -278,7 +284,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
 
                 
             {comprobante.receipt.receipt_type && comprobante.fecha_operacion && <Portlet 
-                title="Descripción"
+                title="Observaciones"
                 handler="descripcion">
                 <div className="row">
                     <div className="col-md-12">
@@ -289,11 +295,29 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                         name="descripcion" 
                         disabled={onlyRead}
                         className="form-control" 
+                        placeholder="Agregá un descripción"
                         value={comprobante.descripcion || ''}
                         onChange={(e) => setComprobante({...comprobante, descripcion: e.target.value})}
                     />
                     </div>            
-                </div>                        
+                </div>
+                
+                {tipoComprobante && tipoComprobante.receipt_number === "manual" && <div className="row my-3">
+                <div className="input-group">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text rounded-end-0" id="basic-addon1"><i className="bi-link-45deg" /></span>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="link" 
+                        name="link" 
+                        className="form-control" 
+                        placeholder="Agregá un link" 
+                        value={comprobante.link || ''}
+                        onChange={(e) => setComprobante({...comprobante, link: e.target.value})}
+                    />
+                    </div>
+                </div>}
             </Portlet>}
 
             <div className="panel-footer mt-3">
@@ -303,6 +327,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     </div>
                     <div className="col-sm-6 text-end">
                     {comprobante.pdf && <button onClick={showPDF} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Imprimir</button>}
+                    {comprobante.link && <a href={comprobante.link} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Ver</a>}
                     {!onlyRead && <button disabled={!canSend} onClick={handleSubmit} type="submit" className="btn btn-bordered btn-primary btn-block mx-1">Guardar</button>}
                     </div>
                 </div>

@@ -4,12 +4,12 @@ import Portlet from "./portlet";
 
 export default function Encabezado ({
     comprobante,
+    tipoComprobante,
     setComprobante,
     onlyRead,
     }) {
 
     const types = CHOICES.receiptTypes[comprobante.modulo]
-    const tipo = types.find(t => t.value === comprobante.receipt.receipt_type)
     const [point_of_sales] = usePuntosDeVenta();
 
     const handleChange = (e) => {
@@ -61,7 +61,7 @@ export default function Encabezado ({
                 </div>
                 <div className="col-md-2 px-1">
                     <label htmlFor="receipt.point_of_sales">Punto Vta</label>
-                    {(tipo && tipo.receipt_number === "auto") && !comprobante.id && point_of_sales ? <select 
+                    {(tipoComprobante && tipoComprobante.receipt_number === "auto") && !comprobante.id && point_of_sales ? <select 
                     className="form-control"
                     name="receipt.point_of_sales" 
                     id="receipt.point_of_sales" 
@@ -79,7 +79,7 @@ export default function Encabezado ({
                         className="form-control" 
                         name="receipt.point_of_sales" 
                         id="receipt.point_of_sales"
-                        disabled={onlyRead || (tipo && tipo.receipt_number === "auto")}
+                        disabled={onlyRead || (tipoComprobante && tipoComprobante.receipt_number === "auto")}
                         min="0" 
                         onChange={handleChange}
                         value={comprobante.receipt.point_of_sales || ''}
@@ -92,7 +92,7 @@ export default function Encabezado ({
                 <input 
                     type="number" 
                     className="form-control" 
-                    disabled={onlyRead || (tipo && tipo.receipt_number === "auto")}
+                    disabled={onlyRead || (tipoComprobante && tipoComprobante.receipt_number === "auto")}
                     name="receipt.receipt_number" 
                     id="receipt.receipt_number" 
                     onChange={handleChange}
