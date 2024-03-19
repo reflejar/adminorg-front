@@ -12,6 +12,7 @@ import configuraciones from './configuraciones';
 import contabilidad from './contabilidad';
 import titulos from './titulos';
 import puntos from './puntos';
+import proyectos from './proyectos';
 import movimientos from './movimientos';
 import preconceptos from './preconceptos';
 import documentos from './documentos';
@@ -31,6 +32,7 @@ const appReducer = combineReducers({
    ingresos,
    gastos,
    cajas,
+   proyectos,
    contabilidad,
    configuraciones,
    titulos,

@@ -37,7 +37,7 @@ const CU = ({ selected, onClose }) => {
   if(!tituloPred) {
     return (
       <div className="alert alert-warning text-center">
-        Necesita configurar un título contable por defecto para este tipo de cuentas. Por favor dirijase a configuraciones
+        Necesita configurar un título contable por defecto para este tipo de cuentas. <br /> Por favor dirijase a configuraciones - Títulos contables
       </div>
     )
   }

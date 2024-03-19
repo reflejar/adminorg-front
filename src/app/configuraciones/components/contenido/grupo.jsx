@@ -17,9 +17,11 @@ import { titulosActions } from '@/redux/actions/titulos';
 import Cliente from "@/components/CRUD/cliente/CU";
 import Proveedor from "@/components/CRUD/proveedor/CU";
 import Caja from "@/components/CRUD/caja/CU";
+import Proyecto from "@/components/CRUD/proyecto/CU";
 import Ingreso from "@/components/CRUD/ingreso/CU";
 import Gasto from "@/components/CRUD/gasto/CU";
 import Titulo from "@/components/CRUD/titulo/CU";
+import { proyectosActions } from '@/redux/actions/proyectos';
 
 
 function Grupo({ 
@@ -27,6 +29,7 @@ function Grupo({
     cliente, 
     proveedor,
     caja,
+    proyecto,
     ingreso,
     gasto,
     titulo,
@@ -74,6 +77,15 @@ function Grupo({
               ],
               modal: <Proveedor selected={modal.item} onClose={handleModal} />
         },
+        proyecto: {
+            action: proyectosActions,
+            lista: proyecto,
+            columnas: [
+                { label: "Nombre", key: "nombre" },
+                { label: "Editar", key: "", onClick: handleModal},
+              ],
+              modal: <Proyecto selected={modal.item} onClose={handleModal} />
+        },        
         caja: {
             action: cajasActions,
             lista: caja,
@@ -164,6 +176,7 @@ function Grupo({
 const mapStateToProps = state => ({
     cliente: state.clientes.list,
     proveedor: state.proveedores.list,
+    proyecto: state.proyectos.list,
     caja: state.cajas.list,
     ingreso: state.ingresos.list,
     gasto: state.gastos.list,

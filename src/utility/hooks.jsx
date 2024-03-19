@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import get from 'lodash/get';
 
 import { clientesActions } from '@/redux/actions/clientes';
 import { proveedoresActions } from '@/redux/actions/proveedores';
@@ -13,6 +12,7 @@ import { titulosActions } from '@/redux/actions/titulos';
 import { ingresosActions } from '@/redux/actions/ingresos';
 import { gastosActions } from '@/redux/actions/gastos';
 import { cajasActions } from '@/redux/actions/cajas';
+import { proyectosActions } from '@/redux/actions/proyectos';
 
 // Parametros
 export const useClientes = () => {
@@ -128,6 +128,7 @@ export const useGastos = () => {
   return [gastos, loading];
 };
 
+
 export const useCajas = () => {
   const [loading, setLoading] = useState(false);
   const cajas = useSelector((state) => state.cajas.list);
@@ -145,6 +146,25 @@ export const useCajas = () => {
   }, []);
 
   return [cajas, loading];
+};
+
+export const useProyectos = () => {
+  const [loading, setLoading] = useState(false);
+  const proyectos = useSelector((state) => state.proyectos.list);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetch() {
+      setLoading(true);
+      await dispatch(proyectosActions.get_all())
+        .finally(() => setLoading(false));
+    }
+    if (proyectos.length === 0) {
+      fetch();
+    }
+  }, []);
+
+  return [proyectos, loading];
 };
 
 // Otros

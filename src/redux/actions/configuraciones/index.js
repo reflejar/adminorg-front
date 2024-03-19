@@ -9,6 +9,7 @@ const get_all = () => async (dispatch) => {
       {id: "cliente",full_name: "Clientes y Financiadores"},
       {id: "proveedor",full_name: "Proveedores"},
       {id: "",full_name: "Area Economica"},
+      {id: "proyecto",full_name: "Proyectos"},
       {id: "caja",full_name: "Tesorería"},
       {id: "ingreso",full_name: "Ingresos"},
       {id: "gasto",full_name: "Gastos"},

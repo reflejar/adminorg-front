@@ -57,6 +57,9 @@ export default function Deudas(props) {
       label: 'Concepto',
       key: 'concepto'
     }, {
+      label: 'Proyecto',
+      key: 'proyecto',
+    }, {      
       label: 'Periodo',
       key: 'periodo'
     }, {

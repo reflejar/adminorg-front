@@ -3,7 +3,7 @@ import Portlet from "./components/portlet";
 import Encabezado from "./components/encabezado";
 import Selectable from "./components/selectable";
 import Appendable from "./components/appendable";
-import { useCajas, useSaldos, useGastos, useIngresos } from "@/utility/hooks";
+import { useCajas, useSaldos, useGastos, useIngresos, useProyectos } from "@/utility/hooks";
 import { saldosActions } from '@/redux/actions/saldos';
 import { movimientosActions } from '@/redux/actions/movimientos';
 import { comprobantesActions } from '@/redux/actions/comprobantes';
@@ -17,10 +17,11 @@ import { Service } from "@/redux/services/general";
 export default function Comprobante({ moduleHandler, destinatario, documentoId, onClose }) {
 
     const dispatch = useDispatch();
-    const [ingresos, loadingIngresos] = useIngresos();
     const [onlyRead, setOnlyRead] = useState();
-    const [cajas, loadingCajas] = useCajas();
+    const [ingresos, loadingIngresos] = useIngresos();
+    const [proyectos, loadingProyectos] = useProyectos();
     const [gastos, loadingGastos] = useGastos();
+    const [cajas, loadingCajas] = useCajas();
     const [saldos, loadingSaldos] = useSaldos(destinatario);
     const [canSend, setCanSend] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -177,6 +178,12 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                     choices: [...ingresos, ...cajas, ...gastos]
                     },
                     {
+                    type: 'select',
+                    name: 'proyecto',
+                    label: 'Proyecto',
+                    choices: proyectos
+                    },                    
+                    {
                     type: 'date',
                     name: 'periodo',
                     label: 'Periodo',
@@ -205,6 +212,7 @@ export default function Comprobante({ moduleHandler, destinatario, documentoId, 
                 
                 cleanedField={{
                     concepto: '',
+                    proyecto: '',
                     periodo: moment().format('YYYY-MM-DD'),
                     fecha_vencimiento: moment().format('YYYY-MM-DD'),
                     detalle: '',

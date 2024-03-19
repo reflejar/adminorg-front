@@ -58,6 +58,9 @@ export default function (props) {
       label: 'Concepto',
       key: 'concepto'
     }, {
+      label: 'Proyecto',
+      key: 'proyecto',
+    }, {      
       label: 'Periodo',
       key: 'periodo'
     }, {
