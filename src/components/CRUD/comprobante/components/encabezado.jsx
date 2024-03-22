@@ -2,6 +2,7 @@ import { usePuntosDeVenta } from "@/utility/hooks";
 import CHOICES from "./choices";
 import Portlet from "./portlet";
 import { monedas } from "@/utility/options/monedas";
+import { useEffect } from "react";
 
 export default function Encabezado ({
     comprobante,
@@ -12,6 +13,12 @@ export default function Encabezado ({
 
     const types = CHOICES.receiptTypes[comprobante.modulo]
     const [point_of_sales] = usePuntosDeVenta();
+
+
+    useEffect(() => {
+        setComprobante(cbte => ({...cbte, receipt: {...cbte.receipt, currency_quote:1}}))
+    }, [comprobante.receipt.currency]);
+
 
     const handleChange = (e) => {
         if (e.target.value !== "---") {
@@ -137,7 +144,7 @@ export default function Encabezado ({
                         ))}
                     </select>
                 </div>    
-                {comprobante.receipt.currency !== 'PES' && <div className="col-md-1 px-1">
+                {comprobante.receipt.currency !== '$ARS' && <div className="col-md-1 px-1">
                 <label htmlFor="fecha_operacion">TC</label>
                 <input 
                     className="form-control" 

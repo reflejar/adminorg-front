@@ -30,7 +30,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
             point_of_sales: '',
             issued_date: moment().format('YYYY-MM-DD'),
             receipt_number: '',
-            currency: 'PES',
+            currency: '$ARS',
             currency_quote: 1
         },
         cargas: [],
@@ -210,7 +210,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     label: 'Monto',
                     },
                     {
-                    type: comprobante.receipt.currency === "PES" ? "hidden": 'number',
+                    type: comprobante.receipt.currency === "$ARS" ? "hidden": 'number',
                     name: 'total_pesos',
                     label: 'Total ($ARS)',
                     },
@@ -270,7 +270,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     label: 'Monto',
                     },
                     {
-                    type: comprobante.receipt.currency === "PES" ? "hidden": 'number',
+                    type: comprobante.receipt.currency === "$ARS" ? "hidden": 'number',
                     name: 'total_pesos',
                     label: 'Total ($ARS)',
                     },                    

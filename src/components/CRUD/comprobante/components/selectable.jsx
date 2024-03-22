@@ -3,19 +3,27 @@ import Portlet from "./portlet"
 
 
 export default function Selectable ({ comprobante, setComprobante, onlyRead, color, title, handler, rows }) {
-    const [grouped, setGrouped] = useState(rows.map(obj=> ({
+
+    const [grouped, setGrouped] = useState([])
+
+    useEffect(() => {
+        const newGrouped = rows.filter(s => s.moneda === comprobante.receipt.currency).map(obj=> ({
             vinculo: obj.id, 
             concepto: `${obj.cuenta ? obj.cuenta + " - " : ''} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.comprobante}`, 
             monto:obj.saldo, 
             moneda:obj.moneda, 
+            tipo_cambio: obj.tipo_cambio,
+            total_pesos: obj.saldo*comprobante.receipt.currency_quote,
             max:obj.saldo, 
             checked:false,
             detalle: ''
         }))
-    )
+
+        setGrouped(newGrouped)
+    }, [comprobante.receipt.currency])
 
     useEffect(() => {
-        const newGrouped = grouped.map(c => ({...c, total_pesos: c.moneda === "$ARS" ? c.monto : c.monto*comprobante.receipt.currency_quote}))
+        const newGrouped = grouped.map(c => ({...c, total_pesos: c.monto*comprobante.receipt.currency_quote}))
         setGrouped(newGrouped)
     }, [comprobante.receipt.currency_quote]);
 
@@ -31,7 +39,7 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
                 const value = Number(+e.target.value)
                 newGrouped[row][name] = value;
                 if (name === "monto") {
-                    newGrouped[row]['total_pesos'] = newGrouped[row]['moneda'] === "$ARS" ? value : value*comprobante.receipt.currency_quote
+                    newGrouped[row]['total_pesos'] = value*comprobante.receipt.currency_quote
                 }                
             }
         }
