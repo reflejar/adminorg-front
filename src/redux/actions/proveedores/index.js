@@ -22,7 +22,7 @@ const get_all = () => async (dispatch) => {
             const {perfil} = c;
             let full_name = get(perfil, 'razon_social', "");
             if (!full_name) {
-                full_name = `${get(perfil, 'apellido', "")} ${get(perfil, 'nombre', "")}`
+                full_name = get(perfil, 'nombre', "")
             }
             return ({...c, full_name})
         }
@@ -50,7 +50,6 @@ const send = (values) => async (dispatch) => {
       titulo: values.titulo,
       perfil: {
         nombre: values.nombre,
-        apellido: values.apellido,
         razon_social: values.razon_social,
         tipo_documento: values.tipo_documento,
         numero_documento: values.numero_documento,
@@ -100,7 +99,6 @@ const send = (values) => async (dispatch) => {
       titulo: x.titulo,
       perfil: {
         nombre: x.nombre,
-        apellido: x.apellido,
         razon_social: x.razon_social,
         tipo_documento: x.tipo_documento,
         numero_documento: x.numero_documento,

@@ -17,16 +17,6 @@ import { Service } from "@/redux/services/general";
 export default function Comprobante({ moduleHandler, destinatario, comprobanteId, onClose }) {
 
     const dispatch = useDispatch();
-    const [onlyRead, setOnlyRead] = useState();
-    const [ingresos, loadingIngresos] = useIngresos();
-    const [proyectos, loadingProyectos] = useProyectos();
-    const [gastos, loadingGastos] = useGastos();
-    const [cajas, loadingCajas] = useCajas();
-    const [saldos, loadingSaldos] = useSaldos(destinatario);
-    const [canSend, setCanSend] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [tipoComprobante, setTipoComprobante] = useState({})
-    const [errors, setErrors] = useState({})
 
     const [comprobante, setComprobante] = useState({
         id: null,
@@ -40,11 +30,26 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
             point_of_sales: '',
             issued_date: moment().format('YYYY-MM-DD'),
             receipt_number: '',
+            currency: 'PES',
+            currency_quote: 1
         },
         cargas: [],
         cobros: [],
         descargas: [],
     });
+
+    const [onlyRead, setOnlyRead] = useState();
+    const [ingresos, loadingIngresos] = useIngresos();
+    const [proyectos, loadingProyectos] = useProyectos();
+    const [gastos, loadingGastos] = useGastos();
+    const [cajas, loadingCajas] = useCajas();
+    const [saldos, loadingSaldos] = useSaldos(destinatario);
+    const [canSend, setCanSend] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [tipoComprobante, setTipoComprobante] = useState({})
+    const [errors, setErrors] = useState({})
+
+
 
     useEffect(() => {
         
@@ -88,9 +93,9 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
             return false
         }
 
-        const totalCargas = comprobante.cargas ? comprobante.cargas.filter(c => (c.concepto !== "" || Number(c.monto) > 0)).reduce((total, current) => total + Number(current['monto']), 0) : 0
-        const totalCobros = comprobante.cobros ? comprobante.cobros.reduce((total, current) => total + Number(current['monto']), 0) : 0
-        const totalDescargas = comprobante.descargas ? comprobante.descargas.reduce((total, current) => total + Number(current['monto']), 0) : 0
+        const totalCargas = comprobante.cargas ? comprobante.cargas.filter(c => (c.concepto !== 0 && Number(c.total_pesos) > 0)).reduce((total, current) => total + Number(current['total_pesos']), 0) : 0
+        const totalCobros = comprobante.cobros ? comprobante.cobros.reduce((total, current) => total + Number(current['total_pesos']), 0) : 0
+        const totalDescargas = comprobante.descargas ? comprobante.descargas.filter(c => (c.cuenta !== 0 && Number(c.total_pesos) > 0)).reduce((total, current) => total + Number(current['total_pesos']), 0) : 0
         const totalDeudas = totalCargas + totalCobros
 
         // Si se crean cargas o si se intenta pagar cobros y existen descargas
@@ -188,42 +193,34 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     name: 'proyecto',
                     label: 'Proyecto',
                     choices: proyectos
-                    },                    
-                    {
-                    type: 'date',
-                    name: 'periodo',
-                    label: 'Periodo',
-                    },    
-                    {
-                    type: 'date',
-                    name: 'fecha_vencimiento',
-                    label: 'Vencimiento',
                     },
                     {
                     type: 'text',
                     name: 'detalle',
                     label: 'Detalle',
-                    },
+                    },                                            
                     {
                     type: 'number',
                     name: 'cantidad',
                     label: 'Cantidad',
-                    },            
+                    },
                     {
                     type: 'number',
                     name: 'monto',
                     label: 'Monto',
-                    },                        
+                    },
+                    {
+                    type: comprobante.receipt.currency === "PES" ? "hidden": 'number',
+                    name: 'total_pesos',
+                    label: 'Total ($ARS)',
+                    },
                 ]}
-                
                 cleanedField={{
                     concepto: '',
                     proyecto: '',
-                    periodo: moment().format('YYYY-MM-DD'),
-                    fecha_vencimiento: moment().format('YYYY-MM-DD'),
+                    cantidad: 1,
                     detalle: '',
-                    cantidad: 0,
-                    monto: 0,
+                    monto: null,
                 }}
             />)
             }
@@ -271,7 +268,12 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     type: 'number',
                     name: 'monto',
                     label: 'Monto',
-                    },                        
+                    },
+                    {
+                    type: comprobante.receipt.currency === "PES" ? "hidden": 'number',
+                    name: 'total_pesos',
+                    label: 'Total ($ARS)',
+                    },                    
                 ]}
                 cleanedField={{
                     cuenta: '',

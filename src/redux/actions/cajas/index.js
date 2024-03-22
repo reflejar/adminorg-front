@@ -44,6 +44,7 @@ const send = (values) => async (dispatch) => {
     let payload = {
       titulo: values.titulo,
       nombre: values.nombre,
+      moneda: values.moneda,
       taxon: values.taxon,
     };
   
@@ -79,6 +80,7 @@ const send = (values) => async (dispatch) => {
     let payload = values.map(x => ({
       nombre: x.nombre,
       titulo: x.titulo,
+      moneda: x.moneda,
       taxon: x.taxon,
     }))
   

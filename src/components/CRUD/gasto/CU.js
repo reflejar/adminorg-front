@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { gastosActions } from '@/redux/actions/gastos';
 import { toastr } from "react-redux-toastr";
 
-import { gastos } from '@/utility/options/taxones';
 import Spinner from '@/components/spinner';
 import { useTitulos } from '@/utility/hooks';
 
@@ -47,12 +46,10 @@ const CU = ({ selected, onClose }) => {
       enableReinitialize
       initialValues={{
         nombre: get(selected, 'nombre', ''),
-        taxon: get(selected, 'taxon', ''),
         titulo: get(selected, 'titulo', tituloPred.id),
       }}
       validationSchema={Yup.object().shape({
         nombre: Yup.string().required(empty),
-        taxon: Yup.string(),
         titulo: Yup.number().required(empty),
       })}
       onSubmit={async (values, { setSubmitting }) => {
@@ -83,15 +80,6 @@ const CU = ({ selected, onClose }) => {
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
-              <FormGroup className='col-sm-4 px-3'>
-                <Label for="taxon">Tipo de erogacion</Label>
-                <Field component="select" name="taxon" id="taxon" className={`form-control ${errors.taxon && touched.taxon && 'is-invalid'}`}>
-                  {gastos.map((gasto, i) => {
-                    return <option key={i} value={gasto.id}>{gasto.nombre}</option>
-                  })}
-                </Field>
-                {errors.taxon && touched.taxon ? <div className="invalid-feedback">{errors.taxon}</div> : null}
-              </FormGroup>    
               <FormGroup className='col-sm-4 px-3'>
                 <Label for="titulo">Titulo contable</Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>

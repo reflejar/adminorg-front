@@ -1,6 +1,7 @@
 import { usePuntosDeVenta } from "@/utility/hooks";
 import CHOICES from "./choices";
 import Portlet from "./portlet";
+import { monedas } from "@/utility/options/monedas";
 
 export default function Encabezado ({
     comprobante,
@@ -120,7 +121,34 @@ export default function Encabezado ({
                     onChange={handleChange}
                     value={comprobante.fecha_operacion || ''}
                 />
-                </div>                    
+                </div>
+                <div className="col-md-1 px-1">
+                <label htmlFor="fecha_operacion">Moneda</label>
+                <select 
+                    className="form-control"
+                    name="receipt.currency" 
+                    id="receipt.currency" 
+                    disabled={onlyRead}
+                    onChange={handleChange}
+                    value={comprobante.receipt.currency || ''}
+                    >
+                        {monedas.map((c, i) => (
+                            <option key={i} value={c.value}>{c.label}</option>
+                        ))}
+                    </select>
+                </div>    
+                {comprobante.receipt.currency !== 'PES' && <div className="col-md-1 px-1">
+                <label htmlFor="fecha_operacion">TC</label>
+                <input 
+                    className="form-control" 
+                    name="receipt.currency_quote" 
+                    type="number" 
+                    min={1}
+                    disabled={onlyRead}
+                    onChange={(e) => e.target.value >= 1 && handleChange(e) }
+                    value={comprobante.receipt.currency_quote || 1}
+                />
+                </div>}
             </div>
         </Portlet>
     )

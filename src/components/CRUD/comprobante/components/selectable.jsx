@@ -5,13 +5,19 @@ import Portlet from "./portlet"
 export default function Selectable ({ comprobante, setComprobante, onlyRead, color, title, handler, rows }) {
     const [grouped, setGrouped] = useState(rows.map(obj=> ({
             vinculo: obj.id, 
-            concepto: `${obj.cuenta ? obj.cuenta + " - " : ''} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.periodo}`, 
-            monto:obj.saldo ? obj.saldo : obj.monto, 
-            max:obj.saldo ? obj.saldo : obj.monto, 
+            concepto: `${obj.cuenta ? obj.cuenta + " - " : ''} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.comprobante}`, 
+            monto:obj.saldo, 
+            moneda:obj.moneda, 
+            max:obj.saldo, 
             checked:false,
             detalle: ''
         }))
     )
+
+    useEffect(() => {
+        const newGrouped = grouped.map(c => ({...c, total_pesos: c.moneda === "$ARS" ? c.monto : c.monto*comprobante.receipt.currency_quote}))
+        setGrouped(newGrouped)
+    }, [comprobante.receipt.currency_quote]);
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -22,10 +28,13 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
             newGrouped[row]['checked'] = !newGrouped[row]['checked'];
         } else {
             if (+e.target.max >= +e.target.value) {
-                newGrouped[row][name] = e.target.value;
+                const value = Number(+e.target.value)
+                newGrouped[row][name] = value;
+                if (name === "monto") {
+                    newGrouped[row]['total_pesos'] = newGrouped[row]['moneda'] === "$ARS" ? value : value*comprobante.receipt.currency_quote
+                }                
             }
         }
-    
         setGrouped(newGrouped);
     };
 
@@ -39,21 +48,22 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
 
 
     return (
-        <Portlet title={title} handler={handler} color={color} display={(["utilizaciones_disponibilidades", "utilizaciones_saldos"].includes(handler) ? "" : "in")}>
+        <Portlet title={title} handler={handler} color={color} display={"in"}>
         <div className="row">
             <div className="col-md-12">
             {grouped.length === 0 ? <div className="text-center fs-4">...No hay items...</div> : <table className="table table-condensed table-responsive">
                 <thead>
                 <tr className="row">
-                    <th className="col-md-2"></th>
-                    <th className="col-md-8">Concepto</th>
+                    <th className="col-md-1"></th>
+                    <th className="col-md-7">Concepto</th>
                     <th className="col-md-2">Monto</th>
+                    <th className="col-md-2">Total ($ARS)</th>
                 </tr>
                 </thead>
                 <tbody>
                 {grouped.map((row, i) => {
                     return (<tr key={i} className="row" >
-                    <td className="col-md-2">
+                    <td className="col-md-1">
                         <input 
                         className="form-check" 
                         type="checkbox" 
@@ -64,18 +74,30 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
                         onChange={handleChange}
                         />
                     </td>
-                    <td className={`col-md-8 ${onlyRead && "text-muted"}`}>{row.concepto}</td>
+                    <td className={`col-md-7 ${onlyRead && "text-muted"}`}>{row.concepto}</td>
                     <td className="col-md-2">
                         <input 
                         className="form-control input-sm "
                         type="number" 
                         value={row.monto} 
                         name={`${i}.monto`} 
-                        disabled={onlyRead || handler === "utilizaciones_disponibilidades" || row.monto < 0}
+                        disabled={onlyRead || row.monto < 0}
                         onChange={handleChange}
                         max={row.max} 
                         />
                     </td>
+                    <td className="col-md-2">
+                        <input 
+                        className="form-control input-sm "
+                        type="number" 
+                        value={row.total_pesos} 
+                        name={`${i}.total_pesos`} 
+                        disabled={true}
+                        onChange={handleChange}
+                        max={row.max} 
+                        />
+                    </td>
+
                     </tr>)
                 })}
 

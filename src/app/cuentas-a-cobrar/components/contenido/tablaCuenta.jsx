@@ -38,6 +38,15 @@ export default function (props) {
       label: 'Proyecto',
       key: 'proyecto',
     }, {      
+      label: 'Moneda',
+      key: 'moneda',
+    }, {            
+      label: 'Base',
+      key: 'valor',
+    }, {    
+      label: 'TC',
+      key: 'tipo_cambio',
+    }, {            
       label: 'Monto',
       key: 'monto',
     }, {

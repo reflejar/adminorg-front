@@ -12,6 +12,7 @@ import { toastr } from "react-redux-toastr";
 import { cajas } from '@/utility/options/taxones';
 import Spinner from '@/components/spinner';
 import { useTitulos } from '@/utility/hooks';
+import { monedas } from '@/utility/options/monedas';
 
 const empty = 'Campo requerido';
 
@@ -48,11 +49,13 @@ const CU = ({ selected, onClose }) => {
       initialValues={{
         nombre: get(selected, 'nombre', ''),
         taxon: get(selected, 'taxon', ''),
+        moneda: get(selected, 'moneda', ''),
         titulo: get(selected, 'titulo', tituloPred.id),
       }}
       validationSchema={Yup.object().shape({
         nombre: Yup.string(),
         taxon: Yup.string(),
+        moneda: Yup.string().required(empty),
         titulo: Yup.number().required(empty),
       })}
       onSubmit={async (values, { setSubmitting }) => {
@@ -91,7 +94,16 @@ const CU = ({ selected, onClose }) => {
                   })}
                 </Field>
                 {errors.taxon && touched.taxon ? <div className="invalid-feedback">{errors.taxon}</div> : null}
-              </FormGroup>             
+              </FormGroup>
+              <FormGroup className='col-sm-4 px-3'>
+                <Label for="taxon">Moneda</Label>
+                <Field component="select" name="moneda" id="moneda" className={`form-control ${errors.moneda && touched.moneda && 'is-invalid'}`}>
+                  {monedas.map((moneda, i) => {
+                    return <option key={i} value={moneda.value}>{moneda.label}</option>
+                  })}
+                </Field>
+                {errors.moneda && touched.moneda ? <div className="invalid-feedback">{errors.moneda}</div> : null}
+              </FormGroup>              
               <FormGroup className='col-sm-4 px-3'>
                 <Label for="titulo">Titulo contable</Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>

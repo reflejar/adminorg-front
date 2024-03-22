@@ -60,13 +60,10 @@ export default function Deudas(props) {
       label: 'Proyecto',
       key: 'proyecto',
     }, {      
-      label: 'Periodo',
-      key: 'periodo'
-    }, {
       label: 'Monto',
       key: 'monto',
     }, {
-      label: 'Pagado/Utilizado',
+      label: 'Pagado',
       key: 'pago_capital',      
     }, {
       label: 'Saldo',

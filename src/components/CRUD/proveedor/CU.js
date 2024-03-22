@@ -47,7 +47,6 @@ const CU = ({ selected, onClose }) => {
     enableReinitialize
     initialValues={{
         nombre: get(selected, 'perfil.nombre', ''),
-        apellido: get(selected, 'perfil.apellido', ''),
         razon_social: get(selected, 'perfil.razon_social', '') || '',
         tipo_documento: get(selected, 'perfil.tipo_documento', ''),
         numero_documento: get(selected, 'perfil.numero_documento', ''),
@@ -63,7 +62,6 @@ const CU = ({ selected, onClose }) => {
       }}
       validationSchema={Yup.object().shape({
         nombre: Yup.string(),
-        apellido: Yup.string(),
         razon_social: Yup.string(),
         tipo_documento: Yup.string().required(empty),
         numero_documento: Yup.number().required(empty),
@@ -105,11 +103,6 @@ const CU = ({ selected, onClose }) => {
                 <Label for="nombre">Nombre</Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
-              </FormGroup>
-              <FormGroup className='col-sm-4 px-3'>
-                <Label for="apellido">Apellido</Label>
-                <Field name="apellido" id="apellido" className={`form-control ${errors.apellido && touched.apellido && 'is-invalid'}`} />
-                {errors.apellido && touched.apellido ? <div className="invalid-feedback">{errors.apellido}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
                 <Label for="razon_social">Razon Social</Label>

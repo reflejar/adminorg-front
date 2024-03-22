@@ -20,10 +20,7 @@ import { clientesActions } from '@/redux/actions/clientes';
 const csvValidations = Yup.object({
   nombre: Yup
     .string('Nombre debe ser un texto valido')
-    .required('Nombre es requerido'),
-  apellido: Yup
-    .string('Apellido debe ser un texto valido')
-    .required('Apellido es requerido'),    
+    .required('Nombre es requerido'),  
   "razon social": Yup
     .string('Razon Social debe ser un texto valido'),
   "tipo documento": Yup
@@ -58,7 +55,7 @@ const csvValidations = Yup.object({
 });
 
 const tableHeaders = [
-    'Nombre', 'Apellido', 'Razon Social', 'Tipo Documento', 
+    'Nombre', 'Razon Social', 'Tipo Documento', 
     'Numero Documento', 'Fecha Nacimiento', 'Mail', 'Telefono', 
     'Provincia', 'Localidad', 'Calle', 'Numero', 'Titulo'
 ];
@@ -190,7 +187,6 @@ const M = ({ onClose }) => {
                 return (
                   <tr className={row.id ? "" : "warning"} key={index}>
                     <td>{row.nombre}</td>
-                    <td>{row.apellido}</td>
                     <td>{row['razon social']}</td>
                     <td>{row['tipo documento']}</td>
                     <td>{row['numero documento']}</td>

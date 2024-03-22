@@ -20,9 +20,6 @@ const csvValidations = Yup.object({
   nombre: Yup
     .string('Nombre debe ser un texto valido')
     .required('Nombre es requerido'),
-  tipo: Yup
-    .string('Tipo de ingreso debe ser un texto valido')
-    .required('Tipo es requerido'),
   titulo: Yup
     .string('Titulo debe ser un texto valido')
     .required('Titulo es requerido'),
@@ -89,20 +86,6 @@ const M = ({ onClose }) => {
           return false;
         });
 
-
-      // All relational fields (e.g destinatario, expensa) match correctly and their ids exists
-      csvArr.forEach((row, index) => {
-        const { tipo } = row;
-        const matchedTipo = ingresos.some((val) => val.nombre.toLowerCase() === tipo.toLowerCase());
-        if (!matchedTipo) {
-          const error = `Tipo "${tipo}" no es posible`;
-          const errorRowLine = index + 1;
-          const message = `Linea ${errorRowLine}: ` + error;    
-          errors.push(message)
-        }
-
-      });
-
       if (errors.length > 0) {
         setCSVError([...errors]);
         return;
@@ -140,7 +123,6 @@ const M = ({ onClose }) => {
                 return (
                   <tr className={row.id ? "" : "warning"} key={index}>
                     <td>{row.nombre}</td>
-                    <td>{row.tipo}</td>
                     <td>{row.titulo}</td>
                   </tr>
                 )

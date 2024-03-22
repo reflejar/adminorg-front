@@ -42,7 +42,7 @@ const get_item = (id) => async (dispatch) => {
   if (response && response.data) {
     const titulo = {
       ...response.data,
-      full_name: response.data.perfil.apellido + ', ' + response.data.perfil.nombre
+      full_name: response.data.perfil.nombre
     }
 
     dispatch({

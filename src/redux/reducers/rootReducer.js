@@ -3,7 +3,6 @@ import { combineReducers } from "redux";
 import { reducer as toastrReducer } from "react-redux-toastr";
 
 import clientes from './clientes';
-import dominios from './dominios';
 import proveedores from './proveedores';
 import ingresos from './ingresos';
 import gastos from './gastos';
@@ -14,19 +13,13 @@ import titulos from './titulos';
 import puntos from './puntos';
 import proyectos from './proyectos';
 import movimientos from './movimientos';
-import preconceptos from './preconceptos';
 import comprobantes from './comprobantes';
-import plataforma from './plataforma';
 import saldos from './saldos';
-import retenciones from './retenciones';
 import analisis from './analisis';
-import carpetas from './carpetas';
 
 const appReducer = combineReducers({
    toastr: toastrReducer, // <- Mounted at toastr.
    clientes,
-   carpetas,
-   dominios,
    analisis,
    proveedores,
    ingresos,
@@ -38,11 +31,8 @@ const appReducer = combineReducers({
    titulos,
    puntos,
    movimientos,
-   preconceptos,
    comprobantes,
-   plataforma,
    saldos,
-   retenciones
 });
 
 const rootReducer = (state, action) => {

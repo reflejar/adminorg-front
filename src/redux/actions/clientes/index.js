@@ -21,7 +21,7 @@ const get_all = (force=false) => async (dispatch) => {
       const {perfil} = c;
       let full_name = get(perfil, 'razon_social', "");
       if (!full_name) {
-          full_name = `${get(perfil, 'apellido', "")} ${get(perfil, 'nombre', "")}`
+          full_name = get(perfil, 'nombre', "")
       }
       return ({...c, full_name})
   }
@@ -48,7 +48,7 @@ const get_client = (id) => async (dispatch) => {
   if (response && response.data) {
     const cliente = {
       ...response.data,
-      full_name: response.data.perfil.apellido + ', ' + response.data.perfil.nombre
+      full_name: response.data.perfil.nombre
     }
 
     dispatch({
@@ -67,11 +67,9 @@ const send = (values) => async (dispatch) => {
 
   let payload = {
     titulo: values.titulo,
-    taxon: 'socio',
     is_active: true,
     perfil: {
       nombre: values.nombre,
-      apellido: values.apellido,
       razon_social: values.razon_social,
       tipo_documento: values.tipo_documento,
       numero_documento: values.numero_documento,
@@ -118,10 +116,8 @@ const send_bulk = (values) => async (dispatch) => {
 
   let payload = values.map(x => ({
     titulo: x.titulo,
-    taxon: 'socio',
     perfil: {
       nombre: x.nombre,
-      apellido: x.apellido,
       razon_social: x.razon_social,
       tipo_documento: x.tipo_documento,
       numero_documento: x.numero_documento,

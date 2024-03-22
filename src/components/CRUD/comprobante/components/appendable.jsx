@@ -7,6 +7,12 @@ export default function Appendable ({ comprobante, setComprobante, onlyRead, tit
     if (!onlyRead) initialGrouping.push(cleanedField)
     const [grouped, setGrouped] = useState(initialGrouping)
 
+
+    useEffect(() => {
+        const newGrouped = grouped.map(c => ({...c, total_pesos: c.monto*comprobante.receipt.currency_quote}))
+        setGrouped(newGrouped)
+    }, [comprobante.receipt.currency_quote]);
+
     useEffect(() => {
         setComprobante(() => ({
         ...comprobante,
@@ -19,8 +25,12 @@ export default function Appendable ({ comprobante, setComprobante, onlyRead, tit
         e.preventDefault()
         const [row, name] = e.target.name.split('.')
         setGrouped(() => {
-        grouped[row][name] = e.target.value
-        return [...grouped]
+            const value = Number(e.target.value)
+            grouped[row][name] = value
+            if (name === "monto") {
+                grouped[row]['total_pesos'] = value * comprobante.receipt.currency_quote
+            }
+            return [...grouped]
         })
     }
 
@@ -53,7 +63,7 @@ export default function Appendable ({ comprobante, setComprobante, onlyRead, tit
         case 'text':
             return <td><input disabled={onlyRead}  className="form-control input-sm" type="text" name={`${fi}.${field.name}`} value={value || ''} onChange={handleChange} /></td>
         case 'number':
-            return <td><input disabled={onlyRead}  className="form-control input-sm" type="number" min={0} name={`${fi}.${field.name}`} value={value || ''} onChange={handleChange} /></td>
+            return <td><input disabled={onlyRead || field.name === "total_pesos"}  className="form-control input-sm" type="number" min={0} name={`${fi}.${field.name}`} value={value || null} onChange={handleChange} /></td>
         case 'hidden':
             return <input disabled={onlyRead}  type="hidden" className="d-none" name={`${fi}.${field.name}`} />
         default:
@@ -68,7 +78,7 @@ export default function Appendable ({ comprobante, setComprobante, onlyRead, tit
             <table className="table table-condensed">
                 <thead>
                 <tr>
-                    {fields.filter(f => f.type !== "hidden").map((field, i) => (<th key={i}>
+                    {fields.filter(f => f.type !== "hidden").map((field, i) => (<th key={i} style={{width: 200}}>
                     {field.label}
                     </th>))}
                 </tr>

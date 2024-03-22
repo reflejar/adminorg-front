@@ -36,7 +36,6 @@ const receiptTypes = {
     ],        
 }
 
-
 export default {
     receiptTypes,
 }

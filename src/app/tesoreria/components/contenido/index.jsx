@@ -14,7 +14,7 @@ function Contenido({ selected }) {
     const [activeTab, setActiveTab] = useState("cuentas");
 
     useEffect(()=> {
-        if (selected && selected.taxon !== "stockeable") setActiveTab("cuentas")
+        if (selected && selected.taxon !== "seguimiento") setActiveTab("cuentas")
     }, [selected])
 
     const showContent = () => {
@@ -33,8 +33,8 @@ function Contenido({ selected }) {
                 <ul className="nav nav-tabs" >
                     <li className="nav-item">
                         <a
-                            className={`nav-link ${activeTab === "deudas" && "active"} ${selected && selected.taxon === "stockeable" ? "pointer" : "disabled"}`}
-                            onClick={() => {selected && selected.taxon === "stockeable" && setActiveTab("deudas");}}
+                            className={`nav-link ${activeTab === "deudas" && "active"} ${selected && selected.taxon === "seguimiento" ? "pointer" : "disabled"}`}
+                            onClick={() => {selected && selected.taxon === "seguimiento" && setActiveTab("deudas");}}
                         >
                             Disponible
                         </a>

@@ -52,7 +52,6 @@ function Grupo({
             lista: cliente,
             columnas: [
                 { label: "Nombre", key: "perfil.nombre"},
-                { label: "Apellido", key: "perfil.apellido" },
                 { label: "Razon social", key: "perfil.razon_social" },
                 { label: "Tipo de documento", key: "perfil.tipo_documento" },
                 { label: "Numero", key: "perfil.numero_documento" },
@@ -67,7 +66,6 @@ function Grupo({
             lista: proveedor,
             columnas: [
                 { label: "Nombre", key: "perfil.nombre" },
-                { label: "Apellido", key: "perfil.apellido" },
                 { label: "Razon social", key: "perfil.razon_social" },
                 { label: "Tipo de documento", key: "perfil.tipo_documento" },
                 { label: "Numero", key: "perfil.numero_documento" },
@@ -101,7 +99,6 @@ function Grupo({
             lista: ingreso,
             columnas: [
                 { label: "Nombre", key: "nombre" },
-                { label: "Tipo", key: "taxon" },
                 { label: "Editar", key: "", onClick: handleModal},
               ],
               modal: <Ingreso selected={modal.item} onClose={handleModal} />

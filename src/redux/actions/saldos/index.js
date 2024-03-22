@@ -4,7 +4,6 @@ const apiEndpoint = 'operative/reportes/saldos';
 
 const get = (params) => async (dispatch) => {
   let path = `${apiEndpoint}/${params.destinatario}/?end_date=${params.fecha}`;
-  path = path + "&condonacion=1";
 
   const response = await Service.get(path);
   if (response && response.data) {

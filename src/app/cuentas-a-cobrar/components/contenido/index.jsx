@@ -16,7 +16,7 @@ function Contenido({ selected }) {
     const showContent = () => {
         switch (activeTab) {
             case "deudas":
-                return <Deudas selected={selected}/>
+                return <Deudas selected={selected} />
             case "cuentas":
                 return <Cuenta selected={selected}/>
             case "info":
@@ -51,7 +51,7 @@ function Contenido({ selected }) {
                         >
                             Información del cliente
                         </a>
-                    </li>
+                    </li>              
                 </ul>
             </section>
 

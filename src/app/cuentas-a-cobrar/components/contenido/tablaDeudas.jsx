@@ -61,13 +61,13 @@ export default function (props) {
       label: 'Proyecto',
       key: 'proyecto',
     }, {      
-      label: 'Periodo',
-      key: 'periodo'
+      label: 'Moneda',
+      key: 'moneda',
     }, {
       label: 'Monto',
       key: 'monto',
-    }, {
-      label: 'Pagado/Utilizado',
+    }, {      
+      label: 'Pagado',
       key: 'pago_capital',      
     }, {
       label: 'Saldo',
@@ -98,7 +98,7 @@ export default function (props) {
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={saldos} columns={columns} />
+    <Listado items={saldos} columns={columns}/>
     </>
     );
 };
