@@ -25,48 +25,56 @@ export default function (props) {
   };        
 
   const columns =[{
-    label: 'Fecha',
-    key: 'fecha'
-  }, {
-    label: 'Comprobante',
-    key: 'comprobante',
-    onClick: handleModal
-  }, {
-    label: 'Concepto',
-    key: 'concepto',
-  }, {
-    label: 'Proyecto',
-    key: 'proyecto',
-  }, {      
-    label: 'Monto',
-    key: 'monto',
-  }, {
-    label: 'Saldo',
-    key: 'saldo',
-  }];  
+      label: 'Fecha',
+      key: 'fecha'
+    }, {
+      label: 'Comprobante',
+      key: 'comprobante',
+      onClick: handleModal
+    }, {
+      label: 'Concepto',
+      key: 'concepto',
+    }, {
+      label: 'Proyecto',
+      key: 'proyecto',
+    }, {      
+      label: 'Moneda',
+      key: 'moneda',
+    }, {            
+      label: 'Base',
+      key: 'valor',
+    }, {    
+      label: 'TC',
+      key: 'tipo_cambio',
+    }, {            
+      label: 'Monto',
+      key: 'monto',
+    }, {
+      label: 'Saldo',
+      key: 'saldo',
+    }];  
 
 
 
-    
-    const renderModal = () => {
-      if (modal.item && modal.item.comprobante) {
-        return (
-            <BasicModal
-              open={modal.open}
-              onToggle={handleModal}
-              header={modal.item.comprobante}
-              footer={false}
-              component={<Comprobante 
-                  moduleHandler={'proveedor'} 
-                  destinatario={selected}
-                  comprobanteId={modal.item.comprobante__id}
-                  onClose={handleModal}
-                />}
-              
-            />          
-          )
-      } 
-    }
+  const renderModal = () => {
+    if (modal.item && modal.item.comprobante) {
+      return (
+          <BasicModal
+            open={modal.open}
+            onToggle={handleModal}
+            header={modal.item.comprobante}
+            footer={false}
+            component={<Comprobante 
+                moduleHandler={'proveedor'}
+                destinatario={selected}
+                comprobanteId={modal.item.comprobante__id}
+                onClose={handleModal}
+              />}
+            
+          />          
+        )
+    } 
+  }
 
   if (loadingMovimientos) return <Spinner />
 

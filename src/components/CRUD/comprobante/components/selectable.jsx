@@ -4,7 +4,17 @@ import Portlet from "./portlet"
 
 export default function Selectable ({ comprobante, setComprobante, onlyRead, color, title, handler, rows }) {
 
-    const [grouped, setGrouped] = useState([])
+    const [grouped, setGrouped] = useState([...rows.filter(s => s.moneda === comprobante.receipt.currency).map(obj=> ({
+        vinculo: obj.id, 
+        concepto: `${obj.cuenta ? obj.cuenta + " - " : ''} ${obj.concepto ? obj.concepto + " - " : ""} ${obj.comprobante}`, 
+        monto:obj.saldo, 
+        moneda:obj.moneda, 
+        tipo_cambio: obj.tipo_cambio,
+        total_pesos: obj.saldo*comprobante.receipt.currency_quote,
+        max:obj.saldo, 
+        checked:false,
+        detalle: ''
+    }))])
 
     useEffect(() => {
         const newGrouped = rows.filter(s => s.moneda === comprobante.receipt.currency).map(obj=> ({
@@ -18,7 +28,6 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
             checked:false,
             detalle: ''
         }))
-
         setGrouped(newGrouped)
     }, [comprobante.receipt.currency])
 
@@ -63,9 +72,8 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
                 <thead>
                 <tr className="row">
                     <th className="col-md-1"></th>
-                    <th className="col-md-7">Concepto</th>
+                    <th className="col-md-9">Concepto</th>
                     <th className="col-md-2">Monto</th>
-                    <th className="col-md-2">Total ($ARS)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,7 +90,7 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
                         onChange={handleChange}
                         />
                     </td>
-                    <td className={`col-md-7 ${onlyRead && "text-muted"}`}>{row.concepto}</td>
+                    <td className={`col-md-9 ${onlyRead && "text-muted"}`}>{row.concepto}</td>
                     <td className="col-md-2">
                         <input 
                         className="form-control input-sm "
@@ -90,17 +98,6 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
                         value={row.monto} 
                         name={`${i}.monto`} 
                         disabled={onlyRead || row.monto < 0}
-                        onChange={handleChange}
-                        max={row.max} 
-                        />
-                    </td>
-                    <td className="col-md-2">
-                        <input 
-                        className="form-control input-sm "
-                        type="number" 
-                        value={row.total_pesos} 
-                        name={`${i}.total_pesos`} 
-                        disabled={true}
                         onChange={handleChange}
                         max={row.max} 
                         />

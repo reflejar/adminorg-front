@@ -90,6 +90,7 @@ function Grupo({
             columnas: [
                 { label: "Nombre", key: "nombre" },
                 { label: "Tipo", key: "taxon" },
+                { label: "Moneda", key: "moneda" },
                 { label: "Editar", key: "", onClick: handleModal},
               ],
               modal: <Caja selected={modal.item} onClose={handleModal} />

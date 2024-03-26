@@ -14,12 +14,6 @@ export default function Encabezado ({
     const types = CHOICES.receiptTypes[comprobante.modulo]
     const [point_of_sales] = usePuntosDeVenta();
 
-
-    useEffect(() => {
-        setComprobante(cbte => ({...cbte, receipt: {...cbte.receipt, currency_quote:1}}))
-    }, [comprobante.receipt.currency]);
-
-
     const handleChange = (e) => {
         if (e.target.value !== "---") {
             const name = e.target.name
@@ -139,12 +133,13 @@ export default function Encabezado ({
                     onChange={handleChange}
                     value={comprobante.receipt.currency || ''}
                     >
+                        <option value="">---</option>
                         {monedas.map((c, i) => (
                             <option key={i} value={c.value}>{c.label}</option>
                         ))}
                     </select>
                 </div>    
-                {comprobante.receipt.currency !== '$ARS' && <div className="col-md-1 px-1">
+                {comprobante.receipt.currency && comprobante.receipt.currency !== '$ARS' && <div className="col-md-1 px-1">
                 <label htmlFor="fecha_operacion">TC</label>
                 <input 
                     className="form-control" 

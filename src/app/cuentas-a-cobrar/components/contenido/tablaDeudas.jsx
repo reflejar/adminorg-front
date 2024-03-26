@@ -15,7 +15,6 @@ export default function (props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const saldos = useSelector(state => state.saldos.list)
-  // const saldos = useSelector(state => state.saldos.list)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,11 +93,17 @@ export default function (props) {
     } 
   }
 
+  const topRight = [...new Set(saldos.map(item => item.moneda))]
+                    .map((m, k) => <button key={k} className='btn btn-sm btn-outline-secondary mx-1' disabled>
+                                    {m}: {saldos.filter(item => item.moneda === m).reduce((acc, curr) => acc + curr.saldo, 0)}
+                                    </button>
+                        )
+
   if (loading) return <Spinner />
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={saldos} columns={columns}/>
+    <Listado items={saldos} columns={columns} topRight={topRight}/>
     </>
     );
 };

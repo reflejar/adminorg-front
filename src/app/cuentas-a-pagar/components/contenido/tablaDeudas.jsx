@@ -10,7 +10,7 @@ import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
 import { saldosActions } from '@/redux/actions/saldos';
 
-export default function Deudas(props) {
+export default function (props) {
   const { selected } = props;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ export default function Deudas(props) {
   const columns = [{
       label: 'Fecha',
       key: 'fecha'
-    }, {
+    }, {      
       label: 'Comprobante',
       key: 'comprobante',
       onClick: handleModal
@@ -60,9 +60,12 @@ export default function Deudas(props) {
       label: 'Proyecto',
       key: 'proyecto',
     }, {      
+      label: 'Moneda',
+      key: 'moneda',
+    }, {
       label: 'Monto',
       key: 'monto',
-    }, {
+    }, {      
       label: 'Pagado',
       key: 'pago_capital',      
     }, {
@@ -90,11 +93,17 @@ export default function Deudas(props) {
     } 
   }
 
+  const topRight = [...new Set(saldos.map(item => item.moneda))]
+                    .map((m, k) => <button key={k} className='btn btn-sm btn-outline-secondary mx-1' disabled>
+                                    {m}: {saldos.filter(item => item.moneda === m).reduce((acc, curr) => acc + curr.saldo, 0)}
+                                    </button>
+                        )
+
   if (loading) return <Spinner />
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={saldos} columns={columns} />
+    <Listado items={saldos} columns={columns} topRight={topRight}/>
     </>
     );
 };

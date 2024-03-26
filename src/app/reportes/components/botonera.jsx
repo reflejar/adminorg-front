@@ -28,32 +28,32 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
               </div>
               <div className="monitor-body-without-footer text-end p-3 bg-white">
                 <label className='mt-3' htmlFor="analizar">Analizar</label>
-                <select type="select" className='form-select' multiple name='analizar' onChange={handleSeleccion}>
-                  <option selected={analizar.indexOf('cliente') >= 0} value="cliente">Clientes</option>
-                  <option selected={analizar.indexOf('proveedor') >= 0} value="proveedor">Proveedores</option>
-                  <option selected={analizar.indexOf('caja') >= 0} value="caja">Tesorería</option>
-                  <option selected={analizar.indexOf('ingreso') >= 0} value="ingreso">Ingresos</option>
-                  <option selected={analizar.indexOf('gasto') >= 0} value="gasto">Gastos</option>
-                  <option selected={analizar.indexOf('titulo') >= 0} value="titulo">Títulos contables</option>
+                <select type="select" className='form-select' multiple name='analizar' value={analizar} onChange={handleSeleccion}>
+                  <option value="cliente">Clientes</option>
+                  <option value="proveedor">Proveedores</option>
+                  <option value="caja">Tesorería</option>
+                  <option value="ingreso">Ingresos</option>
+                  <option value="gasto">Gastos</option>
+                  <option value="titulo">Títulos contables</option>
                 </select>
                 <label className='mt-3' htmlFor="agrupar_por">Agrupar</label>
-                <select type="select" className='form-select' name='agrupar_por' onChange={(e) => setAgrupar(e.target.value)}>
+                <select type="select" className='form-select' name='agrupar_por' value={agrupar_por} onChange={(e) => setAgrupar(e.target.value)}>
                 <option value="">---</option>
-                  <option selected={agrupar_por === 'concepto'} value="concepto">Conceptos</option>
-                  <option selected={agrupar_por === 'proyecto'} value="proyecto">Proyectos</option>
+                  <option value="concepto">Conceptos</option>
+                  <option value="proyecto">Proyectos</option>
                 </select>
                 <label className='mt-3' htmlFor="encolumnar">Columnas</label>
-                <select type="select" className='form-select' name='encolumnar' onChange={(e) => setColumna(e.target.value)}>
+                <select type="select" className='form-select' name='encolumnar' value={encolumnar} onChange={(e) => setColumna(e.target.value)}>
                   <option value="">---</option>
-                  <option selected={encolumnar === 'periodo'} value="periodo">Período</option>
+                  <option value="periodo">Período</option>
                 </select>
                 <label className='mt-3' htmlFor="totalizar">Totalizar</label>
-                <select type="select" className='form-select' name='totalizar' onChange={(e) => setTotalizar(e.target.value)}>
-                  <option>---</option>
-                  <option selected={totalizar === 'total_pesos'} value="total_pesos">Saldos totales $ARS</option>
-                  <option selected={totalizar === '$ARS'} value="$ARS">Saldos $ARS</option>
-                  <option selected={totalizar === '$USD'} value="$USD">Saldos $USD</option>
-                  <option selected={totalizar === 'cantidad'} value="cantidad">Cantidades</option>
+                <select type="select" className='form-select' name='totalizar' value={totalizar} onChange={(e) => setTotalizar(e.target.value)}>
+                  <option value="">---</option>
+                  <option value="total_pesos">Saldos totales $ARS</option>
+                  <option value="$ARS">Saldos $ARS</option>
+                  <option value="$USD">Saldos $USD</option>
+                  <option value="cantidad">Cantidades</option>
                 </select>                                
               </div>
             </div>)

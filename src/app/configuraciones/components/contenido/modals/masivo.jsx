@@ -13,7 +13,7 @@ export default function Modal ({selected}) {
   const [modal, setModal] = useState(false)
 
   const handleToggle = () => {
-    setModal(!modal);
+    if (selected) setModal(!modal);
   };
 
   const modals = {

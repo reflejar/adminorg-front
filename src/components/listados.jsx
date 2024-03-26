@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import ReactToPrint from 'react-to-print';
 import {Numero} from "@/utility/formats";
 
-const Listado = ({ items, columns, buttons }) => {
+const Listado = ({ items, columns, topRight }) => {
     const ref = useRef(null);
 
     const dataForTable = useMemo(() => {
@@ -33,7 +33,7 @@ const Listado = ({ items, columns, buttons }) => {
                     </CSVLink>
                 </div>
             
-                    {buttons && <div className="btn-toolbar">{buttons}</div>}
+                    {topRight && <div className="btn-toolbar">{topRight}</div>}
                 
             </div>
 

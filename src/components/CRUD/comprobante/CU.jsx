@@ -88,6 +88,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
     const validate = () => {
         if (comprobante.receipt.receipt_type === '') return false
         if (comprobante.receipt.point_of_sales === '') return false
+        if (comprobante.receipt.currency === '') return false
         if (comprobante.receipt.receipt_type !== '') {
             if(tipoComprobante && tipoComprobante.receipt_number === "manual" && comprobante.receipt.receipt_number === "") 
             return false
@@ -177,7 +178,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                 onlyRead={onlyRead}
                 title={{
                     cliente: "Creditos",
-                    proveedor: "Deudas",
+                    proveedor: "Debitos",
                     caja: "Cargar dinero"
                 }[comprobante.modulo]}
                 handler="cargas"
@@ -186,7 +187,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     type: 'select',
                     name: 'concepto',
                     label: comprobante.modulo === "caja" ? "Desde": 'Concepto',
-                    choices: [...ingresos, ...cajas, ...gastos]
+                    choices: comprobante.modulo === "caja" ? cajas : [...ingresos, ...gastos]
                     },
                     {
                     type: 'select',
@@ -252,7 +253,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     type: 'select',
                     name: 'cuenta',
                     label: 'Cuenta',
-                    choices: comprobante.receipt.receipt_type.includes("Nota de Credito") ? [...ingresos, ...gastos] : cajas
+                    choices: comprobante.receipt.receipt_type.includes("Nota de Credito") ? [...ingresos, ...gastos] : cajas.filter(c=> c.moneda === comprobante.receipt.currency)
                     },
                     {
                     type: 'text',
