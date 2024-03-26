@@ -10,7 +10,7 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
       const opciones = event.target.options;
       setAgrupar("")
       setColumna("")
-      setTotalizar("valor")
+      setTotalizar("total_pesos")
       const seleccionados = [];
       for (let i = 0; i < opciones.length; i++) {
         if (opciones[i].selected) {
@@ -50,7 +50,9 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
                 <label className='mt-3' htmlFor="totalizar">Totalizar</label>
                 <select type="select" className='form-select' name='totalizar' onChange={(e) => setTotalizar(e.target.value)}>
                   <option>---</option>
-                  <option selected={totalizar === 'valor'} value="valor">Saldos</option>
+                  <option selected={totalizar === 'total_pesos'} value="total_pesos">Saldos totales $ARS</option>
+                  <option selected={totalizar === '$ARS'} value="$ARS">Saldos $ARS</option>
+                  <option selected={totalizar === '$USD'} value="$USD">Saldos $USD</option>
                   <option selected={totalizar === 'cantidad'} value="cantidad">Cantidades</option>
                 </select>                                
               </div>

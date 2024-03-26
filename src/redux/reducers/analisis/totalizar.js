@@ -1,4 +1,4 @@
-const totalizar = (state = 'valor', action) => {
+const totalizar = (state = 'total_pesos', action) => {
     switch (action.type) {
       case 'SELECT_TOTALIZAR':
         return action.payload;
