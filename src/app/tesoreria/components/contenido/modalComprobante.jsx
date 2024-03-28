@@ -17,8 +17,8 @@ export default function Modal ({selected}) {
       <BasicModal
         open={modal}
         onToggle={handleToggle}
-        button={(<button className="btn btn-outline-primary mx-1 shadow" disabled={!selected} onClick={handleToggle}> + Comprobante </button>)}
-        header="Nuevo Comprobante"
+        button={(<button className="btn btn-outline-primary mx-1 shadow" disabled={!selected} onClick={handleToggle}> + Movimiento </button>)}
+        header="Nuevo Movimiento"
         component={<Comprobante moduleHandler={'caja'} destinatario={selected} onClose={() => handleToggle()}/>}
         footer={false}
       />

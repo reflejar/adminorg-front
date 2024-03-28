@@ -9,8 +9,9 @@ import Comprobante from '@/components/CRUD/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
 import { saldosActions } from '@/redux/actions/saldos';
+import { Numero } from '@/utility/formats';
 
-export default function Deudas(props) {
+export default function (props) {
   const { selected } = props;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -45,20 +46,10 @@ export default function Deudas(props) {
         item: rowInfo
     });
   };
-  
+
   const columns = [{
-      label: 'Fecha',
-      key: 'fecha'
-    }, {
-      label: 'Comprobante',
-      key: 'comprobante',
-      onClick: handleModal
-    }, {
-      label: 'Detalle',
-      key: 'detalle'
-    }, {
-      label: 'Vencimiento',
-      key: 'fecha_vencimiento'
+      label: selected && selected.moneda !== "$ARS" ? 'TC' : 'Detalle',     
+      key: selected && selected.moneda !== "$ARS" ? 'tipo_cambio' : 'detalle',      
     }, {
       label: 'Saldo',
       key: 'saldo',
@@ -66,17 +57,16 @@ export default function Deudas(props) {
 
   const renderModal = () => {
     if (modal.item && modal.item.comprobante) {
-      const { receipt } = modal.item.comprobante
       return (
           <BasicModal
             open={modal.open}
             onToggle={handleModal}
-            header={`${receipt.receipt_type} - ${receipt.formatted_number}`}
+            header={modal.item.comprobante}
             footer={false}
             component={<Comprobante 
-                moduleHandler={'caja'} 
+                moduleHandler={"caja"} 
                 destinatario={selected}
-                comprobanteId={modal.item.comprobante.id}
+                comprobanteId={modal.item.comprobante__id}
                 onClose={handleModal}
               />}
             
@@ -85,11 +75,17 @@ export default function Deudas(props) {
     } 
   }
 
+  const topRight = [...new Set(saldos.map(item => item.moneda))]
+                    .map((m, k) => <button key={k} className='btn btn-sm btn-outline-secondary mx-1' disabled>
+                                    {m}: {Numero(saldos.filter(item => item.moneda === m).reduce((acc, curr) => acc + curr.saldo, 0))}
+                                    </button>
+                        )
+
   if (loading) return <Spinner />
 
   return (<>
     {modal && modal.item && renderModal()}
-    <Listado items={saldos} columns={columns} />
+    <Listado items={saldos} columns={columns} topRight={topRight}/>
     </>
     );
 };

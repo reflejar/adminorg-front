@@ -39,7 +39,7 @@ function Botonera({analizar,agrupar_por,encolumnar,totalizar,setAnalizar, setAgr
                 <label className='mt-3' htmlFor="agrupar_por">Agrupar</label>
                 <select type="select" className='form-select' name='agrupar_por' value={agrupar_por} onChange={(e) => setAgrupar(e.target.value)}>
                 <option value="">---</option>
-                  <option value="concepto">Conceptos</option>
+                  <option value="concepto">Razón</option>
                   <option value="proyecto">Proyectos</option>
                 </select>
                 <label className='mt-3' htmlFor="encolumnar">Columnas</label>

@@ -9,6 +9,7 @@ import Comprobante from '@/components/CRUD/comprobante/CU';
 import Listado from '@/components/listados';
 import { useDispatch, useSelector } from 'react-redux';
 import { saldosActions } from '@/redux/actions/saldos';
+import { Numero } from '@/utility/formats';
 
 export default function (props) {
   const { selected } = props;
@@ -54,7 +55,7 @@ export default function (props) {
       key: 'comprobante',
       onClick: handleModal
     }, {
-      label: 'Concepto',
+      label: 'Razón',
       key: 'concepto'
     }, {
       label: 'Proyecto',
@@ -95,7 +96,7 @@ export default function (props) {
 
   const topRight = [...new Set(saldos.map(item => item.moneda))]
                     .map((m, k) => <button key={k} className='btn btn-sm btn-outline-secondary mx-1' disabled>
-                                    {m}: {saldos.filter(item => item.moneda === m).reduce((acc, curr) => acc + curr.saldo, 0)}
+                                    {m}: {Numero(saldos.filter(item => item.moneda === m).reduce((acc, curr) => acc + curr.saldo, 0))}
                                     </button>
                         )
 

@@ -172,7 +172,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
             />
 
             {/* Seccion de Cargas */}
-            {comprobante.receipt.receipt_type && !comprobante.receipt.receipt_type.includes("Nota de Credito") && ((loadingIngresos || loadingCajas || loadingGastos) ? <Spinner /> : <Appendable 
+            {comprobante.receipt.receipt_type && !comprobante.receipt.receipt_type.includes("Nota de Credito") && ((loadingIngresos || loadingCajas || loadingGastos || loadingProyectos) ? <Spinner /> : <Appendable 
                 comprobante={comprobante} 
                 setComprobante={setComprobante} 
                 onlyRead={onlyRead}
@@ -186,11 +186,16 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     {
                     type: 'select',
                     name: 'concepto',
-                    label: comprobante.modulo === "caja" ? "Desde": 'Concepto',
-                    choices: comprobante.modulo === "caja" ? cajas : [...ingresos, ...gastos]
+                    label: comprobante.modulo === "caja" ? "Desde": 'Razón',
+                    choices: comprobante.modulo === "caja" ? [
+                        ...cajas.map(i => ({...i, full_name: `($) ${i.full_name}`})),
+                    ] : [
+                        ...ingresos.map(i => ({...i, full_name: `(+) ${i.full_name}`})), 
+                        ...gastos.map(i => ({...i, full_name: `(-) ${i.full_name}`})),
+                    ]
                     },
                     {
-                    type: 'select',
+                    type: comprobante.modulo === "caja" ? "hidden": 'select',
                     name: 'proyecto',
                     label: 'Proyecto',
                     choices: proyectos
@@ -201,7 +206,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     label: 'Detalle',
                     },                                            
                     {
-                    type: 'number',
+                    type: comprobante.modulo === "caja" ? "hidden": 'number',
                     name: 'cantidad',
                     label: 'Cantidad',
                     },
@@ -211,9 +216,9 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     label: 'Monto',
                     },
                     {
-                    type: comprobante.receipt.currency === "$ARS" ? "hidden": 'number',
+                    type: 'number',
                     name: 'total_pesos',
-                    label: 'Total ($ARS)',
+                    label: 'Subtotal ($ARS)',
                     },
                 ]}
                 cleanedField={{
@@ -271,9 +276,9 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     label: 'Monto',
                     },
                     {
-                    type: comprobante.receipt.currency === "$ARS" ? "hidden": 'number',
+                    type: 'number',
                     name: 'total_pesos',
-                    label: 'Total ($ARS)',
+                    label: 'Subtotal ($ARS)',
                     },                    
                 ]}
                 cleanedField={{

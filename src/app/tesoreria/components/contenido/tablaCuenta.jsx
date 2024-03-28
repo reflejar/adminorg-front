@@ -32,12 +32,9 @@ export default function (props) {
       key: 'comprobante',
       onClick: handleModal
     }, {
-      label: 'Concepto',
+      label: 'Razón',
       key: 'concepto',
-    }, {
-      label: 'Proyecto',
-      key: 'proyecto',
-    }, {      
+    }, {    
       label: 'Moneda',
       key: 'moneda',
     }, {            
