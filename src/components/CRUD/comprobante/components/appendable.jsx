@@ -25,11 +25,11 @@ export default function Appendable ({ comprobante, setComprobante, onlyRead, tit
         e.preventDefault()
         const [row, name] = e.target.name.split('.')
         setGrouped(() => {
-            const value = Number(e.target.value)
+            const value = e.target.value
             grouped[row][name] = value
             if (name === "monto") {
-                grouped[row]['total_pesos'] = value * comprobante.receipt.currency_quote
-            }
+                grouped[row]['total_pesos'] = Number(value)*comprobante.receipt.currency_quote
+            } 
             return [...grouped]
         })
     }
