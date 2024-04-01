@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { connect } from 'react-redux'
 
-import Deudas from './tablaDeudas';
+import Saldos from './tablaSaldos';
 import Cuenta from './tablaCuenta';
 import Info from "@/components/CRUD/cliente/CU";
 
@@ -11,12 +11,12 @@ import ModalRegistros from './modalRegistros';
 
 function Contenido({ selected }) {
 
-    const [activeTab, setActiveTab] = useState("deudas");
+    const [activeTab, setActiveTab] = useState("saldos");
 
     const showContent = () => {
         switch (activeTab) {
-            case "deudas":
-                return <Deudas selected={selected} />
+            case "saldos":
+                return <Saldos selected={selected} />
             case "cuentas":
                 return <Cuenta selected={selected}/>
             case "info":
@@ -30,8 +30,8 @@ function Contenido({ selected }) {
                 <ul className="nav nav-tabs" >
                     <li className="nav-item">
                         <a
-                            className={`nav-link ${activeTab === "deudas" && "active"} pointer`}
-                            onClick={() => {setActiveTab("deudas");}}
+                            className={`nav-link ${activeTab === "saldos" && "active"} pointer`}
+                            onClick={() => {setActiveTab("saldos");}}
                         >
                             A cobrar
                         </a>

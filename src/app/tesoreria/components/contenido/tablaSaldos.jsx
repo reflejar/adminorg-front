@@ -48,9 +48,12 @@ export default function (props) {
   };
 
   const columns = [{
-      label: selected && selected.moneda !== "$ARS" ? 'TC' : 'Detalle',     
-      key: selected && selected.moneda !== "$ARS" ? 'tipo_cambio' : 'detalle',      
+      label: 'Moneda',
+      key: 'moneda',
     }, {
+      label: '#',
+      key: 'detalle',
+    }, {      
       label: 'Saldo',
       key: 'saldo',
   }];    
