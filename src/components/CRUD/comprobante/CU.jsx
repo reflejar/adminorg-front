@@ -211,10 +211,15 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     label: 'Cantidad',
                     },
                     {
+                    type: (comprobante.modulo === "caja" && comprobante.receipt.currency !== "$ARS") ? "number": 'hidden',
+                    name: 'tipo_cambio',
+                    label: 'TC Orig',
+                    },
+                    {
                     type: 'number',
                     name: 'monto',
                     label: 'Monto',
-                    },
+                    },                    
                     {
                     type: 'number',
                     name: 'total_pesos',
@@ -225,8 +230,9 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     concepto: '',
                     proyecto: '',
                     cantidad: 1,
-                    detalle: '',
+                    tipo_cambio: 1,
                     monto: null,
+                    detalle: '',
                 }}
             />)
             }

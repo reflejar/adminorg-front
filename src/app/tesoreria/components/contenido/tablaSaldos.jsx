@@ -54,6 +54,9 @@ export default function (props) {
       label: '#',
       key: 'detalle',
     }, {      
+      label: 'TC',
+      key: 'tipo_cambio',
+    }, {            
       label: 'Saldo',
       key: 'saldo',
   }];    

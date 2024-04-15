@@ -9,7 +9,7 @@ export default function Appendable ({ comprobante, setComprobante, onlyRead, tit
 
 
     useEffect(() => {
-        const newGrouped = grouped.map(c => ({...c, total_pesos: c.monto*comprobante.receipt.currency_quote}))
+        const newGrouped = grouped.map(c => ({...c, tipo_cambio: comprobante.receipt.currency_quote, total_pesos: c.monto*comprobante.receipt.currency_quote}))
         setGrouped(newGrouped)
     }, [comprobante.receipt.currency_quote]);
 
