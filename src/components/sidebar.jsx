@@ -10,6 +10,7 @@ import {
  } from "reactstrap";
 
 import { useAuthContext } from "@/contexts/authContext";
+import SpinnerComponent from "./spinner";
 
 
 export default function Sidebar() {
@@ -18,10 +19,12 @@ export default function Sidebar() {
     const router = useRouter();
     const pathname = usePathname()
 
+    if (!currentUser) return 
+
     return (<div className="col-lg-2 d-flex flex-column flex-shrink-0 p-3 bg-light min-vh-100">
-            <Link href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                        <span className="fs-4">AdminOrg</span>
-                    </Link>
+                    <Link href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        {currentUser ?  <span className="fs-4">{currentUser.logo ? <img src={currentUser.logo} alt={currentUser.community} height={50} /> : currentUser.community}</span>: <SpinnerComponent />}
+                    </Link> 
                     <hr />
                     {currentUser && <ul className="nav nav-pills flex-column mb-auto">
                         <Link href="/reportes" className={`nav-link ${pathname == '/reportes' ? 'active' : 'link-dark'}`}><i className="bi-bar-chart-line me-2" /> Reportes</Link>

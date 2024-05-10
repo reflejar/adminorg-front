@@ -1,8 +1,7 @@
 import axios from 'axios';
 import {baseUrl, initialHeaders} from '../config';
 
-
-
+import { toast } from 'react-toastify';
 
 const get = (apiEndpoint, responseType='json') => {
     let headers = initialHeaders();
@@ -24,8 +23,24 @@ const remove = (apiEndpoint) => {
 const post = (apiEndpoint, payload) => {
     let headers = initialHeaders();
     return axios.post(baseUrl + apiEndpoint, payload, { headers })
-    .then((response) => { return response })
-    .catch((err) => { return err.response });
+    .then((response) => { 
+        toast.success(response.statusText, {
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+        }); 
+        return response
+     })
+    .catch((err) => { 
+        const message = Object.values(err.response.data)[0][0]
+        toast.error(message, {
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+        });
+     });
 }
 
 const postMultiData = (apiEndpoint, payload) => {

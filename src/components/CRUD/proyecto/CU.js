@@ -13,7 +13,6 @@ import { toastr } from "react-redux-toastr";
 const CU = ({ selected, onClose }) => {
   const dispatch = useDispatch();
 
-  console.log("hola")
   return (
     <Formik
       enableReinitialize

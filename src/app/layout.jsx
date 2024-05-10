@@ -8,6 +8,9 @@ import './bootstrap.css'
 import './custom.css'
 import AuthContextProvider from "@/contexts/authContext";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const inter = Inter({ 
   subsets: ['latin'],
   preload: true
@@ -28,6 +31,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} overflow-hidden`}>
         <Provider store={store}>
           <AuthContextProvider>{children}</AuthContextProvider>
+          <ToastContainer />
         </Provider>
       </body>
     </html>

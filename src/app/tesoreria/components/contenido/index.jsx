@@ -9,6 +9,9 @@ import Info from "@/components/CRUD/caja/CU";
 import ModalComprobante from './modalComprobante';
 import ModalRegistros from './modalRegistros';
 
+
+
+
 function Contenido({ selected }) {
 
     const [activeTab, setActiveTab] = useState("saldos");
@@ -61,6 +64,7 @@ function Contenido({ selected }) {
             <section className="monitor-footer p-3 d-flex justify-content-between">
                 <div className="btn-group">
                     <ModalComprobante selected={selected} />,
+                    
                 </div>
                 <div className="btn-group">
                     <ModalRegistros />
