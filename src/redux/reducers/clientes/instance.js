@@ -4,7 +4,7 @@ const selected = (state = null, action) => {
         return action.payload;
 
       case 'POST_CLIENTE':
-        return action.payload.id;
+        return action.payload;
       default:
         return state
     }

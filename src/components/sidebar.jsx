@@ -1,5 +1,5 @@
 'use client'
-import Image from "next/image"
+
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -38,7 +38,7 @@ export default function Sidebar() {
 
                     {currentUser && <UncontrolledDropdown nav inNavbar className="pr-1" direction="up">
                         <DropdownToggle nav className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle">
-                            <Image src="/img/assistant.svg" alt="" width="32" height="32" className="rounded-circle me-2" />
+                            <img src="/img/assistant.svg" alt="" width="32" height="32" className="rounded-circle me-2" />
                             <strong>{currentUser.profile && currentUser.profile.nombre}</strong>
                         </DropdownToggle>
 
