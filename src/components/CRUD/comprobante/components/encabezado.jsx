@@ -73,7 +73,7 @@ export default function Encabezado ({
                     >
                     <option value=''> --- </option>
                         {point_of_sales.map((point, i) => (
-                            <option key={i} value={point.id}>{point.number}</option>
+                            <option key={i} value={point.number}>{point.number}</option>
                         ))}
                     </select> : 
                         <input 
