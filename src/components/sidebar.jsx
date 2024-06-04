@@ -63,7 +63,7 @@ export default function Sidebar() {
                                 onChange={(option) => changeCommunity(option.value)}
                                 value={currentUser.community}
                                 >
-                                    {currentUser.admin_of.map(c => (<option value={c}>{c}</option>))}
+                                    {currentUser.admin_of.map((c, k) => (<option key={k} value={c}>{c}</option>))}
                                 </select>}
                             
                             {/* <Link disabled to="/faq" className="p-0"> */}
