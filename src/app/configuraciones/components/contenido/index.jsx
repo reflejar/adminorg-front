@@ -7,7 +7,7 @@ import Masivo from './modals/masivo'
 function Contenido({ selected }) {
 
 
-    return (<div className="col-lg-8 bg-light min-vh-100">
+    return (<div className="col-lg-8 min-vh-100">
 
             <section className="monitor-head pt-3 px-4">
                 <ul className="nav nav-tabs" >
