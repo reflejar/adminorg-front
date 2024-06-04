@@ -13,9 +13,8 @@ const select = proveedor => ({
     payload: proveedor
 })
 
-
-
 const get_all = () => async (dispatch) => {
+
     const response = await Service.get(apiEndpoint);
     if (response) {
         const proveedores = response.data.results.map(c => {
@@ -43,17 +42,17 @@ const get_all = () => async (dispatch) => {
     }
 }
 
-
 const send = (values) => async (dispatch) => {
 
     let payload = {
       titulo: values.titulo,
+      is_active: true,      
       perfil: {
         nombre: values.nombre,
         razon_social: values.razon_social,
         tipo_documento: values.tipo_documento,
         numero_documento: values.numero_documento,
-        fecha_nacimiento: values.fecha_nacimiento ? values.fecha_nacimiento : null,
+        fecha_nacimiento: null,
         es_extranjero: values.es_extranjero,
         mail: values.mail,
         telefono: values.telefono,
@@ -70,25 +69,17 @@ const send = (values) => async (dispatch) => {
   
     if (values.id) {
       response = await Service.put(apiEndpoint + values.id + '/', payload);
-      await dispatch(get_all());
-      return;
+    } else {
+      response = await Service.post(apiEndpoint, payload);
     }
     
-    response = await Service.post(apiEndpoint, payload);
     if (response) {
       await dispatch(get_all())
       await dispatch({
         type: 'POST_PROVEEDOR',
         payload: response.data
       });
-      response.result = 'success'
-    } else {
-      response = {
-        result: 'error'
-      }
     }
-  
-  
     return response
   };
 

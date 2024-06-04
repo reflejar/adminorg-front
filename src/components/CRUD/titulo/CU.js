@@ -6,7 +6,6 @@ import { ClipLoader } from 'react-spinners';
 import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
 import { titulosActions } from '@/redux/actions/titulos';
-import { toastr } from "react-redux-toastr";
 import { naturalezas } from './_options';
 
 import Spinner from '@/components/spinner';
@@ -49,12 +48,11 @@ const CU = ({ selected, onClose }) => {
           await dispatch(titulosActions.send({ 
             ...values, 
             id: get(selected, 'id', null) 
-          })).then(() => {
-            toastr.success('¡Listo! Guardado con éxito');
-          });
-          if (onClose) {
-            onClose(false);
-          }
+          })).then((response) => {
+            if (200 <= response.status < 300 && onClose) {
+              onClose(false);
+            }
+          })
         } catch (error) {
           console.error(error);
         } finally {

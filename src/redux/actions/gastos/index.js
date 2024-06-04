@@ -42,8 +42,6 @@ const send = (values) => async (dispatch) => {
   
     if (values.id) {
       response = await Service.put(apiEndpoint + values.id + '/', payload);
-      await dispatch(get_all());
-      return;
     } else {
       response = await Service.post(apiEndpoint, payload);
     }
@@ -54,11 +52,6 @@ const send = (values) => async (dispatch) => {
         type: 'POST_GASTO',
         payload: response.data
       });
-      response.result = 'success'
-    } else {
-      response = {
-        result: 'error'
-      }
     }
   
   

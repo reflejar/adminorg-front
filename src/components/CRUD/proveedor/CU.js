@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
 import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
-import { toastr } from "react-redux-toastr";
 
 import { proveedoresActions } from '@/redux/actions/proveedores';
 import Spinner from '@/components/spinner';
@@ -50,11 +49,10 @@ const CU = ({ selected, onClose }) => {
         razon_social: get(selected, 'perfil.razon_social', '') || '',
         tipo_documento: get(selected, 'perfil.tipo_documento', ''),
         numero_documento: get(selected, 'perfil.numero_documento', ''),
-        fecha_nacimiento: get(selected, 'perfil.fecha_nacimiento', ''),
         es_extranjero: get(selected, 'perfil.es_extranjero', false),
         mail: get(selected, 'perfil.mail', ''),
         telefono: get(selected, 'perfil.telefono', ''),
-        provincia: get(selected, 'perfil.domicilio.provincia', ''),
+        provincia: get(selected, 'perfil.domicilio.provincia', null),
         localidad: get(selected, 'perfil.domicilio.localidad', ''),
         calle: get(selected, 'perfil.domicilio.calle', ''),
         numero: get(selected, 'perfil.domicilio.numero', ''),
@@ -65,11 +63,10 @@ const CU = ({ selected, onClose }) => {
         razon_social: Yup.string(),
         tipo_documento: Yup.string().required(empty),
         numero_documento: Yup.number().required(empty),
-        fecha_nacimiento: Yup.date().nullable(),
         es_extranjero: Yup.boolean(),
         mail: Yup.string().email("Email invalido").nullable(),
         telefono: Yup.string(),
-        provincia: Yup.string(),
+        provincia: Yup.string().nullable(),
         localidad: Yup.string(),
         calle: Yup.string(),
         numero: Yup.string(),
@@ -81,12 +78,11 @@ const CU = ({ selected, onClose }) => {
           await dispatch(proveedoresActions.send({ 
             ...values, 
             id: get(selected, 'id', null) 
-          })).then(() => {
-            toastr.success('¡Listo! Guardado con éxito');
-          });
-          if (onClose) {
-            onClose(false);
-          }
+          })).then((response) => {
+            if (200 <= response.status < 300 && onClose) {
+              onClose(false);
+            }
+          })
         } catch (error) {
           console.error(error);
         } finally {

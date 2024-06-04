@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
 import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
-import { toastr } from "react-redux-toastr";
 
 import { clientesActions } from '@/redux/actions/clientes';
 import Spinner from '@/components/spinner';
@@ -50,11 +49,10 @@ const CU = ({ selected, onClose }) => {
         razon_social: get(selected, 'perfil.razon_social', '') || '',
         tipo_documento: get(selected, 'perfil.tipo_documento', ''),
         numero_documento: get(selected, 'perfil.numero_documento', ''),
-        fecha_nacimiento: get(selected, 'perfil.fecha_nacimiento', ''),
         es_extranjero: get(selected, 'perfil.es_extranjero', false),
         mail: get(selected, 'perfil.mail', ''),
         telefono: get(selected, 'perfil.telefono', ''),
-        domicilio_provincia: get(selected, 'perfil.domicilio.provincia', ''),
+        domicilio_provincia: get(selected, 'perfil.domicilio.provincia', null),
         domicilio_localidad: get(selected, 'perfil.domicilio.localidad', ''),
         domicilio_calle: get(selected, 'perfil.domicilio.calle', ''),
         domicilio_numero: get(selected, 'perfil.domicilio.numero', ''),
@@ -65,11 +63,10 @@ const CU = ({ selected, onClose }) => {
         razon_social: Yup.string(),
         tipo_documento: Yup.string().required(empty),
         numero_documento: Yup.number().required(empty),
-        fecha_nacimiento: Yup.date(),
         es_extranjero: Yup.boolean(),
-        mail: Yup.string().email("Email invalido").required(empty),
+        mail: Yup.string().email("Email invalido").nullable(),
         telefono: Yup.string(),
-        domicilio_provincia: Yup.string(),
+        domicilio_provincia: Yup.string().nullable(),
         domicilio_localidad: Yup.string(),
         domicilio_calle: Yup.string(),
         domicilio_numero: Yup.string(),
@@ -81,12 +78,11 @@ const CU = ({ selected, onClose }) => {
           await dispatch(clientesActions.send({ 
             ...values, 
             id: get(selected, 'id', null) 
-          })).then(() => {
-            toastr.success('¡Listo! Guardado con éxito');
-          });
-          if (onClose) {
-            onClose(false);
-          }
+          })).then((response) => {
+            if (200 <= response.status < 300 && onClose) {
+              onClose(false);
+            }
+          })
         } catch (error) {
           console.error(error);
         } finally {
