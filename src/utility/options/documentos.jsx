@@ -1,5 +1,6 @@
 export const tipo_documentos = [
   'DNI',
   'CUIL',
-  'CUIT'
+  'CUIT',
+  'Doc. (Otro)'
 ];
