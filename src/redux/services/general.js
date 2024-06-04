@@ -3,6 +3,24 @@ import {baseUrl, initialHeaders} from '../config';
 
 import { toast } from 'react-toastify';
 
+const extractErrorMessages = (data, currentKey = "") => { // Improved function with optional currentKey
+  const messages = [];
+  for (const key in data) {
+    const value = data[key];
+    const newKey = currentKey ? `${currentKey}.${key}` : key; // Build complete key
+  
+    if (typeof value === "string") {
+      messages.push(`${newKey}: ${value}`);
+    } else if (Array.isArray(value)) { // Exclude arrays
+      messages.push(`${newKey}: ${value[0]}`);
+    } else if (typeof value === "object") { // Exclude arrays
+      messages.push(...extractErrorMessages(value, newKey));
+    }
+  }
+  return messages;
+};
+
+
 const get = (apiEndpoint, responseType='json') => {
     let headers = initialHeaders();
     return axios.get(
@@ -23,25 +41,29 @@ const remove = (apiEndpoint) => {
 const post = (apiEndpoint, payload) => {
     let headers = initialHeaders();
     return axios.post(baseUrl + apiEndpoint, payload, { headers })
-    .then((response) => { 
-        toast.success(response.statusText, {
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "colored",
-        }); 
-        return response
-     })
-    .catch((err) => { 
-        const message = Object.values(err.response.data)[0][0]
-        toast.error(message, {
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "colored",
+      .then((response) => {
+        toast.success("Guardado con éxito", {
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
         });
-     });
-}
+        return response;
+      })
+      .catch((err) => {
+        const errorMessages = extractErrorMessages(err.response.data);
+        errorMessages.forEach(message => {
+            toast.error(message, {
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "colored",
+            });
+            
+        });
+        return err.response.data
+      });
+  };
 
 const postMultiData = (apiEndpoint, payload) => {
     let headers = initialHeaders();
@@ -54,8 +76,28 @@ const postMultiData = (apiEndpoint, payload) => {
 const put = (apiEndpoint, payload) => {
     let headers = initialHeaders();
     return axios.put(baseUrl + apiEndpoint, payload, { headers })
-    .then((response) => { return response })
-    .catch((err) => { return err.response });
+    .then((response) => {
+      toast.success("Guardado con éxito", {
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return response;
+    })
+    .catch((err) => {
+      const errorMessages = extractErrorMessages(err.response.data);
+      errorMessages.forEach(message => {
+          toast.error(message, {
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+          });
+          
+      });
+      return err.response.data
+    });
 }
 
 export const Service = {
