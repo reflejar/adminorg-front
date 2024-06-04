@@ -7,8 +7,8 @@ export default function Reportes() {
     return (
       <main className="row">
         <Sidebar />
-        <Contenido />
         <Botonera />
+        <Contenido />
       </main>
     )
   }
