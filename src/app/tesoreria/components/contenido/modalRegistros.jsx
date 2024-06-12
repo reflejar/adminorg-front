@@ -17,7 +17,7 @@ export default function Modal () {
       <BasicModal
         open={modal}
         onToggle={handleToggle}
-        button={(<button className="btn btn-outline-danger mx-1 shadow" onClick={handleToggle}> Registros </button>)}
+        button={(<button className="btn btn-outline-info mx-1 shadow" onClick={handleToggle}> Registros </button>)}
         header="Registros"
         component={<Comprobantes causante={"caja"} />}
         footer={false}

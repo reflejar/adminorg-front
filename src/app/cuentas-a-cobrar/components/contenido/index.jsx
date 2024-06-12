@@ -33,7 +33,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "saldos" && "active"} pointer`}
                             onClick={() => {setActiveTab("saldos");}}
                         >
-                            A cobrar
+                            <i className="bi-currency-dollar" /> A cobrar
                         </a>
                     </li>
                     <li className="nav-item">
@@ -41,7 +41,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}
                             onClick={() => {setActiveTab("cuentas");}}
                         >
-                            Movimientos
+                            <i className="bi-list-check me-2" /> Movimientos
                         </a>
                     </li>
                     <li className="nav-item">
@@ -49,7 +49,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "info" && "active"} pointer`}
                             onClick={() => {setActiveTab("info");}}
                         >
-                            Información del cliente
+                            <i className="bi-info-circle me-2" /> Información del cliente
                         </a>
                     </li>              
                 </ul>

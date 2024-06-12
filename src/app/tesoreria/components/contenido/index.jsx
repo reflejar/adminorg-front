@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from 'react-redux'
 
 import Saldos from './tablaSaldos';
@@ -35,7 +35,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "saldos" && "active"} pointer`}
                             onClick={() => setActiveTab("saldos")}
                         >
-                            Disponible
+                            <i className="bi-currency-dollar" /> Disponible
                         </a>
                     </li>
                     <li className="nav-item">
@@ -43,7 +43,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "cuentas" && "active"} pointer`}
                             onClick={() => {setActiveTab("cuentas");}}
                         >
-                            Movimientos
+                            <i className="bi-list-check me-2" /> Movimientos
                         </a>
                     </li>
                     <li className="nav-item">
@@ -51,7 +51,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "info" && "active"} pointer`}
                             onClick={() => {setActiveTab("info");}}
                         >
-                            Información de la caja
+                            <i className="bi-info-circle me-2" /> Información de la caja
                         </a>
                     </li>
                 </ul>

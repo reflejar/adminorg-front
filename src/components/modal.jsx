@@ -22,7 +22,7 @@ const BasicModal = ({
       backdrop="static"
       isOpen={open}
       toggle={handleToggle}
-      className={className}
+      className={"animate__animated animate__bounceInRight"}
     >
 
       <ModalHeader toggle={handleToggle}>

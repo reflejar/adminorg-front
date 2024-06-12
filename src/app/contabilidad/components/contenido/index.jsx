@@ -37,7 +37,7 @@ function Contenido({ selected }) {
                             className={`nav-link ${activeTab === "info" && "active"} pointer`}
                             onClick={() => {setActiveTab("info");}}
                         >
-                            Información del titulo
+                            <i className="bi-info-circle me-2" /> Información del titulo
                         </a>
                     </li>
                 </ul>
