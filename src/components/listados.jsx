@@ -39,7 +39,7 @@ const Listado = ({ items, columns, topRight }) => {
 
 
 
-            <table className='mt-3 table table-responsive table-sm table-striped'>
+            <table className='mt-3 table table-responsive table-sm table-striped' ref={ref}>
                 <thead>
                 <tr>
                     {columns.map(t => (
