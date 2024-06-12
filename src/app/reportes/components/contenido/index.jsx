@@ -30,17 +30,17 @@ function Contenido({ analizar,agrupar_por,encolumnar,totalizar }) {
                             className={`nav-link ${activeTab === "tabla" && "active"} pointer`}
                             onClick={() => {selected && setActiveTab("tabla");}}
                         >
-                            Resultados
+                            <i className="bi-list-check me-2" /> Resultados
                         </a>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <a
                             className={`nav-link ${activeTab === "grafico" && "active"} pointer`}
                             onClick={() => {selected && setActiveTab("grafico");}}
                         >
-                            Gráfico
+                            <i className="bi-graph-up-arrow me-2" /> Gráfico
                         </a>
-                    </li>                    
+                    </li> */}
                 </ul>
             </section>
 
