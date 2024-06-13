@@ -34,10 +34,7 @@ function Grupo({
     gasto,
     titulo,
  }) {
-    const [modal, setModal] = useState({
-        open: false,
-        item: null
-    });
+    const [modal, setModal] = useState({open: false,item: null});
 
     const handleModal = (rowInfo) => {
         setModal({
@@ -158,12 +155,19 @@ function Grupo({
         getItems()
     }, [selected])
 
+    const refreshItems = async () => {
+        setLoading(true)
+        await dispatch(grupo.action.get_all())
+        setLoading(false)
+      }
+  
+
     if (loading) return <Spinner />
     
     else if (grupo && grupo.lista.length > 0) {
         return (<>
                 {modal && modal.item && renderModal()}
-                <Listado items={grupo.lista} columns={grupo.columnas} />
+                <Listado items={grupo.lista} columns={grupo.columnas} topRight={<i onClick={refreshItems} className="btn btn-sm btn-outline-dark bi-arrow-clockwise pointer" ></i>} />
         </>)
     } else {
         return "No hay items"

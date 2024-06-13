@@ -29,7 +29,7 @@ const Listado = ({ items, columns, topRight }) => {
                     filename="listado.csv"
                     headers={columns}          
                     data={dataForTable}>
-                        <button className='btn btn-sm bi-filetype-csv btn-outline-success' />
+                        <button className='btn btn-sm btn-outline-success bi-filetype-csv' />
                     </CSVLink>
                 </div>
             

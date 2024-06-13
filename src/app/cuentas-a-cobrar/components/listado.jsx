@@ -1,15 +1,24 @@
 "use client"
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import { clientesActions } from "@/redux/actions/clientes";
 import ModalNew from './contenido/modalCliente';
+import Spinner from '@/components/spinner';
 
 function Listado({searchTerm, searchOnChange, items, instance, getItems, setSelectedObject}) {
 
+    const [loading, setLoading] = useState(false)
+
     useEffect(()=> {
-      if (items.length === 0) getItems()
+      if (items.length === 0) refreshItems()
     }, [])
+
+    const refreshItems = async () => {
+      setLoading(true)
+      await getItems()
+      setLoading(false)
+    }
 
     return (<div className="col-lg-2 min-vh-100 bg-light">
               <div className="monitor-head p-3 d-flex align-items-center">
@@ -26,10 +35,13 @@ function Listado({searchTerm, searchOnChange, items, instance, getItems, setSele
                       onChange={e => searchOnChange(e.target.value)}
                       value= {searchTerm}
                   />
+                  <div className="form-control-position pointer">
+                    <i onClick={refreshItems} className="bi-arrow-clockwise" ></i>
+                  </div>                  
                 </div>
               </div>
               <div className="monitor-body-without-footer p-3 bg-white">
-                <table className="table table-sm">
+                {loading ? <Spinner />  : <table className="table table-sm">
                   <tbody>
                     {items && items.map((item,key) => (
                       <tr 
@@ -41,7 +53,8 @@ function Listado({searchTerm, searchOnChange, items, instance, getItems, setSele
                       </tr>                
                     ))}
                   </tbody>
-                </table>                
+                </table>   }
+             
               </div>
             </div>)
   }
