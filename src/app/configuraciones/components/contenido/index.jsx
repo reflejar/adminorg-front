@@ -38,14 +38,14 @@ function Contenido({ selected }) {
                             <i className="bi-check-circle-fill text-success" /> Habilitados
                         </a>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <a
                             className={`nav-link ${activeTab === "deshabilitados" && "active"} pointer`}
                             onClick={() => {setActiveTab("deshabilitados");}}
                         >
                             <i className="bi-x-circle-fill text-danger" /> Deshabilitados
                         </a>
-                    </li>
+                    </li> */}
                 </ul>
             </section>
 
