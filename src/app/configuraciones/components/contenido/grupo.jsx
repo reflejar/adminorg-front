@@ -86,7 +86,7 @@ function Grupo({
             lista: caja,
             columnas: [
                 { label: "Nombre", key: "nombre" },
-                { label: "Tipo", key: "taxon" },
+                { label: "", key: "taxon" },
                 { label: "Moneda", key: "moneda" },
                 { label: "Editar", key: "", onClick: handleModal},
               ],

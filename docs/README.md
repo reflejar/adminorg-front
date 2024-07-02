@@ -59,7 +59,7 @@ El objetivo es proporcionar una interfaz de usuario amigable y eficiente que per
   - `package.json`: Dependencias y scripts del proyecto.
   - `package-lock.json`: Versión exacta de las dependencias.
   - `README.md`: Documentación inicial del proyecto.
-  - `next.config.js`: Configuraciones específicas de Next.js.
+  - `next.config.js`: Mi Organización específicas de Next.js.
   - `LICENSE`: Licencia del proyecto.
   - `public/img/`: Contiene imágenes y recursos estáticos.
   - `src/app/`: Contiene las páginas y componentes principales de la aplicación.

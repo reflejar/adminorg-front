@@ -32,7 +32,7 @@ export default function (props) {
       key: 'comprobante',
       onClick: handleModal
     }, {
-      label: 'Razón',
+      label: 'Tipo',
       key: 'concepto',
     }, {
       label: 'Proyecto',

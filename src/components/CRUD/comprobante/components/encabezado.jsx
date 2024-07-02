@@ -34,7 +34,7 @@ export default function Encabezado ({
     }
 
     return (
-        <Portlet title="Encabezados" handler='encabezados'>
+        <Portlet title="Encabezado del Comprobante" handler='Encabezado del Comprobante'>
             <div className="row">
                 <div className="col-md-2 px-1">
                 <label htmlFor="receipt.receipt_type">Tipo</label>
@@ -62,7 +62,7 @@ export default function Encabezado ({
                 </select>}
                 </div>
                 <div className="col-md-2 px-1">
-                    <label htmlFor="receipt.point_of_sales">Punto Vta</label>
+                    <label htmlFor="receipt.point_of_sales">Punto de Venta</label>
                     {(tipoComprobante && tipoComprobante.receipt_number === "auto") && !comprobante.id && point_of_sales ? <select 
                     className="form-control"
                     name="receipt.point_of_sales" 
@@ -102,7 +102,7 @@ export default function Encabezado ({
                 />
                 </div>              
                 <div className="col-md-2 px-1">
-                <label htmlFor="receipt.issued_date">Fecha Cbte.</label>
+                <label htmlFor="receipt.issued_date">Fecha del Comprobante</label>
                 <input 
                     className="form-control" 
                     name="receipt.issued_date" 
@@ -113,7 +113,7 @@ export default function Encabezado ({
                 />
                 </div>               
                 <div className="col-md-2 px-1">
-                <label htmlFor="fecha_operacion">Fecha Op.</label>
+                <label htmlFor="fecha_operacion">Fecha de Operación</label>
                 <input 
                     className="form-control" 
                     name="fecha_operacion" 

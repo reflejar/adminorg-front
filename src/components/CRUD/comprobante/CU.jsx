@@ -177,7 +177,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                 setComprobante={setComprobante} 
                 onlyRead={onlyRead}
                 title={{
-                    cliente: "Creditos",
+                    cliente: "Detalle del Comprobante",
                     proveedor: "Debitos",
                     caja: "Cargar dinero"
                 }[comprobante.modulo]}
@@ -186,7 +186,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     {
                     type: 'select',
                     name: 'concepto',
-                    label: comprobante.modulo === "caja" ? "Desde": 'Razón',
+                    label: comprobante.modulo === "caja" ? "Desde": 'Tipo',
                     choices: comprobante.modulo === "caja" ? [
                         ...cajas.map(i => ({...i, full_name: `($) ${i.full_name}`})),
                     ] : [
@@ -255,8 +255,8 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                 setComprobante={setComprobante} 
                 onlyRead={onlyRead}
                 title={{
-                    cliente: "Formas de cobro",
-                    proveedor: "Formas de pago",
+                    cliente: "Información para el cobro",
+                    proveedor: "Información para el pago",
                 }[comprobante.modulo]}
                 handler="descargas"
                 fields={[
@@ -326,7 +326,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                         id="link" 
                         name="link" 
                         className="form-control" 
-                        placeholder="Agregá un link" 
+                        placeholder="Agregá el link al documento" 
                         value={comprobante.link || ''}
                         onChange={(e) => setComprobante({...comprobante, link: e.target.value})}
                     />

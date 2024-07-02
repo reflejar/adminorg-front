@@ -72,7 +72,7 @@ export default function Selectable ({ comprobante, setComprobante, onlyRead, col
                 <thead>
                 <tr className="row">
                     <th className="col-md-1"></th>
-                    <th className="col-md-9">Razón</th>
+                    <th className="col-md-9">Tipo</th>
                     <th className="col-md-2">Monto</th>
                 </tr>
                 </thead>

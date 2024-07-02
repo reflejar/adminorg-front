@@ -52,10 +52,10 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
         const chartDom = chartRef.current;
         const myChart = echarts.init(chartDom);
         const nuevasColumnas = data.length > 0 ? Object.keys(data[0]).filter((o) => o !== "cuenta" && o !== "proyecto" && o !== "concepto") : [];
-
+    
         // Determine the groupByColumn based on agrupar_por
         const groupByColumn = agrupar_por || 'cuenta';
-
+    
         // Create a map to aggregate data
         const aggregatedData = data.reduce((acc, item) => {
             const group = item[groupByColumn];
@@ -67,19 +67,22 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
             });
             return acc;
         }, {});
-
+    
         const seriesData = Object.keys(aggregatedData).map(group => ({
             name: group,
             type: 'bar',
             stack: 'total',
             data: aggregatedData[group]
         }));
-
+    
         const option = {
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
                     type: 'shadow'
+                },
+                formatter: function (params) {
+                    return `${params[0].name}<br />${params.map(p => `${p.marker}${p.seriesName}: $${p.value.toLocaleString('de-DE', { minimumFractionDigits: 0 })}`).join('<br />')}`;
                 }
             },
             legend: {
@@ -96,13 +99,20 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
                 data: nuevasColumnas
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                    formatter: function (value) {
+                        return `$${value.toLocaleString('de-DE', { minimumFractionDigits: 0 })}`;
+                    }
+                }
             },
             series: seriesData
         };
-
+    
         myChart.setOption(option);
     };
+    
+    
 
     const renderPieChart = () => {
         const chartDom = chartRef.current;
@@ -135,7 +145,7 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
-                    return `${params.name}: ${params.value.toLocaleString()} (${params.percent}%)`;
+                    return `${params.name}: $${params.value.toLocaleString()} (${params.percent}%)`;
                 }
             },
             series: [
@@ -147,7 +157,7 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
                     label: {
                         show: true, // Show labels on the pie chart
                         formatter: function (params) {
-                            return `${params.name}: ${params.value.toLocaleString()} (${params.percent}%)`;
+                            return `${params.name}: $${params.value.toLocaleString()} (${params.percent}%)`;
                         }
                     },
                     emphasis: {
@@ -173,7 +183,7 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
                             className={`nav-link ${activeTab === "tabla" && "active"} pointer`}
                             onClick={() => setActiveTab("tabla")}
                         >
-                            <i className="bi-list-check me-2" /> Resultados
+                            <i className="bi-list-check me-2" /> Tablas
                         </a>
                     </li>
                     <li className="nav-item">
