@@ -19,15 +19,17 @@ const get_all = () => async (dispatch) => {
 
   const response = await Service.get(apiEndpoint);
   if (response) {
-    const titulos = response.data.results.map(g => ({...g, full_name: g.nombre})).sort((a, b) => {
-      let comparison = 0;
-      if (a.numero > b.numero) {
-        comparison = 1;
-      } else if (a.numero < b.numero) {
-        comparison = -1;
-      }
-      return comparison;
-    });
+    const titulos = response.data.results
+                    .map(g => ({...g, full_name: g.nombre}))
+                    .sort((a, b) => {
+                      let comparison = 0;
+                      if (a.numero > b.numero) {
+                        comparison = 1;
+                      } else if (a.numero < b.numero) {
+                        comparison = -1;
+                      }
+                      return comparison;})
+                    .map(t => ({...t, numero: t.numero.toString().split('').join('.')}));
 
     dispatch({
       type: 'GET_TITULOS',
