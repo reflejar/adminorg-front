@@ -63,7 +63,7 @@ function Contenido({ selected }) {
 
             <section className="monitor-footer p-3 d-flex justify-content-between">
                 <div className="btn-group">
-                    <ModalComprobante selected={selected} />,
+                    <ModalComprobante selected={selected} />
                     
                 </div>
                 <div className="btn-group">
