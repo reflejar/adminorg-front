@@ -66,12 +66,12 @@ const CU = ({ selected, onClose }) => {
 
               <h4>Datos del título contable</h4>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="nombre">Nombre</Label>
+                <Label for="nombre">Nombre<span className='text-danger'>*</span></Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="numero">Numero</Label>
+                <Label for="numero">Numero<span className='text-danger'>*</span></Label>
                 <Field name="numero" id="numero" className={`form-control ${errors.numero && touched.numero && 'is-invalid'}`} />
                 {errors.numero && touched.numero ? <div className="invalid-feedback">{errors.numero}</div> : null}
               </FormGroup>         

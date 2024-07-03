@@ -52,7 +52,7 @@ const CU = ({ selected, onClose }) => {
         titulo: get(selected, 'titulo', tituloPred.id),
       }}
       validationSchema={Yup.object().shape({
-        nombre: Yup.string(),
+        nombre: Yup.string().required(empty),
         taxon: Yup.string(),
         moneda: Yup.string().required(empty),
         titulo: Yup.number().required(empty),
@@ -80,7 +80,7 @@ const CU = ({ selected, onClose }) => {
           <Row>
               <h4>Datos del tesoro</h4>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="nombre">Nombre</Label>
+                <Label for="nombre">Nombre<span className='text-danger'>*</span></Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
@@ -94,7 +94,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.taxon && touched.taxon ? <div className="invalid-feedback">{errors.taxon}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="taxon">Moneda</Label>
+                <Label for="taxon">Moneda<span className='text-danger'>*</span></Label>
                 <Field component="select" name="moneda" id="moneda" className={`form-control ${errors.moneda && touched.moneda && 'is-invalid'}`}>
                   {monedas.map((moneda, i) => {
                     return <option key={i} value={moneda.value}>{moneda.label}</option>
@@ -103,7 +103,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.moneda && touched.moneda ? <div className="invalid-feedback">{errors.moneda}</div> : null}
               </FormGroup>              
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="titulo">Titulo contable</Label>
+                <Label for="titulo">Titulo contable<span className='text-danger'>*</span></Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>
                   <option value={""}> --- </option>
                   {titulos.map((titulo, i) => {

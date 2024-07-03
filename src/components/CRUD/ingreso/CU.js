@@ -49,7 +49,7 @@ const CU = ({ selected, onClose }) => {
         titulo: get(selected, 'titulo', tituloPred.id),
       }}
       validationSchema={Yup.object().shape({
-        nombre: Yup.string(),
+        nombre: Yup.string().required(empty),
         titulo: Yup.number().required(empty),
       })}
       onSubmit={async (values, { setSubmitting }) => {
@@ -75,12 +75,12 @@ const CU = ({ selected, onClose }) => {
           <Row>
               <h4>Datos del ingreso</h4>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="nombre">Nombres</Label>
+                <Label for="nombre">Nombre<span className='text-danger'>*</span></Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="titulo">Titulo contable</Label>
+                <Label for="titulo">Titulo contable<span className='text-danger'>*</span></Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>
                 <option value={""}>---</option>
                   {titulos.map((titulo, i) => {

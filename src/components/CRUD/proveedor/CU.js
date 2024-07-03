@@ -59,7 +59,7 @@ const CU = ({ selected, onClose }) => {
         titulo: get(selected, 'titulo', tituloPred.id),
       }}
       validationSchema={Yup.object().shape({
-        nombre: Yup.string(),
+        nombre: Yup.string().required(empty),
         razon_social: Yup.string(),
         tipo_documento: Yup.string().required(empty),
         numero_documento: Yup.number().required(empty),
@@ -96,7 +96,7 @@ const CU = ({ selected, onClose }) => {
           <Row>
               <h4>Datos del proveedor</h4>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="nombre">Nombre</Label>
+                <Label for="nombre">Nombre<span className='text-danger'>*</span></Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>
@@ -106,7 +106,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.razon_social && touched.razon_social ? <div className="invalid-feedback">{errors.razon_social}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="tipo_documento">Tipo de documento</Label>
+                <Label for="tipo_documento">Tipo de documento<span className='text-danger'>*</span></Label>
                 <Field component="select" name="tipo_documento" id="tipo_documento" className={`form-control ${errors.tipo_documento && touched.tipo_documento && 'is-invalid'}`}>
                   <option defaultValue={null}>---</option>
                   {tipo_documentos.map((documento, i) => (
@@ -116,7 +116,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.tipo_documento && touched.tipo_documento ? <div className="invalid-feedback">{errors.tipo_documento}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="numero_documento">Numero de documento</Label>
+                <Label for="numero_documento">Numero de documento<span className='text-danger'>*</span></Label>
                 <Field type="number" step="1" name="numero_documento" id="numero_documento" className={`form-control ${errors.numero_documento && touched.numero_documento && 'is-invalid'}`} />
                 {errors.numero_documento && touched.numero_documento ? <div className="invalid-feedback">{errors.numero_documento}</div> : null}
               </FormGroup>
@@ -156,7 +156,7 @@ const CU = ({ selected, onClose }) => {
                 {errors.numero && touched.numero ? <div className="invalid-feedback">{errors.numero}</div> : null}
               </FormGroup>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="titulo">Titulo contable</Label>
+                <Label for="titulo">Titulo contable<span className='text-danger'>*</span></Label>
                 <Field value={tituloPred.id} disabled component="select" name="titulo" id="titulo" className={`form-control ${errors.titulo && touched.titulo && 'is-invalid'}`}>
                   {titulos.map((titulo, i) => {
                     return <option key={i} value={titulo.id}>{titulo.nombre}</option>

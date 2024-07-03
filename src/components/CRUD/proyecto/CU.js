@@ -8,6 +8,7 @@ import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
 import { proyectosActions } from '@/redux/actions/proyectos';
 
+const empty = 'Campo requerido';
 
 const CU = ({ selected, onClose }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const CU = ({ selected, onClose }) => {
         nombre: get(selected, 'nombre', ''),
       }}
       validationSchema={Yup.object().shape({
-        nombre: Yup.string(),
+        nombre: Yup.string().required(empty),
       })}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -44,7 +45,7 @@ const CU = ({ selected, onClose }) => {
           <Row>
               <h4>Datos del proyecto</h4>
               <FormGroup className='col-sm-4 px-3'>
-                <Label for="nombre">Nombre</Label>
+                <Label for="nombre">Nombre<span className='text-danger'>*</span></Label>
                 <Field name="nombre" id="nombre" className={`form-control ${errors.nombre && touched.nombre && 'is-invalid'}`} />
                 {errors.nombre && touched.nombre ? <div className="invalid-feedback">{errors.nombre}</div> : null}
               </FormGroup>       
