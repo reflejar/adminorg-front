@@ -32,7 +32,7 @@ export default function Sidebar() {
                         <Link href="/cuentas-a-pagar" className={`nav-link ${pathname == '/cuentas-a-pagar' ? 'active' : 'link-dark'}`}><i className="bi-upload me-2" /> Cuentas a pagar</Link>
                         <Link href="/tesoreria" className={`nav-link ${pathname == '/tesoreria' ? 'active' : 'link-dark'}`}><i className="bi-currency-dollar me-2" /> Tesorería</Link>
                         {/* <Link href="/contabilidad" className={`nav-link ${pathname == '/contabilidad' ? 'active' : 'link-dark'}`}><i className="bi-briefcase me-2" /> Contabilidad</Link> */}
-                        <Link href="/configuraciones" className={`nav-link ${pathname == '/configuraciones' ? 'active' : 'link-dark'}`}><i className="bi-gear-fill me-2" /> Mi Organización</Link>
+                        <Link href="/configuraciones" className={`nav-link ${pathname == '/configuraciones' ? 'active' : 'link-dark'}`}><i className="bi-house-gear-fill me-2" /> Mi Organización</Link>
                     </ul>}
                     <hr />
 

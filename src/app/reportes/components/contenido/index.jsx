@@ -100,6 +100,7 @@ function Contenido({ analizar, agrupar_por, encolumnar, totalizar }) {
             },
             yAxis: {
                 type: 'value',
+                allowDecimals: false,
                 axisLabel: {
                     formatter: function (value) {
                         return `$${value.toLocaleString('de-DE', { minimumFractionDigits: 0 })}`;
