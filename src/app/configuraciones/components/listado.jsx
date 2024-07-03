@@ -23,7 +23,7 @@ function Listado({items, instance, getItems, setSelectedObject}) {
                         key={key}
                       >
                         <td className={`${item.id ? "pointer" : 'bg-light text-dark' }`}>
-                          {!item.id && <i className='bi-chevron-down' />} {item.full_name}
+                          {item.full_name}
                         </td>  
                       </tr>                
                     ))}
