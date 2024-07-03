@@ -102,7 +102,7 @@ export default function Encabezado ({
                 />
                 </div>              
                 <div className="col-md-2 px-1">
-                <label htmlFor="receipt.issued_date">Fecha del Comprobante</label>
+                <label htmlFor="receipt.issued_date">Fecha Comprobante</label>
                 <input 
                     className="form-control" 
                     name="receipt.issued_date" 
@@ -113,7 +113,7 @@ export default function Encabezado ({
                 />
                 </div>               
                 <div className="col-md-2 px-1">
-                <label htmlFor="fecha_operacion">Fecha de Operación</label>
+                <label htmlFor="fecha_operacion">Fecha Operación</label>
                 <input 
                     className="form-control" 
                     name="fecha_operacion" 

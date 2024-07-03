@@ -56,12 +56,12 @@ function Contenido({ selected }) {
             </section>
 
             <section className="monitor-body bg-white p-3">
-                {selected ? showContent() : "Por favor Seleccione"}
+                {selected ? showContent() : "Por favor seleccione una cuenta"}
             </section>
 
             <section className="monitor-footer p-3 d-flex justify-content-between">
                 <div className="btn-group">
-                    <ModalComprobante selected={selected} />
+                    {selected && <ModalComprobante selected={selected} />}
                 </div>
                 <div className="btn-group">
                     <ModalRegistros />

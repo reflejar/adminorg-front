@@ -55,7 +55,7 @@ function Contenido({ selected }) {
 
             <section className="monitor-footer p-3 d-flex justify-content-between">
                 <div className="btn-group">
-                    <Individual selected={selected} />
+                    {selected && <Individual selected={selected} />}
                     {/* <Masivo selected={selected} />, */}
                 </div>
                 <div className="btn-group">

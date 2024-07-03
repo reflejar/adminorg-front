@@ -18,7 +18,7 @@ export default function Modal ({selected}) {
         open={modal}
         onToggle={handleToggle}
         button={(<button className="btn btn-outline-primary mx-1 shadow" disabled={!selected} onClick={handleToggle}> + Comprobante </button>)}
-        header="Nuevo Comprobante"
+        header={`Nuevo Comprobante - ${selected.full_name}`}
         component={<Comprobante moduleHandler={'cliente'} destinatario={selected} onClose={() => handleToggle()}/>}
         footer={false}
       />

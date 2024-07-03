@@ -342,7 +342,7 @@ export default function Comprobante({ moduleHandler, destinatario, comprobanteId
                     <div className="col-sm-6 text-end">
                     {comprobante.pdf && <button onClick={showPDF} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Imprimir</button>}
                     {comprobante.link && <a href={comprobante.link} target="_blank" className="btn btn-bordered btn-warning btn-block mx-1">Ver</a>}
-                    {!onlyRead && <button disabled={!canSend} onClick={handleSubmit} type="submit" className="btn btn-bordered btn-primary btn-block mx-1">Guardar</button>}
+                    {!onlyRead && <button disabled={!canSend} onClick={handleSubmit} type="submit" className="btn btn-bordered btn-block mx-1 btn-primary">Guardar</button>}           
                     </div>
                 </div>
             </div>

@@ -67,7 +67,7 @@ export default function (props) {
           <BasicModal
             open={modal.open}
             onToggle={handleModal}
-            header={modal.item.comprobante}
+            header={`${modal.item.comprobante} - ${selected.full_name}`}
             footer={false}
             component={<Comprobante 
                 moduleHandler={"caja"} 
